@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MetaL_Star_Guitars.DataBase.Entities;
+﻿using MetaL_Star_Guitars.DataBase.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace MetaL_Star_Guitars.DataBase.Connection;
 
 class DataBaseConnector : DbContext
 {
-    private readonly string _databaseConnectionString = "Host=localhost;Port=5432;DataBase=postgres;Username=postgres;Password=1309201911112019";
     public DbSet<ProductionOrderEntity> ProductionOrders { get; set; }
     public DbSet<ProductEntity> Products { get; set; }
     public DbSet<ProductionStageEntity> ProductionStages { get; set; }
@@ -20,6 +21,13 @@ class DataBaseConnector : DbContext
     public DbSet<WarehouseEntity> Warehouses { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(_databaseConnectionString);
+        var configuration = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory()) // Указываем путь к текущей папке
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .Build();
+
+        string? connectionString = configuration.GetConnectionString("DefaultConnection");
+
+        optionsBuilder.UseNpgsql(connectionString);
     }
 }
