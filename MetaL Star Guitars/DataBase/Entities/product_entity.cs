@@ -1,9 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace MetaL_Star_Guitars.DataBase.Entities;
 
 [Table("product", Schema = "public")]
-public class ProductEntity
+public class product_entity
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

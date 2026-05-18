@@ -1,9 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MetaL_Star_Guitars.DataBase.Entities;
 
 [Table("product_using", Schema = "public")]
-public class ProductUsingEntity
+public class product_using_entity
 {
     [Column("quantity")]
     public int Quantity { get; set; }

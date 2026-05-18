@@ -1,10 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MetaL_Star_Guitars.DataBase.Entities;
 
 [Table("transit_warehouse", Schema = "public")]
-public class TransitWarehouseEntity
+public class transit_warehouse_entity
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

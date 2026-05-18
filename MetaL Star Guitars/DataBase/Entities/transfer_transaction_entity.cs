@@ -1,10 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MetaL_Star_Guitars.DataBase.Entities;
 
 [Table("transfer_transaction", Schema = "public")]
-public class TransferTransactionEntity
+public class transfer_transaction_entity
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

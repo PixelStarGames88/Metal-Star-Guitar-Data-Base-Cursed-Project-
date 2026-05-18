@@ -18,14 +18,14 @@
             <Label x:Name="_authorizationEnterButton" Content="Enter" HorizontalAlignment="Center" Margin="0,490,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black" MouseDown="_authorizationEnterButton_MouseDown" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite"/>
         </Grid>
 
-        <Grid x:Name="_warehouseManagementModuleGrid" d:IsHidden="True" Visibility="Collapsed">
-            <StackPanel x:Name="_warehouseNavigationPanel" Orientation="Horizontal" Margin="10,10,0,0" VerticalAlignment="Top">
+        <Grid x:Name="_warehouseManagementModuleGrid" Visibility="Collapsed">
+            <StackPanel x:Name="_warehouseNavigationPanel" Orientation="Horizontal" Margin="10,10,0,0" VerticalAlignment="Top" Visibility="Collapsed">
                 <Label x:Name="_warehouseNavigationTransfersButton" Content="Transfers" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,0,20,0" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite" MouseDown="_warehouseNavigationTransfersButton_MouseDown"/>
-                <Label x:Name="_warehouseNavigationWriteOffToProductionButton" Content="Write-off to Production" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,0,20,0" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite" MouseDown="_warehouseNavigationWriteOffToProductionButton_MouseDown"/>
+                <Label x:Name="_warehouseNavigationWriteOffToProductionButton" Content="Write-off to Production" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,0,20,0" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite" MouseDown="_warehouseNavigationWriteOffToProductionButton_MouseDown" Visibility="Hidden"/>
                 <Label x:Name="_warehouseNavigationExitToMenuButton" Content="Exit to menu" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite" MouseDown="_globalExitToMenuButton_MouseDown"/>
             </StackPanel>
 
-            <Grid x:Name="_warehouseTransfersSubGrid" Margin="0,53,0,0" Background="#FF1F1F1F" Visibility="Collapsed">
+            <Grid x:Name="_warehouseTransfersSubGrid" Margin="0,53,0,0" Background="#FF1F1F1F">
                 <Label x:Name="_warehouseTransferTitleLabel" Content="Making a transfer order" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black"/>
 
                 <Label x:Name="_warehouseTransferSenderWarehouseLabel" Content="Sender warehouse" HorizontalAlignment="Left" Margin="10,118,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
@@ -60,7 +60,7 @@
                         <Label x:Name="_warehouseTransferReceiptDateValueLabel" Content="18:45 17.05.2026" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
                     </UniformGrid>
                     <StackPanel x:Name="_warehouseTransferButtonsPanel" Orientation="Horizontal" Margin="0,40,0,0">
-                        <Label x:Name="_warehouseTransferSubmitButton" Content="To order" FontSize="36" Foreground="White" FontFamily="Arial Black" Margin="0,0,40,0" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite"/>
+                        <Label x:Name="_warehouseTransferSubmitButton" Content="To order" FontSize="36" Foreground="White" FontFamily="Arial Black" Margin="0,0,40,0" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite" MouseDown="_warehouseTransferSubmitButton_MouseDown"/>
                         <Label x:Name="_warehouseTransferCancelButton" Content="Cancel" FontSize="36" Foreground="White" FontFamily="Arial Black" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite"/>
                     </StackPanel>
                 </StackPanel>
@@ -103,7 +103,7 @@
                     </Grid>
 
                     <StackPanel x:Name="_warehouseWriteOffButtonsPanel" Orientation="Horizontal" Margin="0,30,0,0">
-                        <Label x:Name="_warehouseWriteOffSubmitButton" Content="To write-off" FontSize="36" Foreground="White" FontFamily="Arial Black" Margin="0,0,40,0" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite"/>
+                        <Label x:Name="_warehouseWriteOffSubmitButton" Content="To write-off" FontSize="36" Foreground="White" FontFamily="Arial Black" Margin="0,0,40,0" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite" MouseDown="_warehouseWriteOffSubmitButton_MouseDown"/>
                         <Label x:Name="_warehouseWriteOffCancelButton" Content="Cancel" FontSize="36" Foreground="White" FontFamily="Arial Black" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite"/>
                     </StackPanel>
                 </StackPanel>

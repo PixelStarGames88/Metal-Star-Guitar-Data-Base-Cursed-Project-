@@ -1,10 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MetaL_Star_Guitars.DataBase.Entities;
 
 [Table("stock_adjustment_document", Schema = "public")]
-public class StockAdjustmentDocumentEntity
+public class stock_adjustment_document_entity
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

@@ -1,10 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MetaL_Star_Guitars.DataBase.Entities;
 
 [Table("route", Schema = "public")]
-public class RouteEntity
+public class route_entity
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

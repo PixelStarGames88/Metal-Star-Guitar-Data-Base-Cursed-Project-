@@ -1,9 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MetaL_Star_Guitars.DataBase.Entities;
 
 [Table("transfer_order_content", Schema = "public")]
-public class TransferOrderContentEntity
+public class transfer_order_content_entity
 {
     [Column("quantity")]
     public int Quantity { get; set; }

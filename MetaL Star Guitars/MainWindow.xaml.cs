@@ -2,17 +2,18 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using MetaL_Star_Guitars.DataBase.Connection;
 
 namespace MetaL_Star_Guitars
 {
     public partial class MainWindow : Window
     {
+        DataBaseConnector dbConnector;
         public MainWindow()
         {
             InitializeComponent();
+            dbConnector = new DataBaseConnector();
         }
-
-        // Логика авторизации
         private void _authorizationEnterButton_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var selectedRole = (_authorizationPostComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
@@ -23,7 +24,6 @@ namespace MetaL_Star_Guitars
                 _warehouseManagementModuleGrid.Visibility = Visibility.Visible;
                 _productionStagesManagementModuleGrid.Visibility = Visibility.Collapsed;
 
-                // Дефолтные вкладки для Склада
                 _warehouseTransfersSubGrid.Visibility = Visibility.Visible;
                 _warehouseWriteOffToProductionSubGrid.Visibility = Visibility.Collapsed;
             }
@@ -32,13 +32,11 @@ namespace MetaL_Star_Guitars
                 _warehouseManagementModuleGrid.Visibility = Visibility.Collapsed;
                 _productionStagesManagementModuleGrid.Visibility = Visibility.Visible;
 
-                // Дефолтные вкладки для Производства
                 _productionCreateOrderSubGrid.Visibility = Visibility.Visible;
                 _productionReleaseProductsSubGrid.Visibility = Visibility.Collapsed;
             }
         }
 
-        // --- НАВИГАЦИЯ: МОДУЛЬ СКЛАДОВ ---
         private void _warehouseNavigationTransfersButton_MouseDown(object sender, MouseButtonEventArgs e)
         {
             _warehouseTransfersSubGrid.Visibility = Visibility.Visible;
@@ -50,8 +48,6 @@ namespace MetaL_Star_Guitars
             _warehouseTransfersSubGrid.Visibility = Visibility.Collapsed;
             _warehouseWriteOffToProductionSubGrid.Visibility = Visibility.Visible;
         }
-
-        // --- НАВИГАЦИЯ: МОДУЛЬ ПРОИЗВОДСТВА ---
         private void _productionNavigationCreateOrderButton_MouseDown(object sender, MouseButtonEventArgs e)
         {
             _productionCreateOrderSubGrid.Visibility = Visibility.Visible;
@@ -63,8 +59,6 @@ namespace MetaL_Star_Guitars
             _productionCreateOrderSubGrid.Visibility = Visibility.Collapsed;
             _productionReleaseProductsSubGrid.Visibility = Visibility.Visible;
         }
-
-        // --- ГЛОБАЛЬНЫЕ МЕТОДЫ И ИНТЕРФЕЙСНЫЕ СУЩНОСТИ ---
         private void _globalExitToMenuButton_MouseDown(object sender, MouseButtonEventArgs e)
         {
             _authorizationGrid.Visibility = Visibility.Visible;
@@ -80,6 +74,24 @@ namespace MetaL_Star_Guitars
         private void _globalButton_MouseLeaveWhite(object sender, MouseEventArgs e)
         {
             if (sender is Label label) label.Foreground = Brushes.White;
+        }
+
+        private void _warehouseTransferSubmitButton_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            dbConnector.CreateTransferOrder(new DataBase.Entities.transfer_order_entity         
+                {
+                    ShipmentDate = DateTime.UtcNow,//DateTime.Parse(_warehouseTransferShipmentDateValueLabel.Content.ToString()),
+                    EstimatedDeliveryDate = DateTime.UtcNow,//DateTime.Parse(_warehouseTransferReceiptDateValueLabel.Content.ToString()),
+                    Status = "Open",//_warehouseTransferStatusValueLabel.Content.ToString(),
+                    SenderWarehouseId = 1,//int.Parse(_warehouseTransferSenderWarehouseComboBox.SelectedValue.ToString()),
+                    RecipientWarehouseId = 2,//int.Parse(_warehouseTransferRecipientWarehouseComboBox.SelectedValue.ToString()),
+                    RouteId = 1//int.Parse(_warehouseTransferRouteComboBox.SelectedValue.ToString())
+                });
+        }
+
+        private void _warehouseWriteOffSubmitButton_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            
         }
     }
 }
