@@ -19,4 +19,7 @@ public class route_entity
 
     [Column("finish_warehouse_id")]
     public int FinishWarehouseId { get; set; }
+    //public List<transit_warehouse_entity> TransitWarehouses { get; set; } = new();
+    //public List<transfer_order_entity> TransferOrders { get; set; } = new();
+    //public warehouse_entity Warehouse { get; set; } = null!;
 }

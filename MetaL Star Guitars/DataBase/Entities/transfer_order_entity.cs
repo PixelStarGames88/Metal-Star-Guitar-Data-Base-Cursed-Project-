@@ -28,4 +28,9 @@ public class transfer_order_entity
 
     [Column("route_id")]
     public int RouteId { get; set; }
+    //public route_entity? Route { get; set; }
+    //public warehouse_entity? RecipientWarehouse { get; set; }
+    //public warehouse_entity? SenderWarehouse { get; set; }
+    //public List<transfer_transaction_entity> TransferTransactions { get; set; } = new();
+    //public List<transfer_order_content_entity> TransferOrderContent { get; set; } = new();
 }

@@ -13,4 +13,6 @@ public class stock_entity
 
     [Column("quantity")]
     public int Quantity { get; set; }
+    //public warehouse_entity? Warehouse { get; set; }
+    //public product_entity? Product { get; set; }
 }

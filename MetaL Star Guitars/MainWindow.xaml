@@ -6,188 +6,185 @@
         mc:Ignorable="d"
         Title="MetaL Star Guitars" Height="700" Width="1500" Background="#FF252525">
 
-    <Grid x:Name="_mainRootGrid">
+    <Grid x:Name="_mainGrid">
 
         <Grid x:Name="_authorizationGrid">
             <Label x:Name="_authorizationWelcomeLabel" Content="Welcome! Enter your account." HorizontalAlignment="Center" Margin="0,112,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black"/>
-            <Label x:Name="_authorizationPostLabel" Content="Enter as..." HorizontalAlignment="Left" Margin="590,246,0,0" VerticalAlignment="Top" FontSize="22" Foreground="White" FontFamily="Arial Black"/>
-            <ComboBox x:Name="_authorizationPostComboBox" HorizontalAlignment="Center" Margin="0,281,0,0" VerticalAlignment="Top" Width="320" Background="#FF161616" Foreground="Black" FontFamily="Arial Black" FontSize="22" SelectedIndex="0">
+            <Label x:Name="_authorizationPostLabel" Content="Enter as..." Margin="590,246,778,0" VerticalAlignment="Top" FontSize="22" Foreground="White" FontFamily="Arial Black"/>
+            <ComboBox x:Name="_authorizationPostComboBox" Margin="590,281,590,0" Background="#FF161616" Foreground="Black" FontFamily="Arial Black" FontSize="22" SelectedIndex="0" Height="31" VerticalAlignment="Top">
                 <ComboBoxItem x:Name="_authorizationPostWarehouseItem" Content="Warehouse manager"/>
                 <ComboBoxItem x:Name="_authorizationPostProductionItem" Content="Production stages manager"/>
             </ComboBox>
-            <Label x:Name="_authorizationEnterButton" Content="Enter" HorizontalAlignment="Center" Margin="0,490,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black" MouseDown="_authorizationEnterButton_MouseDown" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite"/>
+            <Label x:Name="_authorizationEnterButton" Content="Enter" HorizontalAlignment="Center" Margin="0,490,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="authorizationEnterButton_MouseDown"/>
         </Grid>
 
-        <Grid x:Name="_warehouseManagementModuleGrid" Visibility="Collapsed">
-            <StackPanel x:Name="_warehouseNavigationPanel" Orientation="Horizontal" Margin="10,10,0,0" VerticalAlignment="Top" Visibility="Collapsed">
-                <Label x:Name="_warehouseNavigationTransfersButton" Content="Transfers" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,0,20,0" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite" MouseDown="_warehouseNavigationTransfersButton_MouseDown"/>
-                <Label x:Name="_warehouseNavigationWriteOffToProductionButton" Content="Write-off to Production" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,0,20,0" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite" MouseDown="_warehouseNavigationWriteOffToProductionButton_MouseDown" Visibility="Hidden"/>
-                <Label x:Name="_warehouseNavigationExitToMenuButton" Content="Exit to menu" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite" MouseDown="_globalExitToMenuButton_MouseDown"/>
-            </StackPanel>
+        <Grid x:Name="_warehouseManagementGrid" Visibility="Collapsed">
+            <Grid x:Name="_warehouseManagementNavigationGrid" Height="53" VerticalAlignment="Top">
+                <Label x:Name="_warehouseManagementTransfersButton" Content="Transfers" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="15,8,0,0" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="warehouseManagementTransfersButton_MouseDown" HorizontalAlignment="Left" Width="135" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
+                <Label x:Name="_warehouseManagementWriteOffToProductionButton" Content="Write-off to Production" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="warehouseManagementWriteOffToProductionButton_MouseDown" Width="310" HorizontalAlignment="Left" Margin="160,8,0,0" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
+                <Label x:Name="_warehouseManagementExitToMenuButton" Content="Exit to menu" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" Margin="475,8,0,0" MouseDown="warehouseManagementExitToMenuButton_MouseDown" HorizontalAlignment="Left" Width="176" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
+            </Grid>
 
-            <Grid x:Name="_warehouseTransfersSubGrid" Margin="0,53,0,0" Background="#FF1F1F1F">
-                <Label x:Name="_warehouseTransferTitleLabel" Content="Making a transfer order" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black"/>
+            <Grid x:Name="_warehouseManagementTransfersGrid" Background="#FF1F1F1F" Margin="0,58,0,-5" Visibility="Collapsed">
+                <Label x:Name="_warehouseManagementTransfersTitleLabel" Content="Making a transfer order" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black" HorizontalAlignment="Left" Width="481"/>
 
-                <Label x:Name="_warehouseTransferSenderWarehouseLabel" Content="Sender warehouse" HorizontalAlignment="Left" Margin="10,118,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-                <ComboBox x:Name="_warehouseTransferSenderWarehouseComboBox" HorizontalAlignment="Left" Margin="332,121,0,0" VerticalAlignment="Top" Width="388" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
+                <Label x:Name="_warehouseManagementTransfersSenderWarehouseLabel" Content="Sender warehouse" Margin="10,118,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black" HorizontalAlignment="Left" Width="262"/>
+                <ComboBox x:Name="_warehouseManagementTransfersSenderWarehouseComboBox" HorizontalAlignment="Left" Margin="332,121,0,0" VerticalAlignment="Top" Width="388" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
 
-                <Label x:Name="_warehouseTransferRecipientWarehouseLabel" Content="Recipient warehouse" HorizontalAlignment="Left" Margin="10,161,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-                <ComboBox x:Name="_warehouseTransferRecipientWarehouseComboBox" HorizontalAlignment="Left" Margin="332,164,0,0" VerticalAlignment="Top" Width="388" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
+                <Label x:Name="_warehouseManagementTransfersRecipientWarehouseLabel" Content="Recipient warehouse" Margin="10,161,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black" HorizontalAlignment="Left" Width="295"/>
+                <ComboBox x:Name="_warehouseManagementTransfersRecipientWarehouseComboBox" HorizontalAlignment="Left" Margin="332,164,0,0" VerticalAlignment="Top" Width="388" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
 
-                <Label x:Name="_warehouseTransferRouteLabel" Content="Route" HorizontalAlignment="Left" Margin="10,204,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-                <ComboBox x:Name="_warehouseTransferRouteComboBox" HorizontalAlignment="Left" Margin="332,207,0,0" VerticalAlignment="Top" Width="388" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
+                <Label x:Name="_warehouseManagementTransfersRouteLabel" Content="Route" Margin="10,204,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black" HorizontalAlignment="Left" Width="95"/>
+                <ComboBox x:Name="_warehouseManagementTransfersRouteComboBox" HorizontalAlignment="Left" Margin="332,207,0,0" VerticalAlignment="Top" Width="388" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
 
-                <Label x:Name="_warehouseTransferContentLabel" Content="Content" HorizontalAlignment="Left" Margin="10,247,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+                <Label x:Name="_warehouseManagementTransfersContentLabel" Content="Content" Margin="10,247,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black" HorizontalAlignment="Left" Width="122"/>
 
-                <Grid x:Name="_warehouseTransferContentPanelGrid" Margin="332,248,780,195" Background="#FF111111">
-                    <ComboBox x:Name="_warehouseTransferProductComboBox" Margin="10,10,198,0" VerticalAlignment="Top" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
-                    <TextBox x:Name="_warehouseTransferQuantityTextBox" HorizontalAlignment="Left" Margin="195,10,0,0" VerticalAlignment="Top" Width="69" FontSize="22"/>
-                    <Label x:Name="_warehouseTransferLimitLabel" Content="&lt;=0 pcs." HorizontalAlignment="Left" Margin="264,8,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+                <Grid x:Name="_warehouseManagementTransfersContentGrid" Margin="332,248,0,195" Background="#FF111111" HorizontalAlignment="Left" Width="388">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="_warehouseManagementTransfersContentProductComboBox" Margin="10,10,200,0" VerticalAlignment="Top" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
+                    <TextBox x:Name="_warehouseManagementTransfersContentQuantityTextBox" HorizontalAlignment="Left" Margin="195,10,0,0" VerticalAlignment="Top" Width="69" FontSize="22"/>
+                    <Label x:Name="_warehouseManagementTransfersContentLimitLabel" Content="&lt;=0 pcs." HorizontalAlignment="Left" Margin="264,8,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
                 </Grid>
 
-                <Label x:Name="_warehouseTransferAddProductButton" Content="+" HorizontalAlignment="Left" Margin="341,441,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black" Width="181" HorizontalContentAlignment="Center" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite"/>
-                <Label x:Name="_warehouseTransferRemoveProductButton" Content="-" HorizontalAlignment="Left" Margin="526,441,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black" Width="180" HorizontalContentAlignment="Center" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite"/>
-
-                <StackPanel x:Name="_warehouseTransferInformationPanel" Margin="754,118,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <UniformGrid x:Name="_warehouseTransferInfoUniformGrid" Columns="2" Width="500" Rows="4">
-                        <Label x:Name="_warehouseTransferOrderIdLabel" Content="Order ID" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-                        <Label x:Name="_warehouseTransferOrderIdValueLabel" Content="1" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-                        <Label x:Name="_warehouseTransferStatusLabel" Content="Status" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-                        <Label x:Name="_warehouseTransferStatusValueLabel" Content="Open" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-                        <Label x:Name="_warehouseTransferShipmentDateLabel" Content="Shipment date" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-                        <Label x:Name="_warehouseTransferShipmentDateValueLabel" Content="18:45 17.05.2026" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-                        <Label x:Name="_warehouseTransferReceiptDateLabel" Content="Receipt date" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-                        <Label x:Name="_warehouseTransferReceiptDateValueLabel" Content="18:45 17.05.2026" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-                    </UniformGrid>
-                    <StackPanel x:Name="_warehouseTransferButtonsPanel" Orientation="Horizontal" Margin="0,40,0,0">
-                        <Label x:Name="_warehouseTransferSubmitButton" Content="To order" FontSize="36" Foreground="White" FontFamily="Arial Black" Margin="0,0,40,0" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite" MouseDown="_warehouseTransferSubmitButton_MouseDown"/>
-                        <Label x:Name="_warehouseTransferCancelButton" Content="Cancel" FontSize="36" Foreground="White" FontFamily="Arial Black" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite"/>
-                    </StackPanel>
-                </StackPanel>
+                <Label x:Name="_warehouseManagementTransfersAddProductButton" Content="+" HorizontalAlignment="Left" Margin="341,0,0,152" FontSize="24" Foreground="White" FontFamily="Arial Black" Width="181" HorizontalContentAlignment="Center" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" Height="38" VerticalAlignment="Bottom"/>
+                <Label x:Name="_warehouseManagementTransfersRemoveProductButton" Content="-" HorizontalAlignment="Left" Margin="526,0,0,152" FontSize="24" Foreground="White" FontFamily="Arial Black" Width="180" HorizontalContentAlignment="Center" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" Height="38" VerticalAlignment="Bottom"/>
+                <Grid x:Name="_warehouseManagementTransfersInfoGrid" Margin="802,122,155,195" Background="#FF111111">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="_warehouseManagementTransfersToOrderButton" Content="To order" FontSize="36" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" Margin="10,0,0,2" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="186" Height="52" VerticalAlignment="Bottom">
+                        <Label.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="0.09"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Label.RenderTransform>
+                    </Label>
+                    <Label x:Name="_warehouseManagementTransfersCancelButton" Content="Cancel" FontSize="36" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" Margin="243,0,0,0" HorizontalAlignment="Left" Width="226" Height="52" VerticalAlignment="Bottom"/>
+                    <Label x:Name="_warehouseManagementTransfersOrderIdTitleLabel" Content="Order ID" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="10,6,0,0" HorizontalAlignment="Left" Width="228" Height="37" VerticalAlignment="Top"/>
+                    <Label x:Name="_warehouseManagementTransfersOrderIdLabel" Content="1" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,6,49,0" Height="38" VerticalAlignment="Top" HorizontalAlignment="Right" Width="243"/>
+                    <Label x:Name="_warehouseManagementTransfersStatusTitleLabel" Content="Status" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="10,43,0,0" Height="38" VerticalAlignment="Top" HorizontalAlignment="Left" Width="228"/>
+                    <Label x:Name="_warehouseManagementTransfersStatusLabel" Content="Open" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,43,49,0" Height="38" VerticalAlignment="Top" HorizontalAlignment="Right" Width="243"/>
+                    <Label x:Name="_warehouseManagementTransfersShipmentDateTitleLabel" Content="Shipment date" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="10,81,0,0" Height="38" VerticalAlignment="Top" HorizontalAlignment="Left" Width="228"/>
+                    <Label x:Name="_warehouseManagementTransfersShipmentDateLabel" Content="18:45 17.05.2026" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,81,49,0" Height="38" VerticalAlignment="Top" HorizontalAlignment="Right" Width="243"/>
+                    <Label x:Name="_warehouseManagementTransfersReceiptDateTitleLabel" Content="Receipt date" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="10,119,0,0" HorizontalAlignment="Left" Width="228" Height="38" VerticalAlignment="Top"/>
+                    <Label x:Name="_warehouseManagementTransfersReceiptDateLabel" Content="18:45 17.05.2026" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,119,49,0" HorizontalAlignment="Right" Width="243" Height="38" VerticalAlignment="Top"/>
+                </Grid>
             </Grid>
 
-            <Grid x:Name="_warehouseWriteOffToProductionSubGrid" Margin="0,53,0,0" Background="#FF1F1F1F">
-                <Label x:Name="_warehouseWriteOffTitleLabel" Content="Decommissioning products into production" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black"/>
+            <Grid x:Name="_warehouseManagementWriteOffToProductionGrid" Background="#FF1F1F1F" Margin="0,58,0,-5">
+                <Label x:Name="_warehouseManagementWriteOffToProductionTitleLabel" Content="Decommissioning products into production" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black" Height="56"/>
 
-                <Label x:Name="_warehouseWriteOffOrderChoiceLabel" Content="For order" HorizontalAlignment="Left" Margin="10,118,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-                <ComboBox x:Name="_warehouseWriteOffOrderChoiceComboBox" HorizontalAlignment="Left" Margin="332,121,0,0" VerticalAlignment="Top" Width="379" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
+                <Label x:Name="_warehouseManagementWriteOffToProductionForOrderLabel" Content="For order" HorizontalAlignment="Left" Margin="10,118,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+                <ComboBox x:Name="_warehouseManagementWriteOffToProductionForOrderComboBox" HorizontalAlignment="Left" Margin="332,121,0,0" VerticalAlignment="Top" Width="379" Background="White" FontSize="22" FontFamily="Arial Black" Foreground="Black"/>
 
-                <Label x:Name="_warehouseWriteOffWarehouseChoiceLabel" Content="From warehouse" HorizontalAlignment="Left" Margin="10,161,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-                <ComboBox x:Name="_warehouseWriteOffWarehouseChoiceComboBox" HorizontalAlignment="Left" Margin="332,164,0,0" VerticalAlignment="Top" Width="379" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
+                <Label x:Name="_warehouseManagementWriteOffToProductionFromWarehouseLabel" Content="From warehouse" Margin="10,161,1262,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+                <ComboBox x:Name="_warehouseManagementWriteOffToProductionFromWarehouseComboBox" HorizontalAlignment="Left" Margin="332,164,0,0" VerticalAlignment="Top" Width="379" Background="White" FontSize="22" FontFamily="Arial Black"/>
 
-                <Label x:Name="_warehouseWriteOffProductLabel" Content="Product" HorizontalAlignment="Left" Margin="10,204,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-                <ComboBox x:Name="_warehouseWriteOffProductComboBox" Margin="332,207,0,0" HorizontalAlignment="Left" Width="180" VerticalAlignment="Top" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
-                <TextBox x:Name="_warehouseWriteOffQuantityTextBox" HorizontalAlignment="Left" Margin="517,207,0,0" VerticalAlignment="Top" Width="69" FontSize="22"/>
-                <Label x:Name="_warehouseWriteOffLimitLabel" Content="&lt;=0 pcs." HorizontalAlignment="Left" Margin="586,205,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-
-                <StackPanel Margin="10,250,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <Grid x:Name="_warehouseWriteOffDataGrid" Width="700">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="322"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-
-                        <Label Grid.Row="0" Grid.Column="0" x:Name="_warehouseWriteOffDocumentIdLabel" Content="Document ID" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,5,0,5"/>
-                        <Label Grid.Row="0" Grid.Column="1" x:Name="_warehouseWriteOffDocumentIdValueLabel" Content="1" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,5,0,5"/>
-
-                        <Label Grid.Row="1" Grid.Column="0" x:Name="_warehouseWriteOffTypeLabel" Content="Type" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,5,0,5"/>
-                        <Label Grid.Row="1" Grid.Column="1" x:Name="_warehouseWriteOffTypeValueLabel" Content="Write-off to production" FontSize="24" FontFamily="Arial Black" Foreground="White" Margin="0,5,0,5"/>
-
-                        <Label Grid.Row="2" Grid.Column="0" x:Name="_warehouseWriteOffDateLabel" Content="Date" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,5,0,5"/>
-                        <Label Grid.Row="2" Grid.Column="1" x:Name="_warehouseWriteOffDateValueLabel" Content="18:45 17.05.2026" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,5,0,5"/>
-                    </Grid>
-
-                    <StackPanel x:Name="_warehouseWriteOffButtonsPanel" Orientation="Horizontal" Margin="0,30,0,0">
-                        <Label x:Name="_warehouseWriteOffSubmitButton" Content="To write-off" FontSize="36" Foreground="White" FontFamily="Arial Black" Margin="0,0,40,0" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite" MouseDown="_warehouseWriteOffSubmitButton_MouseDown"/>
-                        <Label x:Name="_warehouseWriteOffCancelButton" Content="Cancel" FontSize="36" Foreground="White" FontFamily="Arial Black" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite"/>
-                    </StackPanel>
-                </StackPanel>
+                <Label x:Name="_warehouseManagementWriteOffToProductionProductLabel" Content="Product" Margin="10,204,1377,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+                <ComboBox x:Name="_warehouseManagementWriteOffToProductionProductComboBox" Margin="332,207,0,0" HorizontalAlignment="Left" Width="180" VerticalAlignment="Top" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
+                <TextBox x:Name="_warehouseManagementWriteOffToProductionQuantityTextBox" HorizontalAlignment="Left" Margin="517,207,0,0" VerticalAlignment="Top" Width="69" FontSize="22"/>
+                <Label x:Name="_warehouseManagementWriteOffToProductionLimitLabel" Content="&lt;=0 pcs." HorizontalAlignment="Left" Margin="586,205,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black" Width="125"/>
+                <Grid x:Name="_warehouseManagementWriteOffToProductionInfoGrid" Margin="10,248,0,0" Background="#FF111111" HorizontalAlignment="Left" Width="701" Height="309" VerticalAlignment="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="291*"/>
+                        <ColumnDefinition Width="98*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label
+                x:Name="_warehouseManagementWriteOffToProductionToWriteOffButtonLabel" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="0,0,222,10" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="To write-off" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="307"/>
+                    <Label
+                x:Name="_warehouseManagementWriteOffToProductionCancelButtonLabel" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="0,0,20,10" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="Cancel" VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.ColumnSpan="2" Width="378"/>
+                    <Label
+                Grid.Row="0" x:Name="_warehouseManagementWriteOffToProductionDocumentIdTitleLabel" Margin="10,0,0,261" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Document ID" Grid.Column="0" HorizontalAlignment="Left" Width="307" Height="38" VerticalAlignment="Bottom"/>
+                    <Label
+                Grid.Row="0" x:Name="_warehouseManagementWriteOffToProductionDocumentIdLabel" Margin="322,10,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Grid.ColumnSpan="2" Content="1" HorizontalAlignment="Left" Width="378" Height="38" VerticalAlignment="Top"/>
+                    <Label
+                x:Name="_warehouseManagementWriteOffToProductionTypeTitleLabel" Margin="0,53,222,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Type" Grid.Column="0" Height="37" VerticalAlignment="Top" HorizontalAlignment="Right" Width="307"/>
+                    <Label
+                x:Name="_warehouseManagementWriteOffToProductionTypeLabel" Margin="322,53,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Grid.ColumnSpan="2" Content="Write-off to production" HorizontalAlignment="Left" Width="378" Height="37" VerticalAlignment="Top"/>
+                    <Label
+                x:Name="_warehouseManagementWriteOffToProductionDateTitleLabel" Margin="0,0,222,176" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Date" Grid.Column="0" Height="38" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="307"/>
+                    <Label
+                x:Name="_warehouseManagementWriteOffToProductionDateLabel" Margin="322,0,0,176" FontSize="24" FontFamily="Arial Black" Foreground="White" Grid.ColumnSpan="2" Content="18:45 17.05.2026" Height="38" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="378"/>
+                </Grid>
             </Grid>
         </Grid>
 
-        <Grid x:Name="_productionStagesManagementModuleGrid" Visibility="Collapsed">
-            <StackPanel x:Name="_productionNavigationPanel" Orientation="Horizontal" Margin="10,10,0,0" VerticalAlignment="Top">
-                <Label x:Name="_productionNavigationCreateOrderButton" Content="Create Order" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,0,20,0" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite" MouseDown="_productionNavigationCreateOrderButton_MouseDown"/>
-                <Label x:Name="_productionNavigationReleaseProductsButton" Content="Release Products" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,0,20,0" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite" MouseDown="_productionNavigationReleaseProductsButton_MouseDown"/>
-                <Label x:Name="_productionNavigationExitToMenuButton" Content="Exit to menu" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite" MouseDown="_globalExitToMenuButton_MouseDown"/>
-            </StackPanel>
+        <Grid x:Name="_productionStagesManagementGrid" Visibility="Collapsed">
+            <Label x:Name="_productionStagesManagementCreateOrderButton" Content="Create Order" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="10,10,0,0" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" Height="38" VerticalAlignment="Top" HorizontalAlignment="Left" Width="180" MouseDown="productionStagesManagementCreateOrderButton_MouseDown"/>
+            <Label x:Name="_productionStagesManagementReleaseProductsButton" Content="Release Products" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="203,10,0,0" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" HorizontalAlignment="Left" Width="240" Height="38" VerticalAlignment="Top" MouseDown="productionStagesManagementReleaseProductsButton_MouseDown"/>
+            <Label x:Name="_productionStagesManagementExitToMenuButton" Content="Exit to menu" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" Margin="463,10,0,0" HorizontalAlignment="Left" Width="177" Height="38" VerticalAlignment="Top" MouseDown="productionStagesManagementExitToMenuButton_MouseDown"/>
 
-            <Grid x:Name="_productionCreateOrderSubGrid" Margin="0,53,0,0" Background="#FF1F1F1F">
-                <Label x:Name="_productionCreateOrderTitleLabel" Content="Making a production order" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black"/>
+            <Grid x:Name="_productionStagesManagementCreateOrderGrid" Margin="0,53,0,0" Background="#FF1F1F1F">
+                <Label x:Name="_productionStagesManagementCreateOrderTitleLabel" Content="Making a production order" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black"/>
 
-                <Label x:Name="_productionCreateOrderSenderWarehouseLabel" Content="Warehouse" HorizontalAlignment="Left" Margin="10,118,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-                <ComboBox x:Name="_productionCreateOrderSenderWarehouseComboBox" HorizontalAlignment="Left" Margin="332,121,0,0" VerticalAlignment="Top" Width="388" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
+                <Label x:Name="_productionStagesManagementCreateOrderForStageLabel" Content="For production stage" HorizontalAlignment="Left" Margin="10,118,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+                <ComboBox x:Name="_productionStagesManagementCreateOrderForStageComboBox" HorizontalAlignment="Left" Margin="332,121,0,0" VerticalAlignment="Top" Width="388" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
 
-                <Label x:Name="_productionCreateOrderRecipientPantryLabel" Content="For production stage" HorizontalAlignment="Left" Margin="10,161,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-                <ComboBox x:Name="_productionCreateOrderRecipientPantryComboBox" HorizontalAlignment="Left" Margin="332,164,0,0" VerticalAlignment="Top" Width="388" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
-
-                <Label x:Name="_productionCreateOrderContentLabel" Content="Product" HorizontalAlignment="Left" Margin="10,205,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-                <ComboBox x:Name="_productionCreateOrderProductComboBox" Margin="332,207,0,0" HorizontalAlignment="Left" Width="180" VerticalAlignment="Top" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
-                <TextBox x:Name="_productionCreateOrderQuantityTextBox" HorizontalAlignment="Left" Margin="517,207,0,0" VerticalAlignment="Top" Width="69" FontSize="22"/>
-                <Label x:Name="_productionCreateOrderLimitLabel" Content="&lt;=0 pcs." HorizontalAlignment="Left" Margin="586,205,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-
-                <StackPanel x:Name="_productionCreateOrderInformationPanel" Margin="10,250,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <UniformGrid x:Name="_productionCreateOrderInfoUniformGrid" Columns="2" Width="633" Rows="3">
-                        <Label x:Name="_productionCreateOrderOrderIdLabel" Content="Order ID" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,2,0,2"/>
-                        <Label x:Name="_productionCreateOrderIdValueLabel" Content="1" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,2,0,2"/>
-                        <Label x:Name="_productionCreateOrderStatusLabel" Content="Status" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,2,0,2"/>
-                        <Label x:Name="_productionCreateOrderStatusValueLabel" Content="Open" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,2,0,2"/>
-                        <Label x:Name="_productionCreateOrderShipmentDateLabel" Content="Date" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,2,0,2"/>
-                        <Label x:Name="_productionCreateOrderShipmentDateValueLabel" Content="18:45 17.05.2026" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,2,0,2"/>
-                    </UniformGrid>
-                    <StackPanel x:Name="_productionCreateOrderButtonsPanel" Orientation="Horizontal" Margin="0,40,0,0">
-                        <Label x:Name="_productionCreateOrderSubmitButton" Content="To order" FontSize="36" Foreground="White" FontFamily="Arial Black" Margin="0,0,40,0" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite"/>
-                        <Label x:Name="_productionCreateOrderCancelButton" Content="Cancel" FontSize="36" Foreground="White" FontFamily="Arial Black" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite"/>
-                    </StackPanel>
-                </StackPanel>
+                <Label x:Name="_productionStagesManagementCreateOrderProductLabel" Content="Product" HorizontalAlignment="Left" Margin="10,162,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+                <ComboBox x:Name="_productionStagesManagementCreateOrderProductComboBox" Margin="332,164,0,0" HorizontalAlignment="Left" Width="189" VerticalAlignment="Top" Background="#FF161616" FontSize="22" FontFamily="Arial Black" SelectionChanged="productionStagesManagementCreateOrderProductComboBox_SelectionChanged"/>
+                <TextBox x:Name="_productionStagesManagementCreateOrderQuantityTextBox" HorizontalAlignment="Left" Margin="526,164,0,0" VerticalAlignment="Top" Width="78" FontSize="22" FontFamily="Arial Black" Height="31"/>
+                <Label x:Name="_productionStagesManagementCreateOrderLimitLabel" Content="&lt; 0 pcs." HorizontalAlignment="Left" Margin="607,161,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+                <Grid x:Name="_productionStagesManagementCreateOrderInfoGrid" Margin="10,204,0,113" Background="#FF111111" HorizontalAlignment="Left" Width="710">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        x:Name="_productionStagesManagementCreateOrderToOrderButtonLabel" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="10,0,0,10" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="To order" HorizontalAlignment="Left" Width="236" Height="51" VerticalAlignment="Bottom" MouseDown="productionStagesManagementCreateOrderToOrderButtonLabel_MouseDown"/>
+                    <Label
+                        x:Name="_productionStagesManagementCreateOrderCancelButtonLabel" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="322,0,243,10" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="Cancel" Height="51" VerticalAlignment="Bottom" MouseDown="productionStagesManagementCreateOrderCancelButtonLabel_MouseDown"/>
+                    <Label
+                        Grid.Row="0" x:Name="_productionStagesManagementCreateOrderIdTitleLabel" Margin="10,5,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Document ID" Grid.Column="0" HorizontalAlignment="Left" Width="307" Height="38" VerticalAlignment="Top"/>
+                    <Label
+                        Grid.Row="0" x:Name="_productionStagesManagementCreateOrderDocumentIdLabel" Margin="322,5,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="1" HorizontalAlignment="Left" Width="378" Height="38" VerticalAlignment="Top"/>
+                    <Label
+                        x:Name="_productionStagesManagementCreateOrderStatusTitleLabel" Margin="10,53,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Status" Grid.Column="0" HorizontalAlignment="Left" Width="307" Height="37" VerticalAlignment="Top"/>
+                    <Label
+                        x:Name="_productionStagesManagementCreateOrderDateTitleLabel" Margin="10,100,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Date" Grid.Column="0" HorizontalAlignment="Left" Width="307" Height="38" VerticalAlignment="Top"/>
+                    <Label
+                        x:Name="_productionStagesManagementCreateOrderDateLabel" Margin="322,100,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="17.05.2026" Height="38" VerticalAlignment="Top" HorizontalAlignment="Left" Width="378"/>
+                    <Label
+                        Grid.Row="0" x:Name="_productionStagesManagementCreateOrderStatusLabel" Margin="322,52,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Open" HorizontalAlignment="Left" Width="378" Height="38" VerticalAlignment="Top"/>
+                </Grid>
             </Grid>
 
-            <Grid x:Name="_productionReleaseProductsSubGrid" Margin="0,53,0,0" Background="#FF1F1F1F" Visibility="Collapsed">
-                <Label x:Name="_productionReleaseTitleLabel" Content="Release products" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black"/>
+            <Grid x:Name="_productionStagesManagementReleaseProductsGrid" Margin="0,53,0,0" Background="#FF1F1F1F" Visibility="Collapsed">
+                <Label x:Name="_productionStagesManagementReleaseProductsTitleLabel" Content="Release products" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black"/>
 
-                <Label x:Name="_productionReleaseOrderChoiceLabel" Content="For order" HorizontalAlignment="Left" Margin="10,118,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-                <ComboBox x:Name="_productionReleaseOrderChoiceComboBox" HorizontalAlignment="Left" Margin="332,121,0,0" VerticalAlignment="Top" Width="388" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
+                <Label x:Name="_productionStagesManagementReleaseProductsToOrderLabel" Content="For order" HorizontalAlignment="Left" Margin="10,118,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+                <ComboBox x:Name="_productionStagesManagementReleaseProductsToOrderComboBox" HorizontalAlignment="Left" Margin="332,121,0,0" VerticalAlignment="Top" Width="388" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
 
-                <Label x:Name="_productionReleaseRecipientWarehouseLabel" Content="To warehouse" HorizontalAlignment="Left" Margin="10,161,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-                <ComboBox x:Name="_productionReleaseRecipientWarehouseComboBox" HorizontalAlignment="Left" Margin="332,164,0,0" VerticalAlignment="Top" Width="388" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
+                <Label x:Name="_productionStagesManagementReleaseProductsToWarehouseLabel" Content="To warehouse" HorizontalAlignment="Left" Margin="10,161,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+                <ComboBox x:Name="_productionStagesManagementReleaseProductsToWarehouseComboBox" HorizontalAlignment="Left" Margin="332,164,0,0" VerticalAlignment="Top" Width="388" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
 
-                <Label x:Name="_productionReleaseProductLabel" Content="Product" HorizontalAlignment="Left" Margin="10,204,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-                <ComboBox x:Name="_productionReleaseProductComboBox" Margin="332,207,0,0" HorizontalAlignment="Left" Width="180" VerticalAlignment="Top" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
-                <TextBox x:Name="_productionReleaseQuantityTextBox" HorizontalAlignment="Left" Margin="517,207,0,0" VerticalAlignment="Top" Width="69" FontSize="22"/>
-                <Label x:Name="_productionReleaseLimitLabel" Content="&lt;=0 pcs." HorizontalAlignment="Left" Margin="600,204,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-
-                <StackPanel Margin="10,250,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <Grid x:Name="_productionReleaseDataGrid" Width="750">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="322"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-
-                        <Label Grid.Row="0" Grid.Column="0" x:Name="_productionReleaseDocumentIdLabel" Content="Document ID" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,3,0,3"/>
-                        <Label Grid.Row="0" Grid.Column="1" x:Name="_productionReleaseDocumentIdValueLabel" Content="1" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,3,0,3"/>
-
-                        <Label Grid.Row="1" Grid.Column="0" x:Name="_productionReleaseTypeLabel" Content="Type" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,3,0,3"/>
-                        <ComboBox Grid.Row="1" Grid.Column="1" x:Name="_productionReleaseTypeComboBox" HorizontalAlignment="Left" Width="388" Background="#FF161616" FontSize="22" FontFamily="Arial Black" Margin="0,3,0,3"/>
-
-                        <Label Grid.Row="2" Grid.Column="0" x:Name="_productionReleaseDateLabel" Content="Date" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,3,0,3"/>
-                        <Label Grid.Row="2" Grid.Column="1" x:Name="_productionReleaseDateValueLabel" Content="18:45 17.05.2026" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="0,3,0,3"/>
-                    </Grid>
-
-                    <StackPanel x:Name="_productionReleaseButtonsPanel" Orientation="Horizontal" Margin="0,30,0,0">
-                        <Label x:Name="_productionReleaseSubmitButton" Content="To release" FontSize="36" Foreground="White" FontFamily="Arial Black" Margin="0,0,40,0" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite"/>
-                        <Label x:Name="_productionReleaseCancelButton" Content="Cancel" FontSize="36" Foreground="White" FontFamily="Arial Black" MouseEnter="_globalButton_MouseEnterYellow" MouseLeave="_globalButton_MouseLeaveWhite"/>
-                    </StackPanel>
-                </StackPanel>
+                <Label x:Name="_productionStagesManagementReleaseProductsProductLabel" Content="Product" HorizontalAlignment="Left" Margin="10,204,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+                <ComboBox x:Name="_productionStagesManagementReleaseProductsProductComboBox" Margin="332,207,0,0" HorizontalAlignment="Left" Width="180" VerticalAlignment="Top" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
+                <TextBox x:Name="_productionStagesManagementReleaseProductsQuantityTextBox" HorizontalAlignment="Left" Margin="517,207,0,0" VerticalAlignment="Top" Width="78" FontSize="22"/>
+                <Label x:Name="_productionStagesManagementReleaseProductsLimitLabel" Content="&lt;=0 pcs." HorizontalAlignment="Left" Margin="600,204,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+                <Grid x:Name="_productionStagesManagementReleaseProductsInfoGrid" Margin="10,247,0,70" Background="#FF111111" HorizontalAlignment="Left" Width="710">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        x:Name="_productionStagesManagementReleaseProductsToWriteOffButtonLabel" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="10,0,0,10" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="To write-off" Height="51" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="255"/>
+                    <Label
+                        x:Name="_productionStagesManagementReleaseProductsCancelButtonLabel" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="322,0,0,10" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="Cancel" Height="51" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="146"/>
+                    <Label
+                        Grid.Row="0" x:Name="_productionStagesManagementReleaseProductsDocumentIdTitleLabel" Margin="10,5,423,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Document ID" Grid.Column="0" Height="38" VerticalAlignment="Top"/>
+                    <Label
+                        Grid.Row="0" x:Name="_productionStagesManagementReleaseProductsDocumentIdLabel" Margin="322,5,40,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="1" Height="38" VerticalAlignment="Top"/>
+                    <Label
+                        x:Name="_productionStagesManagementReleaseProductsTypeTitleLabel" Margin="10,53,423,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Type" Grid.Column="0" Height="37" VerticalAlignment="Top"/>
+                    <Label
+                        x:Name="_productionStagesManagementReleaseProductsDateTitleLabel" Margin="10,100,423,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Date" Grid.Column="0" Height="38" VerticalAlignment="Top"/>
+                    <Label
+                        x:Name="_productionStagesManagementReleaseProductsDateLabel" Margin="322,100,40,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="18:45 17.05.2026" Height="38" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="_productionStagesManagementReleaseProductsTypeComboBox" HorizontalAlignment="Left" Margin="322,56,0,0" VerticalAlignment="Top" Width="378" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
+                </Grid>
             </Grid>
         </Grid>
 

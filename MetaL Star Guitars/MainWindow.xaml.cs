@@ -1,97 +1,107 @@
-﻿using System.Windows;
+﻿using MetaL_Star_Guitars.DataBase.Connection;
+using MetaL_Star_Guitars.DataBase.Entities;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using MetaL_Star_Guitars.DataBase.Connection;
 
-namespace MetaL_Star_Guitars
+namespace MetaL_Star_Guitars;
+
+public partial class MainWindow : Window
 {
-    public partial class MainWindow : Window
+    DataBaseConnector dbConnector;
+    public MainWindow()
     {
-        DataBaseConnector dbConnector;
-        public MainWindow()
+        InitializeComponent();
+        dbConnector = new DataBaseConnector();
+    }
+    private void someButton_MouseEnterYellow(object sender, MouseEventArgs e)
+    {
+        if (sender is Label label) label.Foreground = Brushes.Yellow;
+    }
+    private void someButton_MouseLeaveWhite(object sender, MouseEventArgs e)
+    {
+        if (sender is Label label) label.Foreground = Brushes.White;
+    }
+
+    private void authorizationEnterButton_MouseDown(object sender, MouseButtonEventArgs e)
+    {
+        if (_authorizationPostComboBox.Text == "Warehouse manager")
         {
-            InitializeComponent();
-            dbConnector = new DataBaseConnector();
-        }
-        private void _authorizationEnterButton_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            var selectedRole = (_authorizationPostComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
             _authorizationGrid.Visibility = Visibility.Collapsed;
+            _warehouseManagementGrid.Visibility = Visibility.Visible;
+            warehouseManagementWriteOffToProductionButton_MouseDown(sender, e);
+        }
+        else if (_authorizationPostComboBox.Text == "Production stages manager")
+        {
+            _authorizationGrid.Visibility = Visibility.Collapsed;
+            _productionStagesManagementGrid.Visibility = Visibility.Visible;
+            productionStagesManagementReleaseProductsButton_MouseDown(sender, e);
+        }
+    }
+    private void warehouseManagementExitToMenuButton_MouseDown(object sender, MouseButtonEventArgs e)
+    {
+        _authorizationGrid.Visibility = Visibility.Visible;
+        _warehouseManagementGrid.Visibility = Visibility.Collapsed;
+    }
 
-            if (selectedRole == "Warehouse manager")
+    private void warehouseManagementWriteOffToProductionButton_MouseDown(object sender, MouseButtonEventArgs e)
+    {
+        _warehouseManagementWriteOffToProductionGrid.Visibility = Visibility.Visible;
+        _warehouseManagementTransfersGrid.Visibility = Visibility.Collapsed;
+        fillForOrderComboBox();
+        fillFromWarehouseComboBox();
+        //fillProductComboBox();
+    }
+    private void fillForOrderComboBox()
+    {
+        var orders = dbConnector.ProductionOrders.ToList();
+        _warehouseManagementWriteOffToProductionForOrderComboBox.ItemsSource = orders;
+        _warehouseManagementWriteOffToProductionForOrderComboBox.DisplayMemberPath = "";
+    }
+    private void fillFromWarehouseComboBox()
+    {
+        var warehouses = dbConnector.Warehouses.ToList();
+        _warehouseManagementWriteOffToProductionFromWarehouseComboBox.ItemsSource = warehouses;
+        _warehouseManagementWriteOffToProductionFromWarehouseComboBox.DisplayMemberPath = "WarehouseName";
+    }
+    private void fillProductComboBox()
+    {
+        var products = dbConnector.Products.
+            Join(dbConnector.Stocks,
+            s => s.ProductId, p => p.ProductId,
+            (p, s) => new
             {
-                _warehouseManagementModuleGrid.Visibility = Visibility.Visible;
-                _productionStagesManagementModuleGrid.Visibility = Visibility.Collapsed;
-
-                _warehouseTransfersSubGrid.Visibility = Visibility.Visible;
-                _warehouseWriteOffToProductionSubGrid.Visibility = Visibility.Collapsed;
-            }
-            else if (selectedRole == "Production stages manager")
+                ProductName = p.ProductName,
+                ProductId = s.ProductId,
+                WarehouseId = s.WarehouseId
+            }).Join(dbConnector.Warehouses,
+            w => w.WarehouseId, s => s.WarehouseId,
+            (w, s) => new
             {
-                _warehouseManagementModuleGrid.Visibility = Visibility.Collapsed;
-                _productionStagesManagementModuleGrid.Visibility = Visibility.Visible;
+                ProductName = w.ProductName,
+                ProductId = w.ProductId,
+                WarehouseName = s.WarehouseName
+            }).Where(w => w.WarehouseName == _warehouseManagementWriteOffToProductionFromWarehouseComboBox.Text).ToList();
 
-                _productionCreateOrderSubGrid.Visibility = Visibility.Visible;
-                _productionReleaseProductsSubGrid.Visibility = Visibility.Collapsed;
-            }
-        }
+        _warehouseManagementWriteOffToProductionFromWarehouseComboBox.ItemsSource = products;
+        _warehouseManagementWriteOffToProductionFromWarehouseComboBox.DisplayMemberPath = "ProductName";
+    }
+    private void warehouseManagementTransfersButton_MouseDown(object sender, MouseButtonEventArgs e)
+    {
+        _warehouseManagementWriteOffToProductionGrid.Visibility = Visibility.Collapsed;
+        _warehouseManagementTransfersGrid.Visibility = Visibility.Visible;
+    }
 
-        private void _warehouseNavigationTransfersButton_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            _warehouseTransfersSubGrid.Visibility = Visibility.Visible;
-            _warehouseWriteOffToProductionSubGrid.Visibility = Visibility.Collapsed;
-        }
+    private void productionStagesManagementExitToMenuButton_MouseDown(object sender, MouseButtonEventArgs e)
+    {
+        _productionStagesManagementGrid.Visibility = Visibility.Collapsed;
+        _authorizationGrid.Visibility = Visibility.Visible;
+    }
 
-        private void _warehouseNavigationWriteOffToProductionButton_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            _warehouseTransfersSubGrid.Visibility = Visibility.Collapsed;
-            _warehouseWriteOffToProductionSubGrid.Visibility = Visibility.Visible;
-        }
-        private void _productionNavigationCreateOrderButton_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            _productionCreateOrderSubGrid.Visibility = Visibility.Visible;
-            _productionReleaseProductsSubGrid.Visibility = Visibility.Collapsed;
-        }
-
-        private void _productionNavigationReleaseProductsButton_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            _productionCreateOrderSubGrid.Visibility = Visibility.Collapsed;
-            _productionReleaseProductsSubGrid.Visibility = Visibility.Visible;
-        }
-        private void _globalExitToMenuButton_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            _authorizationGrid.Visibility = Visibility.Visible;
-            _warehouseManagementModuleGrid.Visibility = Visibility.Collapsed;
-            _productionStagesManagementModuleGrid.Visibility = Visibility.Collapsed;
-        }
-
-        private void _globalButton_MouseEnterYellow(object sender, MouseEventArgs e)
-        {
-            if (sender is Label label) label.Foreground = Brushes.Yellow;
-        }
-
-        private void _globalButton_MouseLeaveWhite(object sender, MouseEventArgs e)
-        {
-            if (sender is Label label) label.Foreground = Brushes.White;
-        }
-
-        private void _warehouseTransferSubmitButton_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            dbConnector.CreateTransferOrder(new DataBase.Entities.transfer_order_entity         
-                {
-                    ShipmentDate = DateTime.UtcNow,//DateTime.Parse(_warehouseTransferShipmentDateValueLabel.Content.ToString()),
-                    EstimatedDeliveryDate = DateTime.UtcNow,//DateTime.Parse(_warehouseTransferReceiptDateValueLabel.Content.ToString()),
-                    Status = "Open",//_warehouseTransferStatusValueLabel.Content.ToString(),
-                    SenderWarehouseId = 1,//int.Parse(_warehouseTransferSenderWarehouseComboBox.SelectedValue.ToString()),
-                    RecipientWarehouseId = 2,//int.Parse(_warehouseTransferRecipientWarehouseComboBox.SelectedValue.ToString()),
-                    RouteId = 1//int.Parse(_warehouseTransferRouteComboBox.SelectedValue.ToString())
-                });
-        }
-
-        private void _warehouseWriteOffSubmitButton_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            
-        }
+    private void productionStagesManagementReleaseProductsButton_MouseDown(object sender, MouseButtonEventArgs e)
+    {
+        _productionStagesManagementReleaseProductsGrid.Visibility = Visibility.Visible;
+        _warehouseManagementWriteOffToProductionGrid.Visibility = Visibility.Collapsed;
     }
 }

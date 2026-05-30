@@ -15,4 +15,10 @@ public class product_entity
 
     [Column("price")]
     public decimal Price { get; set; }
+    //public List<product_using_entity> ProductUsings { get; set; } = new();
+    //public List<production_order_entity> ProductionOrders { get; set; } = new();
+    //public List<stock_adjustment_document_entity> StockAdjustmentDocumentEntities { get; set; } = new();
+    //public List<stock_entity> StockEntities { get; set; } = new();
+    //public List<transfer_order_content_entity> TransferOrderContentEntities { get; set;} = new();
+    //public List<production_stage_entity> ProductionStageEntities { get; set; } = new();
 }

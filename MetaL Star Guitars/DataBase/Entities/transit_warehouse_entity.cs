@@ -19,4 +19,5 @@ public class transit_warehouse_entity
 
     [Column("type_transit")]
     public string TypeTransit { get; set; } = null!;
+    //public List<route_entity> Routes { get; set; } = new();
 }

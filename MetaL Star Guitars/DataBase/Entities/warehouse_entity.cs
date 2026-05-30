@@ -16,4 +16,11 @@ public class warehouse_entity
 
     [Column("capacity")]
     public int Capacity { get; set; }
+    //public List<stock_adjustment_document_entity> StockAdjustmentDocuments { get; set; } = new();
+    //public List<stock_entity> StockEntities { get; set; } = new();
+    //public List<transfer_order_entity> SenderTransferOrderEntities { get; set; } = new();
+    //public List<transfer_order_entity> RecipientTransferOrderEntities { get; set; } = new();
+    //public List<production_order_entity> ProductionOrderEntities { get; set; } = new();
+    //public List<route_entity> StartRouteEntities { get; set; } = new();
+    //public List<route_entity> EndRouteEntities { get; set; } = new();
 }

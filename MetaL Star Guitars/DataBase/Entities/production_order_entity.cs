@@ -25,4 +25,8 @@ public class production_order_entity
 
     [Column("production_stage_id")]
     public int ProductionStageId { get; set; }
+    
+    //public production_stage_entity? ProductionStage { get; set; }
+    //public product_entity? Product { get; set; }
+    //public List<stock_adjustment_document_entity> StockAdjustmentDocumentEntities { get; set; } = new();
 }

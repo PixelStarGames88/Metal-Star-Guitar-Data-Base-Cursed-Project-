@@ -13,4 +13,7 @@ public class product_using_entity
 
     [Column("production_stage_id")]
     public int ProductionStageId { get; set; }
+
+    //public production_stage_entity? ProductionStage { get; set; }
+    //public product_entity? Product { get; set; }
 }

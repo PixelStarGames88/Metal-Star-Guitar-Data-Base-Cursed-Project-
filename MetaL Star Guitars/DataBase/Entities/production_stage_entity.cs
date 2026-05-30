@@ -17,4 +17,8 @@ public class production_stage_entity
 
     [Column("result_product_id")]
     public int ResultProductId { get; set; }
+    
+    //public product_entity? ResultProduct { get; set; }
+    //public List<production_order_entity> ProductionOrders { get; set; } = new();
+    //public List<product_using_entity> ProductUsings { get; set; } = new();
 }

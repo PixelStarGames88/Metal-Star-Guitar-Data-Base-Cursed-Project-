@@ -22,4 +22,6 @@ public class transfer_transaction_entity
 
     [Column("warehouse_id")]
     public int WarehouseId { get; set; }
+    //public transfer_order_entity? TransferOrder { get; set; }
+    //public warehouse_entity? Warehouse { get; set; }
 }

@@ -7,12 +7,6 @@ namespace MetaL_Star_Guitars.DataBase.Connection;
 
 class DataBaseConnector : DbContext
 {
-    // Включаем старое поведение для DateTime, чтобы Postgres не ругался на Kind=Unspecified
-    public DataBaseConnector()
-    {
-        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-    }
-
     public DbSet<production_order_entity> ProductionOrders { get; set; }
     public DbSet<product_entity> Products { get; set; }
     public DbSet<production_stage_entity> ProductionStages { get; set; }
@@ -35,20 +29,16 @@ class DataBaseConnector : DbContext
 
         string? connectionString = configuration.GetConnectionString("DefaultConnection");
 
-        optionsBuilder
-            .UseNpgsql(connectionString);
+        optionsBuilder.UseNpgsql(connectionString);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<product_using_entity>()
-            .HasKey(pu => new { pu.ProductId, pu.ProductionStageId });
+        modelBuilder.Entity<product_using_entity>().HasKey(pu => new { pu.ProductId, pu.ProductionStageId });
 
-        modelBuilder.Entity<stock_entity>()
-            .HasKey(s => new { s.WarehouseId, s.ProductId });
+        modelBuilder.Entity<stock_entity>().HasKey(s => new { s.WarehouseId, s.ProductId });
 
-        modelBuilder.Entity<transfer_order_content_entity>()
-            .HasKey(toc => new { toc.TransferOrderId, toc.ProductId });
+        modelBuilder.Entity<transfer_order_content_entity>().HasKey(toc => new { toc.TransferOrderId, toc.ProductId });
 
         base.OnModelCreating(modelBuilder);
     }
