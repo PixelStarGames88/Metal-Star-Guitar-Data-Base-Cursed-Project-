@@ -13,6 +13,4 @@ public class transfer_order_content_entity
 
     [Column("product_id")]
     public int ProductId { get; set; }
-    //public transfer_order_entity? TransferOrder { get; set; }
-   // public product_entity? Product { get; set; }
 }

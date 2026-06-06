@@ -46,9 +46,9 @@ namespace MetaL_Star_Guitars
             _productionStagesManagementReleaseProductsToWarehouseComboBox.Text = string.Empty;
             _productionStagesManagementReleaseProductsProductComboBox.Text = string.Empty;
             _productionStagesManagementReleaseProductsQuantityTextBox.Text = string.Empty;
-            _productionStagesManagementReleaseProductsTypeComboBox.Text = string.Empty; 
+            _productionStagesManagementReleaseProductsTypeComboBox.Text = string.Empty;
             _productionStagesManagementReleaseProductsLimitLabel.Content = (" < 0 pcs.");
-            _productionStagesManagementReleaseProductsDateLabel.Content = DateTime.Now.ToString("dd.MM.yyyy");
+            _productionStagesManagementReleaseProductsDateLabel.Content = DateTime.Now.ToString("HH\\:mm dd.MM.yyyy");
             int maxId = dbConnector.StockAdjustmentDocuments.Max(p => (int?)p.ProductId) ?? 0;
             _productionStagesManagementReleaseProductsDocumentIdLabel.Content = (maxId + 1).ToString();
         }

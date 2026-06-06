@@ -73,7 +73,7 @@ public partial class MainWindow : Window
         _productionStagesManagementCreateOrderProductComboBox.Text = string.Empty;
         _productionStagesManagementCreateOrderQuantityTextBox.Text = string.Empty;
         _productionStagesManagementCreateOrderLimitLabel.Content = (" < 0 pcs.");
-        _productionStagesManagementCreateOrderDateLabel.Content = DateTime.Now.ToString("dd.MM.yyyy");
+        _productionStagesManagementCreateOrderDateLabel.Content = DateTime.Now.ToString("HH\\:mm dd.MM.yyyy");
         int maxId = dbConnector.ProductionOrders.Max(p => (int?)p.ProductId) ?? 0;
         _productionStagesManagementCreateOrderDocumentIdLabel.Content = (maxId + 1).ToString();
     }
@@ -98,9 +98,9 @@ public partial class MainWindow : Window
             }).
             Where(n => n.WarehouseName == warehousename
             && n.ProductName == productname).Select(x => x.Quantity);
-        
+
         int productCount = product?.FirstOrDefault() ?? 0;
-        
+
         return productCount;
     }
 }

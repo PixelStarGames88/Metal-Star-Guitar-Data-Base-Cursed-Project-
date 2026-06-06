@@ -48,13 +48,4 @@ public partial class MainWindow : Window
         _productionStagesManagementGrid.Visibility = Visibility.Collapsed;
         _authorizationGrid.Visibility = Visibility.Visible;
     }
-
-    private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-
-    }
-
-
-
-
 }

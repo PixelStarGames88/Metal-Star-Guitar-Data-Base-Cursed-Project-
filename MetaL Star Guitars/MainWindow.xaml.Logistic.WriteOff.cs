@@ -47,7 +47,7 @@ public partial class MainWindow : Window
         _warehouseManagementWriteOffToProductionProductComboBox.Text = string.Empty;
         _warehouseManagementWriteOffToProductionQuantityTextBox.Text = string.Empty;
         _warehouseManagementWriteOffToProductionLimitLabel.Content = (" < 0 pcs.");
-        _warehouseManagementWriteOffToProductionDateLabel.Content = DateTime.Now.ToString("dd.MM.yyyy");
+        _warehouseManagementWriteOffToProductionDateLabel.Content = DateTime.Now.ToString("HH\\:mm dd.MM.yyyy");
         int maxId = dbConnector.StockAdjustmentDocuments.Max(p => (int?)p.ProductId) ?? 0;
         _warehouseManagementWriteOffToProductionDocumentIdLabel.Content = (maxId + 1).ToString();
     }
@@ -109,7 +109,7 @@ public partial class MainWindow : Window
         dynamic? selectedItem = _warehouseManagementWriteOffToProductionForOrderComboBox.SelectedItem;
         int orderid = selectedItem.ProductionOrder.ProductionOrderId;
         int quantity;
-        if(!int.TryParse(_warehouseManagementWriteOffToProductionQuantityTextBox.Text, out quantity))
+        if (!int.TryParse(_warehouseManagementWriteOffToProductionQuantityTextBox.Text, out quantity))
         {
             new MessageWindow("Error", "Enter integer number!").Show();
             return;

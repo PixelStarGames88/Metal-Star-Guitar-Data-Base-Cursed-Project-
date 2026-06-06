@@ -1,89 +1,222 @@
 ﻿using MetaL_Star_Guitars.DataBase.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace MetaL_Star_Guitars;
 
 public partial class MainWindow : Window
 {
-    private void warehouseManagementTransfersButton_MouseDown(object sender, MouseButtonEventArgs e)
-    {
-        _warehouseManagementWriteOffToProductionGrid.Visibility = Visibility.Collapsed;
-        _warehouseManagementTransfersGrid.Visibility = Visibility.Visible;
-        warehouseManagementTransfersCancelButton_MouseDown(sender, e);
-        fillRecepientWarehouseComboBox();
-        fillSenderWarehouseComboBox();
+    private void warehouseManagementTransfersButton_MouseDown(object sender, MouseButtonEventArgs e) 
+    { 
+        _warehouseManagementWriteOffToProductionGrid.Visibility = Visibility.Collapsed; 
+        _warehouseManagementTransfersGrid.Visibility = Visibility.Visible; 
+        warehouseManagementTransfersCancelButton_MouseDown(sender, e); 
+        fillRecepientWarehouseComboBox(); 
+        fillSenderWarehouseComboBox(); 
     }
-    private void fillRecepientWarehouseComboBox()
-    {
-        var warehouses = dbConnector.Warehouses.ToList();
-        _warehouseManagementTransfersRecipientWarehouseComboBox.ItemsSource = warehouses;
-        _warehouseManagementTransfersRecipientWarehouseComboBox.DisplayMemberPath = "WarehouseName";
+    private void fillRecepientWarehouseComboBox() 
+    { 
+        var warehouses = dbConnector.Warehouses.ToList(); 
+        _warehouseManagementTransfersRecipientWarehouseComboBox.ItemsSource = warehouses; 
+        _warehouseManagementTransfersRecipientWarehouseComboBox.DisplayMemberPath = "WarehouseName"; 
     }
-    private void fillSenderWarehouseComboBox()
-    {
-        var warehouses = dbConnector.Warehouses.ToList();
-        _warehouseManagementTransfersSenderWarehouseComboBox.ItemsSource = warehouses;
-        _warehouseManagementTransfersSenderWarehouseComboBox.DisplayMemberPath = "WarehouseName";
+    private void fillSenderWarehouseComboBox() 
+    { 
+        var warehouses = dbConnector.Warehouses.ToList(); 
+        _warehouseManagementTransfersSenderWarehouseComboBox.ItemsSource = warehouses; 
+        _warehouseManagementTransfersSenderWarehouseComboBox.DisplayMemberPath = "WarehouseName"; 
     }
     private void warehouseManagementTransfersCancelButton_MouseDown(object sender, MouseButtonEventArgs e)
-    {
-        _warehouseManagementTransfersSenderWarehouseComboBox.Text = string.Empty;
-        _warehouseManagementTransfersRecipientWarehouseComboBox.Text = string.Empty;
-        _warehouseManagementTransfersRouteComboBox.Text = string.Empty;
-        int maxId = dbConnector.TransferOrders.Max(p => (int?)p.TransferOrderId) ?? 0;
-        _warehouseManagementTransfersOrderIdLabel.Content = (maxId + 1).ToString();
-        _warehouseManagementTransfersShipmentDateLabel.Content = DateTime.Now.ToString("dd.MM.yyyy");
-        _warehouseManagementTransfersReceiptDateLabel.Content = "Choice route.";
-    }
+    { 
+        _warehouseManagementTransfersRouteComboBox.Text = string.Empty; 
+        _warehouseManagementTransfersSenderWarehouseComboBox.Text = string.Empty; 
+        _warehouseManagementTransfersRecipientWarehouseComboBox.Text = string.Empty; 
+        int maxId = dbConnector.TransferOrders.Max(p => (int?)p.TransferOrderId) ?? 0; 
+        _warehouseManagementTransfersOrderIdLabel.Content = (maxId + 1).ToString(); 
+        _warehouseManagementTransfersShipmentDateLabel.Content = DateTime.Now.ToString("HH\\:mm dd.MM.yyyy"); 
+        _warehouseManagementTransfersReceiptDateLabel.Content = "Choice route."; }
     private void warehouseManagementTransfersSenderWarehouseComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         string warehousename = null!;
 
-        if (_warehouseManagementTransfersSenderWarehouseComboBox.SelectedItem is warehouse_entity selectedWarehouse)
+        if (_warehouseManagementTransfersSenderWarehouseComboBox.SelectedItem
+            is warehouse_entity selectedWarehouse)
+        {
             warehousename = selectedWarehouse.WarehouseName;
+        }
 
-        var products = dbConnector.Products.
-        Join(dbConnector.Stocks,
-            p => p.ProductId, s => s.ProductId,
-            (p, s) => new { 
-                Product = p, 
-                Stock = s }
-            ).
-        Join(dbConnector.Warehouses,
+        var products = 
+        dbConnector.Products
+        .Join
+        (
+            dbConnector.Stocks,
+            p => p.ProductId,
+            s => s.ProductId,
+            (p, s) => new
+            {
+                Product = p,
+                Stock = s
+            }
+        )
+        .Join
+        (
+            dbConnector.Warehouses,
             combined => combined.Stock.WarehouseId,
             w => w.WarehouseId,
-            (combined, w) =>
-            new { 
-                combined.Product, 
+            (combined, w) => new
+            {
+                combined.Product,
                 Warehouse = w,
-                ProductDescribe = (combined.Product.ProductName + " (" + combined.Stock.Quantity.ToString() + " pcs.)")
-            }).
-        Where(x => x.Warehouse.WarehouseName == warehousename)
-    .Select(x => new { x.ProductDescribe, x.Product.ProductId })
-    .Distinct()
-    .ToList();
+                ProductDescribe =
+                    combined.Product.ProductName +
+                    " (" +
+                    combined.Stock.Quantity.ToString() +
+                    " pcs.)"
+            }
+        )
+        .Where(x => x.Warehouse.WarehouseName == warehousename)
+        .Select(x => new
+        {
+            x.ProductDescribe,
+            x.Product.ProductId,
+            IsSelected = false,
+            Quantity = 0
+        })
+        .Distinct()
+        .ToList();
 
         _contentListBox.ItemsSource = products;
-        
-        _warehouseManagementTransfersRouteComboBox.ItemsSource = null;
-        if (_warehouseManagementTransfersRecipientWarehouseComboBox.SelectedItem != null)
-            fillRoutesComboBox();
+
+        fillRoutesComboBox();
+
+        fillRoutesComboBox();
     }
 
     private void warehouseManagementTransfersRecipientWarehouseComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        _warehouseManagementTransfersRouteComboBox.ItemsSource = null;
-        if (_warehouseManagementTransfersSenderWarehouseComboBox.SelectedItem != null)
-            fillRoutesComboBox();
+        fillRoutesComboBox();
+    }
+    private void warehouseManagementTransfersToOrderButton_MouseDown(object sender, MouseButtonEventArgs e)
+    {
+        if (_warehouseManagementTransfersSenderWarehouseComboBox.SelectedItem == null)
+        {
+            new MessageWindow("Error", "Choice warehouse sender!").Show();
+            return;
+        }
+        if (_warehouseManagementTransfersRecipientWarehouseComboBox.SelectedItem == null)
+        {
+            new MessageWindow("Error", "Choice warehouse recepient!").Show();
+            return;
+        }
+        if (_warehouseManagementTransfersRouteComboBox.SelectedItem == null)
+        {
+            new MessageWindow("Error", "Choice route!").Show();
+            return;
+        }
+
+
+        int warehousenameSenderId = (_warehouseManagementTransfersSenderWarehouseComboBox.SelectedItem as warehouse_entity)?.WarehouseId ?? throw new NullReferenceException();
+        int warehousenameRecepirntId = (_warehouseManagementTransfersRecipientWarehouseComboBox.SelectedItem as warehouse_entity)?.WarehouseId ?? throw new NullReferenceException();
+        dynamic selectedItem = _warehouseManagementTransfersRouteComboBox.SelectedItem ?? throw new NullReferenceException();
+        string fianlRouteId = selectedItem.FinalRoute.FinalRouteId;
+        DateTime ShipmentDate = DateTime.UtcNow;
+        DateTime ReceiptDate = DateTime.UtcNow + selectedItem.FinalRoute.ScheduledTime;
+
+        dbConnector.TransferOrders.Add(new transfer_order_entity
+        {
+            SenderWarehouseId = warehousenameSenderId,
+            RecipientWarehouseId = warehousenameRecepirntId,
+            ShipmentDate = ShipmentDate,
+            EstimatedDeliveryDate = ReceiptDate,
+            Status = "Open",
+            FinalRouteId = fianlRouteId
+        });
+
+        dbConnector.SaveChanges();
+
+        int transferOrderId = int.Parse(_warehouseManagementTransfersOrderIdLabel.Content.ToString()!);
+
+        for (int i = 0; i < _contentListBox.Items.Count; i++)
+        {
+            ListBoxItem listBoxItem = (ListBoxItem)_contentListBox.ItemContainerGenerator.ContainerFromIndex(i);
+            
+            if (listBoxItem == null) continue;
+            
+            Grid grid = FindVisualChild<Grid>(listBoxItem);
+            
+            if (grid == null) continue;
+            
+            CheckBox checkBox = FindVisualChild<CheckBox>(grid);
+            
+            if (checkBox == null || checkBox.IsChecked != true) 
+                continue;
+
+            TextBlock textBlock = FindVisualChild<TextBlock>(grid);
+            
+            TextBox textBox = FindVisualChild<TextBox>(grid);
+            
+            if (textBlock == null || textBox == null) 
+                continue;
+            
+            string productName = textBlock.Text.Split('(')[0].Trim();
+            
+            int quantity;
+
+            if (!int.TryParse(textBox.Text, out quantity))
+            {
+                new MessageWindow("Error", "Enter integer number in text\nboxes for quantity!").Show();
+                return;
+            }
+
+            int productId = dbConnector.Products.First(x => x.ProductName == productName).ProductId;
+            dbConnector.TransferOrderContents.Add(
+                new transfer_order_content_entity
+                {
+                    TransferOrderId = transferOrderId,
+                    ProductId = productId,
+                    Quantity = quantity
+                });
+        }
+
+        dbConnector.SaveChanges();
+        warehouseManagementTransfersCancelButton_MouseDown(sender, e);
+        new MessageWindow("Message", "Your order was made successfully!").Show();
+    }
+    private T FindVisualChild<T>(DependencyObject obj) where T : DependencyObject
+    {
+        for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
+        {
+            DependencyObject child = VisualTreeHelper.GetChild(obj, i);
+
+            if (child is T t) return t;
+
+            T childOfChild = FindVisualChild<T>(child);
+
+            if (childOfChild != null)
+                return childOfChild;
+        }
+        return null!;
+    }
+    private void warehouseManagementTransfersRouteComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (_warehouseManagementTransfersRouteComboBox.SelectedItem == null)
+        {
+            _warehouseManagementTransfersReceiptDateLabel.Content = "Choice route.";
+            return;
+        }
+        dynamic selectedItem = _warehouseManagementTransfersRouteComboBox.SelectedItem ?? throw new NullReferenceException();
+        _warehouseManagementTransfersReceiptDateLabel.Content = (DateTime.Now + selectedItem.FinalRoute.ScheduledTime).ToString("HH\\:mm dd.MM.yyyy");
     }
     private void fillRoutesComboBox()
     {
-        
+        if (_warehouseManagementTransfersSenderWarehouseComboBox.SelectedItem == null ||
+            _warehouseManagementTransfersRecipientWarehouseComboBox.SelectedItem == null)
+            return;
+
+        _warehouseManagementTransfersRouteComboBox.ItemsSource = null;
+
         string warehousename_1 = (_warehouseManagementTransfersSenderWarehouseComboBox.SelectedItem as warehouse_entity)?.WarehouseName ?? throw new NullReferenceException();
         string warehousename_2 = (_warehouseManagementTransfersRecipientWarehouseComboBox.SelectedItem as warehouse_entity)?.WarehouseName ?? throw new NullReferenceException();
 
@@ -167,12 +300,10 @@ public partial class MainWindow : Window
                 }
             )
             .ToList().Where(
-            n => 
+            n =>
             n.Start_Route.RouteId == int.Parse(n.FinalRoute.FinalRouteId!.Split('_')[0]) &&
             n.Finish_Route.RouteId == int.Parse(n.FinalRoute.FinalRouteId.Split('_')[^1]) &&
             n.StartWarehouse.WarehouseName == warehousename_1 && n.FinishWarehouse.WarehouseName == warehousename_2);
-
-
 
         _warehouseManagementTransfersRouteComboBox.ItemsSource = FinalRoutes;
         _warehouseManagementTransfersRouteComboBox.DisplayMemberPath = "Discribe";
@@ -220,7 +351,7 @@ public partial class MainWindow : Window
                 FinalRouteId = (FinalRoute.route_1.RouteId.ToString()),
                 RouteId = FinalRoute.route_1.RouteId
             });
-            
+
         }
         dbConnector.SaveChanges();
     }
@@ -273,19 +404,19 @@ public partial class MainWindow : Window
             )
             .ToList();
 
-        
+
         foreach (var FinalRoute in FinalRoutes)
         {
-            if (dbConnector.FinalRoutes.Any(n => n.FinalRouteId == (FinalRoute.route_1.RouteId.ToString() + "_" + 
+            if (dbConnector.FinalRoutes.Any(n => n.FinalRouteId == (FinalRoute.route_1.RouteId.ToString() + "_" +
             FinalRoute.route_2.RouteId.ToString())))
                 continue;
 
-                dbConnector.FinalRoutes.Add(new final_route_entity
+            dbConnector.FinalRoutes.Add(new final_route_entity
             {
                 ScheduledTime = (FinalRoute.route_1.TravelTime + FinalRoute.route_2.TravelTime),
                 FinalRouteId = (FinalRoute.route_1.RouteId.ToString() + "_" + FinalRoute.route_2.RouteId.ToString()),
-                }
-            );
+            }
+        );
             dbConnector.RouteFinalRoutes.Add(new route_final_route_entity
             {
                 SequenceRoute = 1,
@@ -376,9 +507,9 @@ public partial class MainWindow : Window
 
         foreach (var FinalRoute in FinalRoutes)
         {
-            if (dbConnector.FinalRoutes.Any(n => n.FinalRouteId == 
-            (FinalRoute.route_1.RouteId.ToString() + "_" + 
-            FinalRoute.route_2.RouteId.ToString() + "_" + 
+            if (dbConnector.FinalRoutes.Any(n => n.FinalRouteId ==
+            (FinalRoute.route_1.RouteId.ToString() + "_" +
+            FinalRoute.route_2.RouteId.ToString() + "_" +
             FinalRoute.route_3.RouteId.ToString())))
                 continue;
 

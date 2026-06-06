@@ -4,12 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MetaL Star Guitars" Height="372" Width="909" Background="#FF252525">
+        Title="MetaL Star Guitars" Height="227" Width="497" Background="#FF252525">
 
-    <Grid x:Name="_mainGrid">
+    <Grid x:Name="_mainGrid" Margin="0,0,0,2">
 
-        <Label x:Name="_authorizationWelcomeLabel" Content="Welcome! Enter your account." HorizontalAlignment="Center" Margin="0,36,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black" Height="244" Width="889"/>
-        <Label x:Name="_authorizationEnterButton" Content="Got It" HorizontalAlignment="Center" Margin="0,285,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="authorizationEnterButton_MouseDown"/>
+        <Label x:Name="_authorizationWelcomeLabel" Content="Welcome! Enter your account." Margin="0,10,0,0" FontSize="22" Foreground="White" FontFamily="Arial Black" HorizontalAlignment="Center" Width="478" Height="143" VerticalAlignment="Top"/>
+        <Label x:Name="_authorizationEnterButton" Content="Got It" Margin="0,0,0,10" FontSize="22" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="authorizationEnterButton_MouseDown" HorizontalAlignment="Center" Width="78" Height="35" VerticalAlignment="Bottom"/>
 
     </Grid>
 </Window>

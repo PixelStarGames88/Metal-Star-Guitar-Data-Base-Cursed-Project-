@@ -38,14 +38,14 @@
                 <ComboBox x:Name="_warehouseManagementTransfersRecipientWarehouseComboBox" HorizontalAlignment="Left" Margin="332,164,0,0" VerticalAlignment="Top" Width="449" Background="#FF161616" FontSize="22" FontFamily="Arial Black" SelectionChanged="warehouseManagementTransfersRecipientWarehouseComboBox_SelectionChanged"/>
 
                 <Label x:Name="_warehouseManagementTransfersRouteLabel" Content="Route" Margin="10,204,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black" HorizontalAlignment="Left" Width="95"/>
-                <ComboBox x:Name="_warehouseManagementTransfersRouteComboBox" HorizontalAlignment="Left" Margin="332,207,0,0" VerticalAlignment="Top" Width="449" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
+                <ComboBox x:Name="_warehouseManagementTransfersRouteComboBox" HorizontalAlignment="Left" Margin="332,207,0,0" VerticalAlignment="Top" Width="449" Background="#FF161616" FontSize="22" FontFamily="Arial Black" SelectionChanged="warehouseManagementTransfersRouteComboBox_SelectionChanged"/>
 
                 <Label x:Name="_warehouseManagementTransfersContentLabel" Content="Content" Margin="10,247,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black" HorizontalAlignment="Left" Width="122"/>
                 <Grid x:Name="_warehouseManagementTransfersInfoGrid" Margin="837,122,120,195" Background="#FF111111">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Label x:Name="_warehouseManagementTransfersToOrderButton" Content="To order" FontSize="36" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" Margin="10,0,0,2" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="186" Height="52" VerticalAlignment="Bottom">
+                    <Label x:Name="_warehouseManagementTransfersToOrderButton" Content="To order" FontSize="36" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" Margin="10,0,0,2" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="186" Height="52" VerticalAlignment="Bottom" MouseDown="warehouseManagementTransfersToOrderButton_MouseDown">
                         <Label.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -93,8 +93,8 @@
                 </ListBox>
             </Grid>
 
-            <Grid x:Name="_warehouseManagementWriteOffToProductionGrid" Background="#FF1F1F1F" Margin="0,58,0,-5" d:IsHidden="True">
-                <Label x:Name="_warehouseManagementWriteOffToProductionTitleLabel" Content="Decommissioning products into production" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black" Height="56"/>
+            <Grid x:Name="_warehouseManagementWriteOffToProductionGrid" Background="#FF1F1F1F" Margin="0,58,0,-5">
+                <Label x:Name="_warehouseManagementWriteOffToProductionTitleLabel" Content="Write-off products into production" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black" Height="56" HorizontalAlignment="Left" Width="861"/>
 
                 <Label x:Name="_warehouseManagementWriteOffToProductionForOrderLabel" Content="For order" HorizontalAlignment="Left" Margin="10,118,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
                 <ComboBox x:Name="_warehouseManagementWriteOffToProductionForOrderComboBox" HorizontalAlignment="Left" Margin="332,121,0,0" VerticalAlignment="Top" Width="379" Background="White" FontSize="22" FontFamily="Arial Black" Foreground="Black"/>
@@ -127,6 +127,45 @@
                     <Label
                 x:Name="_warehouseManagementWriteOffToProductionDateLabel" Margin="322,0,0,176" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="18:45 17.05.2026" Height="38" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="378"/>
                 </Grid>
+                <ListBox x:Name="_writeOffDocumentsListBox" Margin="750,66,0,74" Background="#FF111111" Foreground="White" BorderBrush="#FF111111" FontFamily="Arial Black" d:ItemsSource="{d:SampleData ItemCount=5}" HorizontalAlignment="Left" Width="740" IsSynchronizedWithCurrentItem="False">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Width="725">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="280" />
+                                </Grid.ColumnDefinitions>
+
+
+                                <TextBlock Grid.Column="0" 
+                                    Text="{Binding Describe}" 
+                                    FontSize="18" Margin="0,0,-320,0"
+                           
+                                    TextTrimming="CharacterEllipsis" 
+
+                                    ToolTip="{Binding Describe}" Grid.ColumnSpan="2" />
+
+                                <TextBlock Grid.Column="1" 
+                                    Text="{Binding Delete}" 
+                                    FontSize="18" Margin="600,0,-387,0"
+                                    MouseLeave="someButton_MouseLeaveWhite" 
+                                    MouseEnter="someButton_MouseEnterYellow"
+                                    TextTrimming="CharacterEllipsis" 
+
+                                    ToolTip="{Binding Delete}" />
+
+                                <TextBlock Grid.Column="2" 
+                                    Text="{Binding Edit}" 
+                                    FontSize="18" Margin="677,0,-443,0"
+                                    MouseLeave="someButton_MouseLeaveWhite" 
+                                    MouseEnter="someButton_MouseEnterYellow"
+                                    TextTrimming="CharacterEllipsis" 
+
+                                    ToolTip="{Binding Delete}" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </Grid>
         </Grid>
 
