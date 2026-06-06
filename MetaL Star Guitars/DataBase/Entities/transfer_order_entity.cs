@@ -27,7 +27,7 @@ public class transfer_order_entity
     public int SenderWarehouseId { get; set; }
 
     [Column("route_id")]
-    public int RouteId { get; set; }
+    public string? FinalRouteId { get; set; }
     //public route_entity? Route { get; set; }
     //public warehouse_entity? RecipientWarehouse { get; set; }
     //public warehouse_entity? SenderWarehouse { get; set; }

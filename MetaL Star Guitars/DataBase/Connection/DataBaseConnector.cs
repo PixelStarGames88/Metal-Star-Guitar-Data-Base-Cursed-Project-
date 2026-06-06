@@ -19,6 +19,9 @@ class DataBaseConnector : DbContext
     public DbSet<transfer_transaction_entity> TransferTransactions { get; set; }
     public DbSet<transit_warehouse_entity> TransitWarehouses { get; set; }
     public DbSet<warehouse_entity> Warehouses { get; set; }
+    public DbSet<final_route_entity> FinalRoutes { get; set; }
+    public DbSet<route_final_route_entity> RouteFinalRoutes { get; set; }
+    public DbSet<transit_warehouse_route_entity> TransitWarehouseRoutes { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -34,11 +37,20 @@ class DataBaseConnector : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<product_using_entity>().HasKey(pu => new { pu.ProductId, pu.ProductionStageId });
+        modelBuilder.Entity<product_using_entity>()
+    .HasKey(pu => new { pu.ProductId, pu.ProductionStageId });
 
-        modelBuilder.Entity<stock_entity>().HasKey(s => new { s.WarehouseId, s.ProductId });
+        modelBuilder.Entity<stock_entity>()
+            .HasKey(s => new { s.WarehouseId, s.ProductId });
 
-        modelBuilder.Entity<transfer_order_content_entity>().HasKey(toc => new { toc.TransferOrderId, toc.ProductId });
+        modelBuilder.Entity<transfer_order_content_entity>()
+            .HasKey(toc => new { toc.TransferOrderId, toc.ProductId });
+
+        modelBuilder.Entity<route_final_route_entity>()
+            .HasKey(rfr => new { rfr.FinalRouteId, rfr.RouteId });
+
+        modelBuilder.Entity<transit_warehouse_route_entity>()
+            .HasKey(twr => new { twr.TransitWarehouseId, twr.RouteId });
 
         base.OnModelCreating(modelBuilder);
     }

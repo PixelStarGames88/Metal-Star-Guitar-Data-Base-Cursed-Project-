@@ -8,7 +8,7 @@
 
     <Grid x:Name="_mainGrid">
 
-        <Grid x:Name="_authorizationGrid">
+        <Grid x:Name="_authorizationGrid" d:IsHidden="True">
             <Label x:Name="_authorizationWelcomeLabel" Content="Welcome! Enter your account." HorizontalAlignment="Center" Margin="0,112,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black"/>
             <Label x:Name="_authorizationPostLabel" Content="Enter as..." Margin="590,246,778,0" VerticalAlignment="Top" FontSize="22" Foreground="White" FontFamily="Arial Black"/>
             <ComboBox x:Name="_authorizationPostComboBox" Margin="590,281,590,0" Background="#FF161616" Foreground="Black" FontFamily="Arial Black" FontSize="22" SelectedIndex="0" Height="31" VerticalAlignment="Top">
@@ -18,14 +18,14 @@
             <Label x:Name="_authorizationEnterButton" Content="Enter" HorizontalAlignment="Center" Margin="0,490,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="authorizationEnterButton_MouseDown"/>
         </Grid>
 
-        <Grid x:Name="_warehouseManagementGrid" Visibility="Collapsed">
+        <Grid x:Name="_warehouseManagementGrid">
             <Grid x:Name="_warehouseManagementNavigationGrid" Height="53" VerticalAlignment="Top">
                 <Label x:Name="_warehouseManagementTransfersButton" Content="Transfers" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="15,8,0,0" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="warehouseManagementTransfersButton_MouseDown" HorizontalAlignment="Left" Width="135" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
                 <Label x:Name="_warehouseManagementWriteOffToProductionButton" Content="Write-off to Production" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="warehouseManagementWriteOffToProductionButton_MouseDown" Width="310" HorizontalAlignment="Left" Margin="160,8,0,0" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
                 <Label x:Name="_warehouseManagementExitToMenuButton" Content="Exit to menu" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" Margin="475,8,0,0" MouseDown="warehouseManagementExitToMenuButton_MouseDown" HorizontalAlignment="Left" Width="176" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
             </Grid>
 
-            <Grid x:Name="_warehouseManagementTransfersGrid" Background="#FF1F1F1F" Margin="0,58,0,-5" Visibility="Collapsed">
+            <Grid x:Name="_warehouseManagementTransfersGrid" Background="#FF1F1F1F" Margin="0,58,0,-5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
@@ -35,7 +35,7 @@
                 <ComboBox x:Name="_warehouseManagementTransfersSenderWarehouseComboBox" HorizontalAlignment="Left" Margin="332,121,0,0" VerticalAlignment="Top" Width="449" Background="#FF161616" FontSize="22" FontFamily="Arial Black" SelectionChanged="warehouseManagementTransfersSenderWarehouseComboBox_SelectionChanged"/>
 
                 <Label x:Name="_warehouseManagementTransfersRecipientWarehouseLabel" Content="Recipient warehouse" Margin="10,161,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black" HorizontalAlignment="Left" Width="295"/>
-                <ComboBox x:Name="_warehouseManagementTransfersRecipientWarehouseComboBox" HorizontalAlignment="Left" Margin="332,164,0,0" VerticalAlignment="Top" Width="449" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
+                <ComboBox x:Name="_warehouseManagementTransfersRecipientWarehouseComboBox" HorizontalAlignment="Left" Margin="332,164,0,0" VerticalAlignment="Top" Width="449" Background="#FF161616" FontSize="22" FontFamily="Arial Black" SelectionChanged="warehouseManagementTransfersRecipientWarehouseComboBox_SelectionChanged"/>
 
                 <Label x:Name="_warehouseManagementTransfersRouteLabel" Content="Route" Margin="10,204,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black" HorizontalAlignment="Left" Width="95"/>
                 <ComboBox x:Name="_warehouseManagementTransfersRouteComboBox" HorizontalAlignment="Left" Margin="332,207,0,0" VerticalAlignment="Top" Width="449" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
@@ -93,7 +93,7 @@
                 </ListBox>
             </Grid>
 
-            <Grid x:Name="_warehouseManagementWriteOffToProductionGrid" Background="#FF1F1F1F" Margin="0,58,0,-5">
+            <Grid x:Name="_warehouseManagementWriteOffToProductionGrid" Background="#FF1F1F1F" Margin="0,58,0,-5" d:IsHidden="True">
                 <Label x:Name="_warehouseManagementWriteOffToProductionTitleLabel" Content="Decommissioning products into production" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black" Height="56"/>
 
                 <Label x:Name="_warehouseManagementWriteOffToProductionForOrderLabel" Content="For order" HorizontalAlignment="Left" Margin="10,118,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
