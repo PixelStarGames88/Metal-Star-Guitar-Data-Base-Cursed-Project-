@@ -36,7 +36,9 @@ public partial class MainWindow : Window
         int maxId = dbConnector.TransferOrders.Max(p => (int?)p.TransferOrderId) ?? 0; 
         _warehouseManagementTransfersOrderIdLabel.Content = (maxId + 1).ToString(); 
         _warehouseManagementTransfersShipmentDateLabel.Content = DateTime.Now.ToString("HH\\:mm dd.MM.yyyy"); 
-        _warehouseManagementTransfersReceiptDateLabel.Content = "Choice route."; }
+        _warehouseManagementTransfersReceiptDateLabel.Content = "Choice route.";
+        fill_makingOrderDocumentsListBox();
+    }
     private void warehouseManagementTransfersSenderWarehouseComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         string warehousename = null!;
@@ -111,26 +113,42 @@ public partial class MainWindow : Window
         }
 
 
+        int transferOrderId = int.Parse(_warehouseManagementTransfersOrderIdLabel.Content.ToString()!);
         int warehousenameSenderId = (_warehouseManagementTransfersSenderWarehouseComboBox.SelectedItem as warehouse_entity)?.WarehouseId ?? throw new NullReferenceException();
         int warehousenameRecepirntId = (_warehouseManagementTransfersRecipientWarehouseComboBox.SelectedItem as warehouse_entity)?.WarehouseId ?? throw new NullReferenceException();
         dynamic selectedItem = _warehouseManagementTransfersRouteComboBox.SelectedItem ?? throw new NullReferenceException();
         string fianlRouteId = selectedItem.FinalRoute.FinalRouteId;
-        DateTime ShipmentDate = DateTime.UtcNow;
-        DateTime ReceiptDate = DateTime.UtcNow + selectedItem.FinalRoute.ScheduledTime;
 
-        dbConnector.TransferOrders.Add(new transfer_order_entity
+        if (_warehouseManagementTransfersToOrderButton.Content.ToString() == "Save")
         {
-            SenderWarehouseId = warehousenameSenderId,
-            RecipientWarehouseId = warehousenameRecepirntId,
-            ShipmentDate = ShipmentDate,
-            EstimatedDeliveryDate = ReceiptDate,
-            Status = "Open",
-            FinalRouteId = fianlRouteId
-        });
+            var existingOrder = dbConnector.TransferOrders.FirstOrDefault(x => x.TransferOrderId == transferOrderId);
+            if (existingOrder != null)
+            {
+                existingOrder.SenderWarehouseId = warehousenameSenderId;
+                existingOrder.RecipientWarehouseId = warehousenameRecepirntId;
+                existingOrder.FinalRouteId = fianlRouteId;
+            }
+
+            var oldContent = dbConnector.TransferOrderContents.Where(x => x.TransferOrderId == transferOrderId).ToList();
+            dbConnector.TransferOrderContents.RemoveRange(oldContent);
+        }
+        else
+        {
+            DateTime ShipmentDate = DateTime.UtcNow;
+            DateTime ReceiptDate = DateTime.UtcNow + selectedItem.FinalRoute.ScheduledTime;
+
+            dbConnector.TransferOrders.Add(new transfer_order_entity
+            {
+                SenderWarehouseId = warehousenameSenderId,
+                RecipientWarehouseId = warehousenameRecepirntId,
+                ShipmentDate = ShipmentDate,
+                EstimatedDeliveryDate = ReceiptDate,
+                Status = "Open",
+                FinalRouteId = fianlRouteId
+            });
+        }
 
         dbConnector.SaveChanges();
-
-        int transferOrderId = int.Parse(_warehouseManagementTransfersOrderIdLabel.Content.ToString()!);
 
         for (int i = 0; i < _contentListBox.Items.Count; i++)
         {
@@ -203,6 +221,147 @@ public partial class MainWindow : Window
         dynamic selectedItem = _warehouseManagementTransfersRouteComboBox.SelectedItem ?? throw new NullReferenceException();
         _warehouseManagementTransfersReceiptDateLabel.Content = (DateTime.Now + selectedItem.FinalRoute.ScheduledTime).ToString("HH\\:mm dd.MM.yyyy");
     }
+
+    private void fill_makingOrderDocumentsListBox()
+    {
+        // Безопасно вытягиваем заказы. 
+        // Если таблица пустая, ToList() вернет пустой список без исключений.
+        var orders = dbConnector.TransferOrders.ToList();
+        _makingOrderDocumentsListBox.ItemsSource = orders;
+    }
+
+    private void DeleteOrder_Click(object sender, MouseButtonEventArgs e)
+    {
+        // Твой классический каст через dynamic из контекста элемента строки
+        dynamic selectedItem = (sender as TextBlock)?.DataContext ?? throw new NullReferenceException();
+        int transferOrderId = selectedItem.TransferOrderId;
+
+        // Сначала удаляем табличную часть, чтобы не нарушить связи Foreign Key
+        var contentToDelete = dbConnector.TransferOrderContents
+            .Where(x => x.TransferOrderId == transferOrderId).ToList();
+
+        if (contentToDelete.Count > 0)
+        {
+            dbConnector.TransferOrderContents.RemoveRange(contentToDelete);
+        }
+
+        // Удаляем саму шапку заказа
+        var orderToDelete = dbConnector.TransferOrders
+            .FirstOrDefault(x => x.TransferOrderId == transferOrderId);
+
+        if (orderToDelete != null)
+        {
+            dbConnector.TransferOrders.Remove(orderToDelete);
+        }
+
+        dbConnector.SaveChanges();
+
+        // Обновляем журнал и сбрасываем форму ввода в дефолтное состояние
+        fill_makingOrderDocumentsListBox();
+        warehouseManagementTransfersCancelButton_MouseDown(sender, e);
+
+        new MessageWindow("Message", "Order deleted successfully!").Show();
+    }
+
+    private void EditOrder_Click(object sender, MouseButtonEventArgs e)
+    {
+        // Вытаскиваем редактируемый заказ
+        dynamic selectedItem = (sender as TextBlock)?.DataContext ?? throw new NullReferenceException();
+        int transferOrderId = selectedItem.TransferOrderId;
+
+        var order = dbConnector.TransferOrders
+            .FirstOrDefault(x => x.TransferOrderId == transferOrderId);
+
+        if (order == null) return;
+
+        // 1. Выставляем склады в комбобоксах
+        _warehouseManagementTransfersSenderWarehouseComboBox.SelectedItem =
+            dbConnector.Warehouses.FirstOrDefault(x => x.WarehouseId == order.SenderWarehouseId);
+
+        _warehouseManagementTransfersRecipientWarehouseComboBox.SelectedItem =
+            dbConnector.Warehouses.FirstOrDefault(x => x.WarehouseId == order.RecipientWarehouseId);
+
+        // 2. Принудительно генерируем маршруты для этих складов и выбираем нужный
+        fillRoutesComboBox();
+        _warehouseManagementTransfersRouteComboBox.SelectedItem =
+            _warehouseManagementTransfersRouteComboBox.Items.Cast<dynamic>()
+            .FirstOrDefault(x => x.FinalRoute.FinalRouteId == order.FinalRouteId);
+
+        // 3. Заполняем инфо-панель данными из базы
+        _warehouseManagementTransfersOrderIdLabel.Content = order.TransferOrderId.ToString();
+        _warehouseManagementTransfersShipmentDateLabel.Content = order.ShipmentDate.ToString("HH\\:mm dd.MM.yyyy");
+
+        // Подтягиваем время в пути из выбранного маршрута
+        dynamic selectedRoute = _warehouseManagementTransfersRouteComboBox.SelectedItem;
+        if (selectedRoute != null)
+        {
+            _warehouseManagementTransfersReceiptDateLabel.Content =
+                (order.ShipmentDate + (TimeSpan)selectedRoute.FinalRoute.ScheduledTime).ToString("HH\\:mm dd.MM.yyyy");
+        }
+
+        // Меняем режим кнопки на "Save"
+        _warehouseManagementTransfersToOrderButton.Content = "Save";
+
+        // 4. САМОЕ ИНТЕРЕСНОЕ: Специфическое заполнение состава с сохранением галочек и количества
+        string senderWarehouseName = ((warehouse_entity)_warehouseManagementTransfersSenderWarehouseComboBox.SelectedItem).WarehouseName;
+
+        // Вытаскиваем то, что сейчас лежит в этом заказе
+        var currentOrderContent = dbConnector.TransferOrderContents
+            .Where(x => x.TransferOrderId == transferOrderId)
+            .ToList();
+
+        // Джоиним остатки склада, но мапим их с учетом позиций заказа
+        var productsWithOrderData = dbConnector.Products
+            .Join(dbConnector.Stocks, p => p.ProductId, s => s.ProductId, (p, s) => new { Product = p, Stock = s })
+            .Join(dbConnector.Warehouses, combined => combined.Stock.WarehouseId, w => w.WarehouseId,
+            (combined, w) => new
+            {
+                combined.Product,
+                Warehouse = w,
+                ProductDescribe = combined.Product.ProductName + " (" + combined.Stock.Quantity.ToString() + " pcs.)"
+            })
+            .Where(x => x.Warehouse.WarehouseName == senderWarehouseName)
+            .ToList() // Переходим в Memory, чтобы сопоставить с локальным списком заказа
+            .Select(x => {
+                // Ищем, есть ли данный товар в редактируемом заказе
+                var orderPosition = currentOrderContent.FirstOrDefault(co => co.ProductId == x.Product.ProductId);
+
+                return new
+                {
+                    x.ProductDescribe,
+                    x.Product.ProductId,
+                    IsSelected = orderPosition != null,          // Если есть в заказе — true
+                    Quantity = orderPosition?.Quantity ?? 0      // Если есть в заказе — ставим его кол-во, иначе 0
+                };
+            })
+            .Distinct()
+            .ToList();
+
+        // Пихаем это в ItemSource левого списка
+        _contentListBox.ItemsSource = productsWithOrderData;
+
+        // 5. Форсируем WPF проставить UI-элементы (галочки и текст), так как анонимные типы автоматом не забиндит назад в TextBox.Text
+        _contentListBox.UpdateLayout(); // Даем WPF время построить контейнеры элементов
+
+        for (int i = 0; i < _contentListBox.Items.Count; i++)
+        {
+            ListBoxItem listBoxItem = (ListBoxItem)_contentListBox.ItemContainerGenerator.ContainerFromIndex(i);
+            if (listBoxItem == null) continue;
+
+            Grid grid = FindVisualChild<Grid>(listBoxItem);
+            if (grid == null) continue;
+
+            CheckBox checkBox = FindVisualChild<CheckBox>(grid);
+            TextBox textBox = FindVisualChild<TextBox>(grid);
+
+            dynamic itemData = _contentListBox.Items[i];
+
+            if (checkBox != null) checkBox.IsChecked = itemData.IsSelected;
+            if (textBox != null) textBox.Text = itemData.Quantity > 0 ? itemData.Quantity.ToString() : string.Empty;
+        }
+    }
+
+
     private void fillRoutesComboBox()
     {
         if (_warehouseManagementTransfersSenderWarehouseComboBox.SelectedItem == null ||

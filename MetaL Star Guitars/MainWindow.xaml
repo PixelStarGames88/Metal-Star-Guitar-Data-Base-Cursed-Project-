@@ -8,7 +8,7 @@
 
     <Grid x:Name="_mainGrid">
 
-        <Grid x:Name="_authorizationGrid" d:IsHidden="True">
+        <Grid x:Name="_authorizationGrid">
             <Label x:Name="_authorizationWelcomeLabel" Content="Welcome! Enter your account." HorizontalAlignment="Center" Margin="0,112,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black"/>
             <Label x:Name="_authorizationPostLabel" Content="Enter as..." Margin="590,246,778,0" VerticalAlignment="Top" FontSize="22" Foreground="White" FontFamily="Arial Black"/>
             <ComboBox x:Name="_authorizationPostComboBox" Margin="590,281,590,0" Background="#FF161616" Foreground="Black" FontFamily="Arial Black" FontSize="22" SelectedIndex="0" Height="31" VerticalAlignment="Top">
@@ -18,7 +18,7 @@
             <Label x:Name="_authorizationEnterButton" Content="Enter" HorizontalAlignment="Center" Margin="0,490,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="authorizationEnterButton_MouseDown"/>
         </Grid>
 
-        <Grid x:Name="_warehouseManagementGrid">
+        <Grid x:Name="_warehouseManagementGrid" Visibility="Collapsed">
             <Grid x:Name="_warehouseManagementNavigationGrid" Height="53" VerticalAlignment="Top">
                 <Label x:Name="_warehouseManagementTransfersButton" Content="Transfers" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="15,8,0,0" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="warehouseManagementTransfersButton_MouseDown" HorizontalAlignment="Left" Width="135" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
                 <Label x:Name="_warehouseManagementWriteOffToProductionButton" Content="Write-off to Production" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="warehouseManagementWriteOffToProductionButton_MouseDown" Width="310" HorizontalAlignment="Left" Margin="160,8,0,0" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
@@ -41,7 +41,7 @@
                 <ComboBox x:Name="_warehouseManagementTransfersRouteComboBox" HorizontalAlignment="Left" Margin="332,169,0,0" VerticalAlignment="Top" Width="387" Background="#FF161616" FontSize="22" FontFamily="Arial Black" SelectionChanged="warehouseManagementTransfersRouteComboBox_SelectionChanged"/>
 
                 <Label x:Name="_warehouseManagementTransfersContentLabel" Content="Content" Margin="10,209,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black" HorizontalAlignment="Left" Width="122"/>
-                <Grid x:Name="_warehouseManagementTransfersInfoGrid" Margin="10,332,781,35" Background="#FF111111">
+                <Grid x:Name="_warehouseManagementTransfersInfoGrid" Margin="10,0,0,35" Background="#FF111111" Height="264" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="709">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
@@ -68,7 +68,7 @@
                 <ListBox x:Name="_contentListBox" Margin="332,209,0,315" Background="#FF111111" Foreground="White" BorderBrush="#FF111111" HorizontalAlignment="Left" Width="387" FontFamily="Arial Black" d:ItemsSource="{d:SampleData ItemCount=5}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Width="343">
+                            <Grid Width="356">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="280" />
@@ -79,24 +79,24 @@
 
                                 <TextBlock Grid.Column="1" 
                            Text="{Binding ProductDescribe}" 
-                           FontSize="18" Margin="0,0,-130,0"
+                           FontSize="18" Margin="0,0,12,0"
                            
                            TextTrimming="CharacterEllipsis" 
 
                            ToolTip="{Binding ProductDescribe}" />
 
                                 <TextBox Grid.Column="1" 
-                         HorizontalContentAlignment="Center" FontSize="18" Margin="338,0,-116,0"/>
+                         HorizontalContentAlignment="Center" FontSize="18" Margin="273,0,-51,0"/>
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
                 <ListBox x:Name="_makingOrderDocumentsListBox"
-                    Margin="743,80,21,0"
+                    Margin="743,80,21,35"
                     Background="#FF111111"
                     Foreground="White"
                     BorderBrush="#FF111111"
-                    FontFamily="Arial Black" RenderTransformOrigin="0.5,0.5" Height="516" VerticalAlignment="Top">
+                    FontFamily="Arial Black" RenderTransformOrigin="0.5,0.5">
                     <ListBox.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -144,16 +144,17 @@
 
                                             <TextBlock FontSize="18"
                                                 FontWeight="Bold"
-                                                Text="{Binding DocumentType}" />
+                                                Text="{Binding Status}" />
 
                                             <TextBlock FontSize="14"
-                                                Text="{Binding StockAdjustmentDocumentId, StringFormat=ID: \{0\}}" />
+                                                Text="{Binding TransferOrderId, StringFormat=ID: \{0\}}" />
+
+
 
                                             <TextBlock FontSize="14"
-                                                Text="{Binding Quantity, StringFormat=Quantity: \{0\}}" />
-
+                                                Text="{Binding ShipmentDate, StringFormat=Date: \{0:dd.MM.yyyy\}}" />
                                             <TextBlock FontSize="14"
-                                                Text="{Binding IssueDate, StringFormat=Date: \{0:dd.MM.yyyy\}}" />
+                                                Text="{Binding EstimatedDeliveryDate, StringFormat=Date: \{0:dd.MM.yyyy\}}" />
 
                                         </StackPanel>
 
@@ -166,7 +167,7 @@
                                                 Cursor="Hand"
                                                 FontSize="18"
                                                 Margin="0,0,15,0"
-                                                MouseLeftButtonDown="DeleteDocument_Click">
+                                                MouseLeftButtonDown="DeleteOrder_Click">
 
                                                 <TextBlock.Style>
                                                     <Style TargetType="{x:Type TextBlock}">
@@ -187,7 +188,7 @@
                                             <TextBlock Text="Edit"
                                                 Cursor="Hand"
                                                 FontSize="18"
-                                                MouseLeftButtonDown="EditDocument_Click">
+                                                MouseLeftButtonDown="EditOrder_Click">
 
                                                 <TextBlock.Style>
                                                     <Style TargetType="{x:Type TextBlock}">
@@ -213,7 +214,7 @@
                 </ListBox>
             </Grid>
 
-            <Grid x:Name="_warehouseManagementWriteOffToProductionGrid" Background="#FF1F1F1F" Margin="0,58,0,-5" d:IsHidden="True">
+            <Grid x:Name="_warehouseManagementWriteOffToProductionGrid" Background="#FF1F1F1F" Margin="0,58,0,-5" Visibility="Collapsed">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
