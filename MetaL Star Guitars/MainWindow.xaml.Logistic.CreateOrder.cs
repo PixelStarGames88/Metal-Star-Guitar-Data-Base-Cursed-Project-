@@ -69,11 +69,7 @@ public partial class MainWindow : Window
             {
                 combined.Product,
                 Warehouse = w,
-                ProductDescribe =
-                    combined.Product.ProductName +
-                    " (" +
-                    combined.Stock.Quantity.ToString() +
-                    " pcs.)"
+                ProductDescribe = combined.Product.ProductName + " (" + combined.Stock.Quantity.ToString() + " pcs.)"
             }
         )
         .Where(x => x.Warehouse.WarehouseName == warehousename)
@@ -88,8 +84,6 @@ public partial class MainWindow : Window
         .ToList();
 
         _contentListBox.ItemsSource = products;
-
-        fillRoutesComboBox();
 
         fillRoutesComboBox();
     }

@@ -94,6 +94,9 @@
             </Grid>
 
             <Grid x:Name="_warehouseManagementWriteOffToProductionGrid" Background="#FF1F1F1F" Margin="0,58,0,-5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
                 <Label x:Name="_warehouseManagementWriteOffToProductionTitleLabel" Content="Write-off products into production" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black" Height="56" HorizontalAlignment="Left" Width="861"/>
 
                 <Label x:Name="_warehouseManagementWriteOffToProductionForOrderLabel" Content="For order" HorizontalAlignment="Left" Margin="10,118,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
@@ -127,42 +130,127 @@
                     <Label
                 x:Name="_warehouseManagementWriteOffToProductionDateLabel" Margin="322,0,0,176" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="18:45 17.05.2026" Height="38" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="378"/>
                 </Grid>
-                <ListBox x:Name="_writeOffDocumentsListBox" Margin="750,66,0,74" Background="#FF111111" Foreground="White" BorderBrush="#FF111111" FontFamily="Arial Black" d:ItemsSource="{d:SampleData ItemCount=5}" HorizontalAlignment="Left" Width="740" IsSynchronizedWithCurrentItem="False">
+                <ListBox x:Name="_writeOffDocumentsListBox"
+         Margin="753,66,0,0"
+         Background="#FF111111"
+         Foreground="White"
+         BorderBrush="#FF111111"
+         FontFamily="Arial Black"
+         Width="731" RenderTransformOrigin="0.5,0.5" Height="491" VerticalAlignment="Top" HorizontalAlignment="Left">
+                    <ListBox.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleX="-0.186"/>
+                            <RotateTransform/>
+                            <TranslateTransform X="-0.797"/>
+                        </TransformGroup>
+                    </ListBox.RenderTransform>
+
+                    <!-- Убираем подсветку всего объекта -->
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <ContentPresenter/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Width="725">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="280" />
-                                </Grid.ColumnDefinitions>
+                            <Border BorderBrush="#333333"
+                                BorderThickness="0,0,0,1"
+                                Padding="10"
+                                HorizontalAlignment="Stretch">
 
+                                <Grid HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
 
-                                <TextBlock Grid.Column="0" 
-                                    Text="{Binding Describe}" 
-                                    FontSize="18" Margin="0,0,-320,0"
-                           
-                                    TextTrimming="CharacterEllipsis" 
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
 
-                                    ToolTip="{Binding Describe}" Grid.ColumnSpan="2" />
+                                        <!-- Информация -->
+                                        <StackPanel Grid.Column="0">
 
-                                <TextBlock Grid.Column="1" 
-                                    Text="{Binding Delete}" 
-                                    FontSize="18" Margin="600,0,-387,0"
-                                    MouseLeave="someButton_MouseLeaveWhite" 
-                                    MouseEnter="someButton_MouseEnterYellow"
-                                    TextTrimming="CharacterEllipsis" 
+                                            <TextBlock FontSize="18"
+                                   FontWeight="Bold"
+                                   Text="{Binding DocumentType}" />
 
-                                    ToolTip="{Binding Delete}" />
+                                            <TextBlock FontSize="14"
+                                   Text="{Binding StockAdjustmentDocumentId,
+                                   StringFormat='ID: {0}'}" />
 
-                                <TextBlock Grid.Column="2" 
-                                    Text="{Binding Edit}" 
-                                    FontSize="18" Margin="677,0,-443,0"
-                                    MouseLeave="someButton_MouseLeaveWhite" 
-                                    MouseEnter="someButton_MouseEnterYellow"
-                                    TextTrimming="CharacterEllipsis" 
+                                            <TextBlock FontSize="14"
+                                   Text="{Binding Quantity,
+                                   StringFormat='Quantity: {0}'}" />
 
-                                    ToolTip="{Binding Delete}" />
-                            </Grid>
+                                            <TextBlock FontSize="14"
+                                   Text="{Binding IssueDate,
+                                   StringFormat='Date: {0:dd.MM.yyyy}'}" />
+
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="1"
+                                        Orientation="Horizontal"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Top">
+
+                                            <TextBlock Text="Delete"
+                                           Cursor="Hand"
+                                           FontSize="18"
+                                           Margin="0,0,15,0"
+                                           MouseLeftButtonDown="DeleteDocument_Click">
+
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Foreground"
+                                                        Value="White"/>
+
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver"
+                                                            Value="True">
+                                                                <Setter Property="Foreground"
+                                                            Value="Yellow"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+
+                                            <TextBlock Text="Edit"
+                                           Cursor="Hand"
+                                           FontSize="18"
+                                           MouseLeftButtonDown="EditDocument_Click">
+
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Foreground"
+                                                        Value="White"/>
+
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver"
+                                                                Value="True">
+                                                                <Setter Property="Foreground"
+                                                                Value="Yellow"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </Border>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>

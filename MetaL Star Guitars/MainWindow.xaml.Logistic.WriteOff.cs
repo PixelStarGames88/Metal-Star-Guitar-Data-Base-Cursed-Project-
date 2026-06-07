@@ -48,8 +48,10 @@ public partial class MainWindow : Window
         _warehouseManagementWriteOffToProductionQuantityTextBox.Text = string.Empty;
         _warehouseManagementWriteOffToProductionLimitLabel.Content = (" < 0 pcs.");
         _warehouseManagementWriteOffToProductionDateLabel.Content = DateTime.Now.ToString("HH\\:mm dd.MM.yyyy");
-        int maxId = dbConnector.StockAdjustmentDocuments.Max(p => (int?)p.ProductId) ?? 0;
+        int maxId = dbConnector.StockAdjustmentDocuments.Max(p => (int?)p.StockAdjustmentDocumentId) ?? 0;
         _warehouseManagementWriteOffToProductionDocumentIdLabel.Content = (maxId + 1).ToString();
+        _warehouseManagementWriteOffToProductionToWriteOffButtonLabel.Content = "To write-off";
+        fill_writeOffDocumentsListBox();
     }
     private void warehouseManagementWriteOffToProductionForOrderComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
@@ -74,6 +76,152 @@ public partial class MainWindow : Window
         _warehouseManagementWriteOffToProductionProductComboBox.DisplayMemberPath = "ProductName";
     }
     private void warehouseManagementWriteOffToProductionProductComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        findLimit();
+    }
+    private void warehouseManagementWriteOffToProductionToWriteOffButtonLabel_MouseDown(object sender, MouseButtonEventArgs e)
+    {
+        int productId = (_warehouseManagementWriteOffToProductionProductComboBox.SelectedItem as product_entity)?.ProductId ?? throw new NullReferenceException();
+        int warehouseId = (_warehouseManagementWriteOffToProductionFromWarehouseComboBox.SelectedItem as warehouse_entity)?.WarehouseId ?? throw new NullReferenceException();
+
+        dynamic? selectedOrder = _warehouseManagementWriteOffToProductionForOrderComboBox.SelectedItem;
+        int orderId = selectedOrder.ProductionOrder.ProductionOrderId;
+
+        int quantity = int.Parse(_warehouseManagementWriteOffToProductionQuantityTextBox.Text);
+
+        string productName = (_warehouseManagementWriteOffToProductionProductComboBox.SelectedItem as product_entity)?.ProductName ?? throw new NullReferenceException();
+        string warehouseName = (_warehouseManagementWriteOffToProductionFromWarehouseComboBox.SelectedItem as warehouse_entity)?.WarehouseName ?? throw new NullReferenceException();
+
+        int documentId = int.Parse(_warehouseManagementWriteOffToProductionDocumentIdLabel.Content.ToString());
+
+        if (!ValidateQuantity(quantity, productName, warehouseName))
+            return;
+
+        SaveOrUpdateDocument(documentId, productId, warehouseId, orderId, quantity);
+
+        warehouseManagementWriteOffToProductionCancelButtonLabel_MouseDown(sender, e);
+    }
+
+    private bool ValidateQuantity(int quantity, string productName, string warehouseName)
+    {
+        if (quantity > GetProductsCount(productName, warehouseName))
+        {
+            new MessageWindow("Error", "Enter number less than limit!").Show();
+            return false;
+        }
+
+        return true;
+    }
+
+    private void SaveOrUpdateDocument(int documentId, int productId, int warehouseId, int orderId, int quantity)
+    {
+        stock_adjustment_document_entity? document = GetDocumentById(documentId);
+
+        if (document != null)
+        {
+            UpdateDocument(document, productId, warehouseId, orderId, quantity);
+            new MessageWindow("Message", "Document updated successfully!").Show();
+        }
+        else
+        {
+            CreateDocument(productId, warehouseId, orderId, quantity);
+            new MessageWindow("Message", "Your document was made successfully!").Show();
+        }
+
+        dbConnector.SaveChanges();
+    }
+
+    private stock_adjustment_document_entity? GetDocumentById(int id)
+    {
+        return dbConnector.StockAdjustmentDocuments.FirstOrDefault(x => x.StockAdjustmentDocumentId == id);
+    }
+
+    private void UpdateDocument(stock_adjustment_document_entity document, int productId, int warehouseId, int orderId, int quantity)
+    {
+        document.IssueDate = DateTime.UtcNow;
+        document.DocumentType = "Decommissioning into production";
+        document.Quantity = quantity;
+        document.WarehouseId = warehouseId;
+        document.ProductionOrderId = orderId;
+        document.ProductId = productId;
+    }
+
+    private void CreateDocument(int productId, int warehouseId, int orderId, int quantity)
+    {
+        dbConnector.StockAdjustmentDocuments.Add(new stock_adjustment_document_entity
+        {
+            IssueDate = DateTime.UtcNow,
+            DocumentType = "Decommissioning into production",
+            Quantity = quantity,
+            WarehouseId = warehouseId,
+            ProductionOrderId = orderId,
+            ProductId = productId
+        });
+    }
+    private void fill_writeOffDocumentsListBox()
+    {
+        var Documents = dbConnector.StockAdjustmentDocuments.ToList();
+        _writeOffDocumentsListBox.ItemsSource = Documents;
+    }
+    private void EditDocument_Click(object sender, MouseButtonEventArgs e)
+    {
+        if (sender is TextBlock textBlock && textBlock.DataContext is stock_adjustment_document_entity document)
+        {
+            _warehouseManagementWriteOffToProductionDocumentIdLabel.Content = document.StockAdjustmentDocumentId.ToString();
+
+            _warehouseManagementWriteOffToProductionDateLabel.Content = document.IssueDate.ToString("HH:mm dd.MM.yyyy");
+
+            _warehouseManagementWriteOffToProductionQuantityTextBox.Text = document.Quantity.ToString();
+
+            var warehouse = dbConnector.Warehouses.FirstOrDefault(w => w.WarehouseId == document.WarehouseId);
+
+            if (warehouse != null)
+            {
+                _warehouseManagementWriteOffToProductionFromWarehouseComboBox.SelectedItem =
+                    warehouse;
+            }
+
+            var product = dbConnector.Products.FirstOrDefault(p => p.ProductId == document.ProductId);
+
+            if (product != null)
+            {
+                _warehouseManagementWriteOffToProductionProductComboBox.SelectedItem = product;
+            }
+
+            var orderItem = _warehouseManagementWriteOffToProductionForOrderComboBox
+            .Items.Cast<dynamic>().FirstOrDefault(x => x.ProductionOrder.ProductionOrderId == document.ProductionOrderId);
+
+            if (orderItem != null)
+            {
+                _warehouseManagementWriteOffToProductionForOrderComboBox.SelectedItem = orderItem;
+            }
+
+            findLimit();
+
+            _warehouseManagementWriteOffToProductionToWriteOffButtonLabel.Content = "Save";
+        }
+    }
+    private void DeleteDocument_Click(object sender, MouseButtonEventArgs e)
+    {
+        if (sender is TextBlock textBlock &&
+            textBlock.DataContext is stock_adjustment_document_entity document)
+        {
+            var documentToDelete =
+                dbConnector.StockAdjustmentDocuments
+                .FirstOrDefault(x =>
+                    x.StockAdjustmentDocumentId ==
+                    document.StockAdjustmentDocumentId);
+
+            if (documentToDelete != null)
+            {
+                dbConnector.StockAdjustmentDocuments.Remove(documentToDelete);
+                dbConnector.SaveChanges();
+
+                fill_writeOffDocumentsListBox();
+            }
+        }
+    }
+    private void findLimit()
     {
         string? productname = (_warehouseManagementWriteOffToProductionProductComboBox.SelectedItem as product_entity)?.ProductName;
 
@@ -101,38 +249,5 @@ public partial class MainWindow : Window
 
         int limit = lastStock?.FirstOrDefault() ?? 0;
         _warehouseManagementWriteOffToProductionLimitLabel.Content = (" < " + limit.ToString() + " pcs.");
-    }
-    private void warehouseManagementWriteOffToProductionToWriteOffButtonLabel_MouseDown(object sender, MouseButtonEventArgs e)
-    {
-        int productid = (_warehouseManagementWriteOffToProductionProductComboBox.SelectedItem as product_entity)?.ProductId ?? throw new NullReferenceException();
-        int warehouseid = (_warehouseManagementWriteOffToProductionFromWarehouseComboBox.SelectedItem as warehouse_entity)?.WarehouseId ?? throw new NullReferenceException();
-        dynamic? selectedItem = _warehouseManagementWriteOffToProductionForOrderComboBox.SelectedItem;
-        int orderid = selectedItem.ProductionOrder.ProductionOrderId;
-        int quantity;
-        if (!int.TryParse(_warehouseManagementWriteOffToProductionQuantityTextBox.Text, out quantity))
-        {
-            new MessageWindow("Error", "Enter integer number!").Show();
-            return;
-        }
-        string? productname = (_warehouseManagementWriteOffToProductionProductComboBox.SelectedItem as product_entity)?.ProductName ?? throw new NullReferenceException();
-        string? warehousename = (_warehouseManagementWriteOffToProductionFromWarehouseComboBox.SelectedItem as warehouse_entity)?.WarehouseName ?? throw new NullReferenceException();
-
-        if (quantity > GetProductsCount(productname, warehousename))
-        {
-            new MessageWindow("Error", "Enter number less than limit!").Show();
-            return;
-        }
-        dbConnector.StockAdjustmentDocuments.Add(new stock_adjustment_document_entity
-        {
-            IssueDate = DateTime.UtcNow,
-            DocumentType = "Decommissioning into production",
-            Quantity = quantity,
-            WarehouseId = warehouseid,
-            ProductionOrderId = orderid,
-            ProductId = productid
-        });
-        dbConnector.SaveChanges();
-        warehouseManagementWriteOffToProductionCancelButtonLabel_MouseDown(sender, e);
-        new MessageWindow("Message", "Your document was made successfully!").Show();
     }
 }
