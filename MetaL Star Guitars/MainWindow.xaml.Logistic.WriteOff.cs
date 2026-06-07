@@ -92,7 +92,7 @@ public partial class MainWindow : Window
         string productName = (_warehouseManagementWriteOffToProductionProductComboBox.SelectedItem as product_entity)?.ProductName ?? throw new NullReferenceException();
         string warehouseName = (_warehouseManagementWriteOffToProductionFromWarehouseComboBox.SelectedItem as warehouse_entity)?.WarehouseName ?? throw new NullReferenceException();
 
-        int documentId = int.Parse(_warehouseManagementWriteOffToProductionDocumentIdLabel.Content.ToString());
+        int documentId = int.Parse(_warehouseManagementWriteOffToProductionDocumentIdLabel.Content.ToString()!);
 
         if (!ValidateQuantity(quantity, productName, warehouseName))
             return;
@@ -206,11 +206,8 @@ public partial class MainWindow : Window
         if (sender is TextBlock textBlock &&
             textBlock.DataContext is stock_adjustment_document_entity document)
         {
-            var documentToDelete =
-                dbConnector.StockAdjustmentDocuments
-                .FirstOrDefault(x =>
-                    x.StockAdjustmentDocumentId ==
-                    document.StockAdjustmentDocumentId);
+            var documentToDelete = dbConnector.StockAdjustmentDocuments
+                .FirstOrDefault(x => x.StockAdjustmentDocumentId == document.StockAdjustmentDocumentId);
 
             if (documentToDelete != null)
             {

@@ -27,9 +27,6 @@ public class stock_adjustment_document_entity
     public int ProductId { get; set; }
 
     [Column("production_order_id")]
-    public int ProductionOrderId { get; set; }
-    
-    //public warehouse_entity? Warehouse { get; set; }
-    //public product_entity? Product { get; set; }
-    //public production_order_entity? ProductionOrder { get; set; }
+    public int? ProductionOrderId { get; set; }
+
 }
