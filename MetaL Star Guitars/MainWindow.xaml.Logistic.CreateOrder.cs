@@ -9,9 +9,12 @@ namespace MetaL_Star_Guitars;
 public partial class MainWindow : Window
 {
     private void warehouseManagementTransfersButton_MouseDown(object sender, MouseButtonEventArgs e) 
-    { 
-        _warehouseManagementWriteOffToProductionGrid.Visibility = Visibility.Collapsed; 
-        _warehouseManagementTransfersGrid.Visibility = Visibility.Visible; 
+    {
+        _warehouseManagementTransactionGrid.Visibility = Visibility.Collapsed;
+        _warehouseManagementRoutesGrid.Visibility = Visibility.Collapsed;
+        _warehouseManagementWriteOffToProductionGrid.Visibility = Visibility.Collapsed;
+        _warehouseManagementTransfersGrid.Visibility = Visibility.Visible;
+        _warehouseManagementWarehousesGrid.Visibility = Visibility.Collapsed;
         warehouseManagementTransfersCancelButton_MouseDown(sender, e); 
         fillRecepientWarehouseComboBox(); 
         fillSenderWarehouseComboBox(); 
@@ -224,19 +227,14 @@ public partial class MainWindow : Window
 
     private void fill_makingOrderDocumentsListBox()
     {
-        // Безопасно вытягиваем заказы. 
-        // Если таблица пустая, ToList() вернет пустой список без исключений.
         var orders = dbConnector.TransferOrders.ToList();
         _makingOrderDocumentsListBox.ItemsSource = orders;
     }
 
     private void DeleteOrder_Click(object sender, MouseButtonEventArgs e)
     {
-        // Твой классический каст через dynamic из контекста элемента строки
         dynamic selectedItem = (sender as TextBlock)?.DataContext ?? throw new NullReferenceException();
         int transferOrderId = selectedItem.TransferOrderId;
-
-        // Сначала удаляем табличную часть, чтобы не нарушить связи Foreign Key
         var contentToDelete = dbConnector.TransferOrderContents
             .Where(x => x.TransferOrderId == transferOrderId).ToList();
 
@@ -245,7 +243,6 @@ public partial class MainWindow : Window
             dbConnector.TransferOrderContents.RemoveRange(contentToDelete);
         }
 
-        // Удаляем саму шапку заказа
         var orderToDelete = dbConnector.TransferOrders
             .FirstOrDefault(x => x.TransferOrderId == transferOrderId);
 
@@ -256,7 +253,6 @@ public partial class MainWindow : Window
 
         dbConnector.SaveChanges();
 
-        // Обновляем журнал и сбрасываем форму ввода в дефолтное состояние
         fill_makingOrderDocumentsListBox();
         warehouseManagementTransfersCancelButton_MouseDown(sender, e);
 
@@ -265,7 +261,6 @@ public partial class MainWindow : Window
 
     private void EditOrder_Click(object sender, MouseButtonEventArgs e)
     {
-        // Вытаскиваем редактируемый заказ
         dynamic selectedItem = (sender as TextBlock)?.DataContext ?? throw new NullReferenceException();
         int transferOrderId = selectedItem.TransferOrderId;
 
@@ -274,24 +269,20 @@ public partial class MainWindow : Window
 
         if (order == null) return;
 
-        // 1. Выставляем склады в комбобоксах
         _warehouseManagementTransfersSenderWarehouseComboBox.SelectedItem =
             dbConnector.Warehouses.FirstOrDefault(x => x.WarehouseId == order.SenderWarehouseId);
 
         _warehouseManagementTransfersRecipientWarehouseComboBox.SelectedItem =
             dbConnector.Warehouses.FirstOrDefault(x => x.WarehouseId == order.RecipientWarehouseId);
 
-        // 2. Принудительно генерируем маршруты для этих складов и выбираем нужный
         fillRoutesComboBox();
         _warehouseManagementTransfersRouteComboBox.SelectedItem =
             _warehouseManagementTransfersRouteComboBox.Items.Cast<dynamic>()
             .FirstOrDefault(x => x.FinalRoute.FinalRouteId == order.FinalRouteId);
 
-        // 3. Заполняем инфо-панель данными из базы
         _warehouseManagementTransfersOrderIdLabel.Content = order.TransferOrderId.ToString();
         _warehouseManagementTransfersShipmentDateLabel.Content = order.ShipmentDate.ToString("HH\\:mm dd.MM.yyyy");
 
-        // Подтягиваем время в пути из выбранного маршрута
         dynamic selectedRoute = _warehouseManagementTransfersRouteComboBox.SelectedItem;
         if (selectedRoute != null)
         {
@@ -299,18 +290,14 @@ public partial class MainWindow : Window
                 (order.ShipmentDate + (TimeSpan)selectedRoute.FinalRoute.ScheduledTime).ToString("HH\\:mm dd.MM.yyyy");
         }
 
-        // Меняем режим кнопки на "Save"
         _warehouseManagementTransfersToOrderButton.Content = "Save";
 
-        // 4. САМОЕ ИНТЕРЕСНОЕ: Специфическое заполнение состава с сохранением галочек и количества
         string senderWarehouseName = ((warehouse_entity)_warehouseManagementTransfersSenderWarehouseComboBox.SelectedItem).WarehouseName;
 
-        // Вытаскиваем то, что сейчас лежит в этом заказе
         var currentOrderContent = dbConnector.TransferOrderContents
             .Where(x => x.TransferOrderId == transferOrderId)
             .ToList();
 
-        // Джоиним остатки склада, но мапим их с учетом позиций заказа
         var productsWithOrderData = dbConnector.Products
             .Join(dbConnector.Stocks, p => p.ProductId, s => s.ProductId, (p, s) => new { Product = p, Stock = s })
             .Join(dbConnector.Warehouses, combined => combined.Stock.WarehouseId, w => w.WarehouseId,
@@ -321,27 +308,24 @@ public partial class MainWindow : Window
                 ProductDescribe = combined.Product.ProductName + " (" + combined.Stock.Quantity.ToString() + " pcs.)"
             })
             .Where(x => x.Warehouse.WarehouseName == senderWarehouseName)
-            .ToList() // Переходим в Memory, чтобы сопоставить с локальным списком заказа
+            .ToList()
             .Select(x => {
-                // Ищем, есть ли данный товар в редактируемом заказе
                 var orderPosition = currentOrderContent.FirstOrDefault(co => co.ProductId == x.Product.ProductId);
 
                 return new
                 {
                     x.ProductDescribe,
                     x.Product.ProductId,
-                    IsSelected = orderPosition != null,          // Если есть в заказе — true
-                    Quantity = orderPosition?.Quantity ?? 0      // Если есть в заказе — ставим его кол-во, иначе 0
+                    IsSelected = orderPosition != null,
+                    Quantity = orderPosition?.Quantity ?? 0
                 };
             })
             .Distinct()
             .ToList();
 
-        // Пихаем это в ItemSource левого списка
         _contentListBox.ItemsSource = productsWithOrderData;
 
-        // 5. Форсируем WPF проставить UI-элементы (галочки и текст), так как анонимные типы автоматом не забиндит назад в TextBox.Text
-        _contentListBox.UpdateLayout(); // Даем WPF время построить контейнеры элементов
+        _contentListBox.UpdateLayout();
 
         for (int i = 0; i < _contentListBox.Items.Count; i++)
         {

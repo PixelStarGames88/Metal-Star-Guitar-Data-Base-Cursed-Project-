@@ -8,7 +8,7 @@
 
     <Grid x:Name="_mainGrid">
 
-        <Grid x:Name="_authorizationGrid">
+        <Grid x:Name="_authorizationGrid" d:IsHidden="True">
             <Label x:Name="_authorizationWelcomeLabel" Content="Welcome! Enter your account." HorizontalAlignment="Center" Margin="0,112,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black"/>
             <Label x:Name="_authorizationPostLabel" Content="Enter as..." Margin="590,246,778,0" VerticalAlignment="Top" FontSize="22" Foreground="White" FontFamily="Arial Black"/>
             <ComboBox x:Name="_authorizationPostComboBox" Margin="590,281,590,0" Background="#FF161616" Foreground="Black" FontFamily="Arial Black" FontSize="22" SelectedIndex="0" Height="31" VerticalAlignment="Top">
@@ -18,11 +18,14 @@
             <Label x:Name="_authorizationEnterButton" Content="Enter" HorizontalAlignment="Center" Margin="0,490,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="authorizationEnterButton_MouseDown"/>
         </Grid>
 
-        <Grid x:Name="_warehouseManagementGrid" Visibility="Collapsed">
+        <Grid x:Name="_warehouseManagementGrid">
             <Grid x:Name="_warehouseManagementNavigationGrid" Height="53" VerticalAlignment="Top">
-                <Label x:Name="_warehouseManagementTransfersButton" Content="Transfers" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="15,8,0,0" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="warehouseManagementTransfersButton_MouseDown" HorizontalAlignment="Left" Width="135" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
-                <Label x:Name="_warehouseManagementWriteOffToProductionButton" Content="Write-off to Production" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="warehouseManagementWriteOffToProductionButton_MouseDown" Width="310" HorizontalAlignment="Left" Margin="160,8,0,0" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
-                <Label x:Name="_warehouseManagementExitToMenuButton" Content="Exit to menu" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" Margin="475,8,0,0" MouseDown="warehouseManagementExitToMenuButton_MouseDown" HorizontalAlignment="Left" Width="176" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
+                <Label x:Name="_warehouseManagementTransfersButton" Content="Transfers" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="15,10,0,0" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="warehouseManagementTransfersButton_MouseDown" HorizontalAlignment="Left" Width="135" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
+                <Label x:Name="_warehouseManagementWriteOffToProductionButton" Content="Write-off to Production" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="warehouseManagementWriteOffToProductionButton_MouseDown" Width="310" HorizontalAlignment="Left" Margin="160,10,0,0" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
+                <Label x:Name="_warehouseManagementExitToMenuButton" Content="Exit to menu" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" Margin="954,10,0,0" MouseDown="warehouseManagementExitToMenuButton_MouseDown" HorizontalAlignment="Left" Width="176" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
+                <Label x:Name="_warehouseManagementWarehousesButton" Content="Warehouses" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="480,10,0,0" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" HorizontalAlignment="Left" Width="170" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top" MouseDown="warehouseManagementWarehousesButton_MouseDown"/>
+                <Label x:Name="_warehouseManagementRoutesButton" Content="Routes" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="warehouseManagementWriteOffToProductionButton_MouseDown" Width="103" HorizontalAlignment="Left" Margin="662,10,0,0" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
+                <Label x:Name="_warehouseManagementTransactionButton" Content="Transaction" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" Margin="777,10,0,0" MouseDown="warehouseManagementExitToMenuButton_MouseDown" HorizontalAlignment="Left" Width="167" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
             </Grid>
 
             <Grid x:Name="_warehouseManagementTransfersGrid" Background="#FF1F1F1F" Margin="0,58,0,-5">
@@ -214,7 +217,7 @@
                 </ListBox>
             </Grid>
 
-            <Grid x:Name="_warehouseManagementWriteOffToProductionGrid" Background="#FF1F1F1F" Margin="0,58,0,-5" Visibility="Collapsed">
+            <Grid x:Name="_warehouseManagementWriteOffToProductionGrid" Background="#FF1F1F1F" Margin="0,58,0,-5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
@@ -362,6 +365,591 @@
                                                                 Value="True">
                                                                 <Setter Property="Foreground"
                                                                 Value="Yellow"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+            <Grid x:Name="_warehouseManagementWarehousesGrid" Background="#FF1F1F1F" Margin="0,58,0,-5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="_warehouseManagementWarehouseTitleLabel" Content="New warehouse registration" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black" Height="56" HorizontalAlignment="Left" Width="740"/>
+
+                <Label x:Name="_warehouseManagementWarehouseWarehouseNameTitleLabel" Content="Warehouse name" HorizontalAlignment="Left" Margin="9,158,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black" Width="324"/>
+
+                <Label x:Name="_warehouseManagementWarehouseCapacityTitleLabel" Content="Capacity" Margin="9,201,1167,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+                <TextBox x:Name="_warehouseManagementWarehouseCapacityTextBox" HorizontalAlignment="Left" Margin="338,204,0,0" VerticalAlignment="Top" Width="379" FontSize="22" FontFamily="Arial Black" Height="31"/>
+                <Label
+                        Grid.Row="0" x:Name="_warehouseManagementWarehouseWarehouseIdTitleLabel" Margin="9,245,1167,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Warehouse ID" Grid.Column="0" Height="38" VerticalAlignment="Top"/>
+                <Label
+                        Grid.Row="0" x:Name="_warehouseManagementWarehouseWarehouseIdLabel" Margin="340,245,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="1" HorizontalAlignment="Left" Width="378" Height="38" VerticalAlignment="Top"/>
+                <Label
+                        x:Name="_warehouseManagementWarehouseWarehouseRegisterButtonLabel" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="10,297,1166,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Register" VerticalAlignment="Top" MouseDown="warehouseManagementWarehouseWarehouseRegisterButtonLabel_MouseDown"/>
+                <Label
+                        x:Name="_warehouseManagementWarehouseWarehouseCancelButtonLabel" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="339,297,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Cancel" VerticalAlignment="Top" HorizontalAlignment="Left" Width="379" MouseDown="warehouseManagementWarehouseWarehouseCancelButtonLabel_MouseDown"/>
+                <ListBox x:Name="_warehouseManagementWarehouseWarehousesListBox"
+                    Margin="754,90,34,0"
+                    Background="#FF111111"
+                    Foreground="White"
+                    BorderBrush="#FF111111"
+                    FontFamily="Arial Black" RenderTransformOrigin="0.5,0.5" Height="250" VerticalAlignment="Top">
+                    <ListBox.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleX="-0.186"/>
+                            <RotateTransform/>
+                            <TranslateTransform X="-0.797"/>
+                        </TransformGroup>
+                    </ListBox.RenderTransform>
+
+
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <ContentPresenter/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="#333333"
+                                BorderThickness="0,0,0,1"
+                                Padding="10"
+                                HorizontalAlignment="Stretch">
+
+                                <Grid HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Информация -->
+                                        <StackPanel Grid.Column="0">
+
+                                            <TextBlock FontSize="18"
+                                                FontWeight="Bold"
+                                                Text="{Binding WarehouseName}" />
+
+                                            <TextBlock FontSize="14"
+                                                Text="{Binding WarehouseId, StringFormat=\{0\}}" />
+
+                                            <TextBlock FontSize="14"
+                                                Text="{Binding Capacity, StringFormat=Capacity: \{0\}}" />
+
+                                        
+
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="1"
+                                            Orientation="Horizontal"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top">
+
+                                            <TextBlock Text="Delete"
+                                                Cursor="Hand"
+                                                FontSize="18"
+                                                Margin="0,0,15,0"
+                                                MouseLeftButtonDown="DeleteWarehouseFromDB">
+
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground"
+                                                            Value="White"/>
+
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver"
+                                                                Value="True">
+                                                                <Setter Property="Foreground"
+                                                                    Value="Yellow"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+
+                                            <TextBlock Text="Edit"
+                                                Cursor="Hand"
+                                                FontSize="18"
+                                                MouseLeftButtonDown="EditWarehouseInDB">
+
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground"
+                                                            Value="White"/>
+
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver"
+                                                                Value="True">
+                                                                <Setter Property="Foreground"
+                                                                    Value="Yellow"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <TextBox x:Name="_warehouseManagementWarehouseWarehouseNameTextBox" HorizontalAlignment="Left" Margin="338,161,0,0" VerticalAlignment="Top" Width="379" FontSize="22" FontFamily="Arial Black" Height="31"/>
+                <Label x:Name="_warehouseManagementWarehouseWarehouseTitleLabel" Content="Warehouse" HorizontalAlignment="Left" Margin="10,424,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black" Width="324"/>
+                <Label x:Name="_warehouseManagementWarehouseProductTitleLabel" Content="Product" Margin="10,467,1166,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+                <Label
+                    Grid.Row="0" x:Name="_warehouseManagementWarehouseQuantityTitleLabel" Margin="10,511,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Quantity" Grid.Column="0" HorizontalAlignment="Left" Width="324" Height="38" VerticalAlignment="Top"/>
+                <Label
+                    x:Name="_warehouseManagementWarehouseStockRegisterButtonLabel" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="10,572,1166,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Register" Height="38" VerticalAlignment="Top" MouseDown="warehouseManagementWarehouseStockRegisterButtonLabel_MouseDown"/>
+                <Label
+                    x:Name="_warehouseManagementWarehouseStockCancelButtonLabel" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="339,572,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Cancel" HorizontalAlignment="Left" Width="380" Height="38" VerticalAlignment="Top" MouseDown="warehouseManagementWarehouseStockCancelButtonLabel_MouseDown"/>
+                <ListBox x:Name="_warehouseManagementWarehouseStockListBox"
+                    Margin="755,361,33,0"
+                    Background="#FF111111"
+                    Foreground="White"
+                    BorderBrush="#FF111111"
+                    FontFamily="Arial Black" RenderTransformOrigin="0.5,0.5" Height="250" VerticalAlignment="Top">
+                    <ListBox.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleX="-0.186"/>
+                            <RotateTransform/>
+                            <TranslateTransform X="-0.797"/>
+                        </TransformGroup>
+                    </ListBox.RenderTransform>
+
+
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <ContentPresenter/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="#333333"
+                                BorderThickness="0,0,0,1"
+                                Padding="10"
+                                HorizontalAlignment="Stretch">
+
+                                <Grid HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Информация -->
+                                        <StackPanel Grid.Column="0">
+
+                                            <TextBlock FontSize="18"
+                                                FontWeight="Bold"
+                                                Text="{Binding ProductName}" />
+
+                                            <TextBlock FontSize="14"
+                                                Text="{Binding WarehouseName, StringFormat=ID: \{0\}}" />
+
+                                            <TextBlock FontSize="14"
+                                                Text="{Binding Quantity, StringFormat=Quantity: \{0\}}" />
+
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="1"
+                                            Orientation="Horizontal"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top">
+
+                                            <TextBlock Text="Delete"
+                                                Cursor="Hand"
+                                                FontSize="18"
+                                                Margin="0,0,15,0"
+                                                MouseLeftButtonDown="DeleteStockFromDB">
+
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground"
+                                                            Value="White"/>
+
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver"
+                                                                Value="True">
+                                                                <Setter Property="Foreground"
+                                                                    Value="Yellow"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+
+                                            <TextBlock Text="Edit"
+                                                Cursor="Hand"
+                                                FontSize="18"
+                                                MouseLeftButtonDown="EditStockInDB">
+                                                    
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground"
+                                                            Value="White"/>
+
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver"
+                                                                Value="True">
+                                                                <Setter Property="Foreground"
+                                                                    Value="Yellow"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <TextBox x:Name="_warehouseManagementWarehousesQuantityTextBox" HorizontalAlignment="Left" Margin="340,514,0,0" Width="379" FontSize="22" FontFamily="Arial Black" Height="31" VerticalAlignment="Top"/>
+                <ComboBox x:Name="_warehouseManagementWarehouseWarehouseComboBox" HorizontalAlignment="Left" Margin="340,427,0,0" Width="379" Background="#FF161616" FontSize="22" FontFamily="Arial Black" SelectionChanged="warehouseManagementTransfersSenderWarehouseComboBox_SelectionChanged" Height="31" VerticalAlignment="Top"/>
+                <ComboBox x:Name="_warehouseManagementWarehouseProductComboBox" HorizontalAlignment="Left" Margin="340,470,0,0" Width="379" Background="#FF161616" FontSize="22" FontFamily="Arial Black" SelectionChanged="warehouseManagementTransfersRecipientWarehouseComboBox_SelectionChanged" Height="31" VerticalAlignment="Top"/>
+                <Label x:Name="_warehouseManagementWarehouseWarehouseTitleLabel1" Content="Warehouse" Margin="10,90,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black" Height="56" HorizontalAlignment="Left" Width="740"/>
+                <Label x:Name="_warehouseManagementWarehouseStockTitleLabel" Content="Stock" Margin="10,361,0,0" FontSize="36" Foreground="White" FontFamily="Arial Black" HorizontalAlignment="Left" Width="740" Height="56" VerticalAlignment="Top"/>
+            </Grid>
+            <Grid x:Name="_warehouseManagementRoutesGrid" Background="#FF1F1F1F" Margin="0,58,0,-5" Visibility="Collapsed">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="_warehouseManagementWriteOffToProductionTitleLabel2" Content="Write-off products into production" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black" Height="56" HorizontalAlignment="Left" Width="861"/>
+
+                <Label x:Name="_warehouseManagementWriteOffToProductionForOrderLabel2" Content="For order" HorizontalAlignment="Left" Margin="10,118,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+                <ComboBox x:Name="_warehouseManagementWriteOffToProductionForOrderComboBox2" HorizontalAlignment="Left" Margin="332,121,0,0" VerticalAlignment="Top" Width="379" Background="White" FontSize="22" FontFamily="Arial Black" Foreground="Black"/>
+
+                <Label x:Name="_warehouseManagementWriteOffToProductionFromWarehouseLabel2" Content="From warehouse" Margin="10,161,1262,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+                <ComboBox x:Name="_warehouseManagementWriteOffToProductionFromWarehouseComboBox2" HorizontalAlignment="Left" Margin="332,164,0,0" VerticalAlignment="Top" Width="379" Background="White" FontSize="22" FontFamily="Arial Black" SelectionChanged="warehouseManagementWriteOffToProductionForOrderComboBox_SelectionChanged"/>
+
+                <Label x:Name="_warehouseManagementWriteOffToProductionProductLabel2" Content="Product" Margin="10,204,1377,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+                <ComboBox x:Name="_warehouseManagementWriteOffToProductionProductComboBox2" Margin="332,207,0,0" HorizontalAlignment="Left" Width="180" VerticalAlignment="Top" Background="#FF161616" FontSize="22" FontFamily="Arial Black" SelectionChanged="warehouseManagementWriteOffToProductionProductComboBox_SelectionChanged"/>
+                <TextBox x:Name="_warehouseManagementWriteOffToProductionQuantityTextBox2" HorizontalAlignment="Left" Margin="517,207,0,0" VerticalAlignment="Top" Width="69" FontSize="22" FontFamily="Arial Black" Height="31"/>
+                <Label x:Name="_warehouseManagementWriteOffToProductionLimitLabel2" Content=" &lt; 0 pcs." Margin="591,204,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black" HorizontalAlignment="Left" Width="244"/>
+                <Grid x:Name="_warehouseManagementWriteOffToProductionInfoGrid2" Margin="10,248,0,0" Background="#FF111111" HorizontalAlignment="Left" Width="701" Height="309" VerticalAlignment="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        x:Name="_warehouseManagementWriteOffToProductionToWriteOffButtonLabel2" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="0,0,384,10" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="To write-off" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="307" MouseDown="warehouseManagementWriteOffToProductionToWriteOffButtonLabel_MouseDown"/>
+                    <Label
+                        x:Name="_warehouseManagementWriteOffToProductionCancelButtonLabel2" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="0,0,1,10" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="Cancel" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="378" MouseDown="warehouseManagementWriteOffToProductionCancelButtonLabel_MouseDown"/>
+                    <Label
+                        Grid.Row="0" x:Name="_warehouseManagementWriteOffToProductionDocumentIdTitleLabel2" Margin="10,0,0,261" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Document ID" Grid.Column="0" HorizontalAlignment="Left" Width="307" Height="38" VerticalAlignment="Bottom"/>
+                    <Label
+                        Grid.Row="0" x:Name="_warehouseManagementWriteOffToProductionDocumentIdLabel2" Margin="322,10,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="1" HorizontalAlignment="Left" Width="378" Height="38" VerticalAlignment="Top"/>
+                    <Label
+                        x:Name="_warehouseManagementWriteOffToProductionTypeTitleLabel2" Margin="10,53,384,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Type" Grid.Column="0" Height="37" VerticalAlignment="Top"/>
+                    <Label
+                        x:Name="_warehouseManagementWriteOffToProductionTypeLabel2" Margin="322,53,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Write-off to production" HorizontalAlignment="Left" Width="378" Height="37" VerticalAlignment="Top"/>
+                    <Label
+                        x:Name="_warehouseManagementWriteOffToProductionDateTitleLabel2" Margin="10,0,384,176" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Date" Grid.Column="0" Height="38" VerticalAlignment="Bottom"/>
+                    <Label
+                        x:Name="_warehouseManagementWriteOffToProductionDateLabel2" Margin="322,0,0,176" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="18:45 17.05.2026" Height="38" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="378"/>
+                </Grid>
+                <ListBox x:Name="_writeOffDocumentsListBox2"
+                    Margin="753,66,35,0"
+                    Background="#FF111111"
+                    Foreground="White"
+                    BorderBrush="#FF111111"
+                    FontFamily="Arial Black" RenderTransformOrigin="0.5,0.5" Height="491" VerticalAlignment="Top">
+                    <ListBox.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleX="-0.186"/>
+                            <RotateTransform/>
+                            <TranslateTransform X="-0.797"/>
+                        </TransformGroup>
+                    </ListBox.RenderTransform>
+
+
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <ContentPresenter/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="#333333"
+                                BorderThickness="0,0,0,1"
+                                Padding="10"
+                                HorizontalAlignment="Stretch">
+
+                                <Grid HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Информация -->
+                                        <StackPanel Grid.Column="0">
+
+                                            <TextBlock FontSize="18"
+                                                FontWeight="Bold"
+                                                Text="{Binding DocumentType}" />
+
+                                            <TextBlock FontSize="14"
+                                                Text="{Binding StockAdjustmentDocumentId, StringFormat=ID: \{0\}}" />
+
+                                            <TextBlock FontSize="14"
+                                                Text="{Binding Quantity, StringFormat=Quantity: \{0\}}" />
+
+                                            <TextBlock FontSize="14"
+                                                Text="{Binding IssueDate, StringFormat=Date: \{0:dd.MM.yyyy\}}" />
+
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="1"
+                                            Orientation="Horizontal"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top">
+
+                                            <TextBlock Text="Delete"
+                                                Cursor="Hand"
+                                                FontSize="18"
+                                                Margin="0,0,15,0"
+                                                MouseLeftButtonDown="DeleteDocument_Click">
+
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground"
+                                                            Value="White"/>
+
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver"
+                                                                Value="True">
+                                                                <Setter Property="Foreground"
+                                                                    Value="Yellow"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+
+                                            <TextBlock Text="Edit"
+                                                Cursor="Hand"
+                                                FontSize="18"
+                                                MouseLeftButtonDown="EditDocument_Click">
+
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground"
+                                                            Value="White"/>
+
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver"
+                                                                Value="True">
+                                                                <Setter Property="Foreground"
+                                                                    Value="Yellow"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+            <Grid x:Name="_warehouseManagementTransactionGrid" Background="#FF1F1F1F" Margin="0,58,0,-5" Visibility="Collapsed">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="_warehouseManagementWriteOffToProductionTitleLabel3" Content="Write-off products into production" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black" Height="56" HorizontalAlignment="Left" Width="861"/>
+
+                <Label x:Name="_warehouseManagementWriteOffToProductionForOrderLabel3" Content="For order" HorizontalAlignment="Left" Margin="10,118,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+                <ComboBox x:Name="_warehouseManagementWriteOffToProductionForOrderComboBox3" HorizontalAlignment="Left" Margin="332,121,0,0" VerticalAlignment="Top" Width="379" Background="White" FontSize="22" FontFamily="Arial Black" Foreground="Black"/>
+
+                <Label x:Name="_warehouseManagementWriteOffToProductionFromWarehouseLabel3" Content="From warehouse" Margin="10,161,1262,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+                <ComboBox x:Name="_warehouseManagementWriteOffToProductionFromWarehouseComboBox3" HorizontalAlignment="Left" Margin="332,164,0,0" VerticalAlignment="Top" Width="379" Background="White" FontSize="22" FontFamily="Arial Black" SelectionChanged="warehouseManagementWriteOffToProductionForOrderComboBox_SelectionChanged"/>
+
+                <Label x:Name="_warehouseManagementWriteOffToProductionProductLabel3" Content="Product" Margin="10,204,1377,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+                <ComboBox x:Name="_warehouseManagementWriteOffToProductionProductComboBox3" Margin="332,207,0,0" HorizontalAlignment="Left" Width="180" VerticalAlignment="Top" Background="#FF161616" FontSize="22" FontFamily="Arial Black" SelectionChanged="warehouseManagementWriteOffToProductionProductComboBox_SelectionChanged"/>
+                <TextBox x:Name="_warehouseManagementWriteOffToProductionQuantityTextBox3" HorizontalAlignment="Left" Margin="517,207,0,0" VerticalAlignment="Top" Width="69" FontSize="22" FontFamily="Arial Black" Height="31"/>
+                <Label x:Name="_warehouseManagementWriteOffToProductionLimitLabel3" Content=" &lt; 0 pcs." Margin="591,204,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black" HorizontalAlignment="Left" Width="244"/>
+                <Grid x:Name="_warehouseManagementWriteOffToProductionInfoGrid3" Margin="10,248,0,0" Background="#FF111111" HorizontalAlignment="Left" Width="701" Height="309" VerticalAlignment="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        x:Name="_warehouseManagementWriteOffToProductionToWriteOffButtonLabel3" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="0,0,384,10" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="To write-off" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="307" MouseDown="warehouseManagementWriteOffToProductionToWriteOffButtonLabel_MouseDown"/>
+                    <Label
+                        x:Name="_warehouseManagementWriteOffToProductionCancelButtonLabel3" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="0,0,1,10" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="Cancel" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="378" MouseDown="warehouseManagementWriteOffToProductionCancelButtonLabel_MouseDown"/>
+                    <Label
+                        Grid.Row="0" x:Name="_warehouseManagementWriteOffToProductionDocumentIdTitleLabel3" Margin="10,0,0,261" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Document ID" Grid.Column="0" HorizontalAlignment="Left" Width="307" Height="38" VerticalAlignment="Bottom"/>
+                    <Label
+                        Grid.Row="0" x:Name="_warehouseManagementWriteOffToProductionDocumentIdLabel3" Margin="322,10,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="1" HorizontalAlignment="Left" Width="378" Height="38" VerticalAlignment="Top"/>
+                    <Label
+                        x:Name="_warehouseManagementWriteOffToProductionTypeTitleLabel3" Margin="10,53,384,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Type" Grid.Column="0" Height="37" VerticalAlignment="Top"/>
+                    <Label
+                        x:Name="_warehouseManagementWriteOffToProductionTypeLabel3" Margin="322,53,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Write-off to production" HorizontalAlignment="Left" Width="378" Height="37" VerticalAlignment="Top"/>
+                    <Label
+                        x:Name="_warehouseManagementWriteOffToProductionDateTitleLabel3" Margin="10,0,384,176" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Date" Grid.Column="0" Height="38" VerticalAlignment="Bottom"/>
+                    <Label
+                        x:Name="_warehouseManagementWriteOffToProductionDateLabel3" Margin="322,0,0,176" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="18:45 17.05.2026" Height="38" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="378"/>
+                </Grid>
+                <ListBox x:Name="_writeOffDocumentsListBox3"
+                    Margin="753,66,35,0"
+                    Background="#FF111111"
+                    Foreground="White"
+                    BorderBrush="#FF111111"
+                    FontFamily="Arial Black" RenderTransformOrigin="0.5,0.5" Height="491" VerticalAlignment="Top">
+                    <ListBox.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleX="-0.186"/>
+                            <RotateTransform/>
+                            <TranslateTransform X="-0.797"/>
+                        </TransformGroup>
+                    </ListBox.RenderTransform>
+
+
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <ContentPresenter/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="#333333"
+                                BorderThickness="0,0,0,1"
+                                Padding="10"
+                                HorizontalAlignment="Stretch">
+
+                                <Grid HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Информация -->
+                                        <StackPanel Grid.Column="0">
+
+                                            <TextBlock FontSize="18"
+                                                FontWeight="Bold"
+                                                Text="{Binding DocumentType}" />
+
+                                            <TextBlock FontSize="14"
+                                                Text="{Binding StockAdjustmentDocumentId, StringFormat=ID: \{0\}}" />
+
+                                            <TextBlock FontSize="14"
+                                                Text="{Binding Quantity, StringFormat=Quantity: \{0\}}" />
+
+                                            <TextBlock FontSize="14"
+                                                Text="{Binding IssueDate, StringFormat=Date: \{0:dd.MM.yyyy\}}" />
+
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="1"
+                                            Orientation="Horizontal"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top">
+
+                                            <TextBlock Text="Delete"
+                                                Cursor="Hand"
+                                                FontSize="18"
+                                                Margin="0,0,15,0"
+                                                MouseLeftButtonDown="DeleteDocument_Click">
+
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground"
+                                                            Value="White"/>
+
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver"
+                                                                Value="True">
+                                                                <Setter Property="Foreground"
+                                                                    Value="Yellow"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+
+                                            <TextBlock Text="Edit"
+                                                Cursor="Hand"
+                                                FontSize="18"
+                                                MouseLeftButtonDown="EditDocument_Click">
+
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground"
+                                                            Value="White"/>
+
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver"
+                                                                Value="True">
+                                                                <Setter Property="Foreground"
+                                                                    Value="Yellow"/>
                                                             </Trigger>
                                                         </Style.Triggers>
                                                     </Style>

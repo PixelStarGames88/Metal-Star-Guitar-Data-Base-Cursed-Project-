@@ -9,6 +9,9 @@ public partial class MainWindow : Window
 {
     private void warehouseManagementWriteOffToProductionButton_MouseDown(object sender, MouseButtonEventArgs e)
     {
+        _warehouseManagementTransactionGrid.Visibility = Visibility.Collapsed;
+        _warehouseManagementRoutesGrid.Visibility = Visibility.Collapsed;
+        _warehouseManagementTransfersGrid.Visibility = Visibility.Collapsed;
         _warehouseManagementWriteOffToProductionGrid.Visibility = Visibility.Visible;
         _warehouseManagementTransfersGrid.Visibility = Visibility.Collapsed;
         warehouseManagementWriteOffToProductionCancelButtonLabel_MouseDown(sender, e);
