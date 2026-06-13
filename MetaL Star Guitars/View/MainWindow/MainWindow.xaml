@@ -1,0 +1,840 @@
+﻿<Window x:Class="MetaL_Star_Guitars.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MetaL Star Guitars" Height="700" Width="1500" Background="#FF252525">
+
+    <Grid x:Name="_mainGrid">
+
+        <Grid x:Name="_authorizationGrid">
+            <Label x:Name="_authorizationWelcomeLabel" Content="Welcome! Enter your account." HorizontalAlignment="Center" Margin="0,112,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black"/>
+            <Label x:Name="_authorizationPostLabel" Content="Enter as..." Margin="590,246,778,0" VerticalAlignment="Top" FontSize="22" Foreground="White" FontFamily="Arial Black"/>
+            <ComboBox x:Name="_authorizationPostComboBox" Margin="590,281,590,0" Background="#FF161616" Foreground="Black" FontFamily="Arial Black" FontSize="22" SelectedIndex="0" Height="31" VerticalAlignment="Top">
+                <ComboBoxItem x:Name="_authorizationPostWarehouseItem" Content="Warehouse manager"/>
+                <ComboBoxItem x:Name="_authorizationPostProductionItem" Content="Production stages manager"/>
+            </ComboBox>
+            <Label x:Name="_authorizationEnterButton" Content="Enter" HorizontalAlignment="Center" Margin="0,490,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="authorizationEnterButton_MouseDown"/>
+        </Grid>
+
+        <Grid x:Name="_warehouseManagementGrid" Visibility="Collapsed">
+            <Grid x:Name="_warehouseManagementNavigationGrid" Height="53" VerticalAlignment="Top">
+                <Label x:Name="_warehouseManagementTransfersButton" Content="Transfers" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="15,10,0,0" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="warehouseManagementTransfersButton_MouseDown" HorizontalAlignment="Left" Width="135" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
+                <Label x:Name="_warehouseManagementWriteOffToProductionButton" Content="Write-off to Production" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="warehouseManagementWriteOffToProductionButton_MouseDown" Width="310" HorizontalAlignment="Left" Margin="160,10,0,0" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
+                <Label x:Name="_warehouseManagementExitToMenuButton" Content="Exit to menu" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" Margin="1252,10,0,0" MouseDown="warehouseManagementExitToMenuButton_MouseDown" HorizontalAlignment="Left" Width="176" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
+                <Label x:Name="_warehouseManagementWarehousesButton" Content="Warehouses" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="485,10,0,0" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" HorizontalAlignment="Left" Width="170" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top" MouseDown="warehouseManagementWarehousesButton_MouseDown"/>
+                <Label x:Name="_warehouseManagementRoutesButton" Content="Routes" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="warehouseManagementRoutesButton_MouseDown" Width="103" HorizontalAlignment="Left" Margin="666,10,0,0" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
+                <Label x:Name="_warehouseManagementTransactionButton" Content="Transaction" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" Margin="1075,10,0,0" HorizontalAlignment="Left" Width="167" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top" MouseDown="warehouseManagementTransactionButton_MouseDown" RenderTransformOrigin="0.693,0.501"/>
+                <Label x:Name="_warehouseManagementTransitWarehousesButton" Content="Transit Warehouses" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" Width="271" HorizontalAlignment="Left" Margin="786,10,0,0" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top" MouseDown="warehouseManagementTransitWarehousesButton_MouseDown"/>
+            </Grid>
+
+            <!-- ==================== TRANSFERS ==================== -->
+            <Grid x:Name="_warehouseManagementTransfersGrid" Background="#FF1F1F1F" Margin="0,58,0,-5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="_warehouseTransfersOrdersTitleLabel" Content="Transfers orders" Margin="36,10,0,0" FontSize="36" Foreground="White" FontFamily="Arial Black" HorizontalAlignment="Left" Width="732" Height="56" VerticalAlignment="Top"/>
+                <Label x:Name="_createTransferOrderButton" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="36,0,1311,16" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="Create" Height="51" VerticalAlignment="Bottom" MouseDown="_createTransferOrderButton_MouseDown"/>
+                <ListBox x:Name="_transferOrdersListBox" Background="#FF111111" Foreground="White" BorderBrush="#FF111111" FontFamily="Arial Black" RenderTransformOrigin="0.5,0.5" Height="476" VerticalAlignment="Top" Margin="36,78,36,0">
+                    <ListBox.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleX="-0.186"/>
+                            <RotateTransform/>
+                            <TranslateTransform X="-0.797"/>
+                        </TransformGroup>
+                    </ListBox.RenderTransform>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <ContentPresenter/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="#333333" BorderThickness="0,0,0,1" Padding="10" HorizontalAlignment="Stretch">
+                                <Grid HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock FontSize="18" FontWeight="Bold" Foreground="White" Text="{Binding orderId, StringFormat='{}{0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding orderStartData, StringFormat='Date: {0:dd.MM.yyyy}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding orderStatus, StringFormat='Status: {0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding orderFinishData, StringFormat='Estimated Delivery: {0:dd.MM.yyyy}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding senderWarehouse, StringFormat='Sender Warehouse: {0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding recipientWarehouse, StringFormat='Recipient Warehouse: {0}'}" FontFamily="Arial Black"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                            <TextBlock Text="Delete" Cursor="Hand" FontSize="18" Foreground="White" Margin="0,0,15,0" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseLeftButtonDown="deleteTransferOrderEntity">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground" Value="White"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Foreground" Value="Yellow"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                            <TextBlock Text="Edit" Cursor="Hand" FontSize="18" Foreground="White" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseLeftButtonDown="editTransferOrderEntity">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground" Value="White"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Foreground" Value="Yellow"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+
+            <!-- ==================== WRITE-OFF TO PRODUCTION ==================== -->
+            <Grid x:Name="_warehouseManagementWriteOffToProductionGrid" Background="#FF1F1F1F" Margin="0,58,0,-5" Visibility="Collapsed">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="_warehouseWriteOffTitleLabel" Content="Write-off to production documents" Margin="36,10,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black" Height="56" HorizontalAlignment="Left" Width="732"/>
+                <Label x:Name="_createWriteOffButton" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="36,0,1311,16" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="Create" Height="51" VerticalAlignment="Bottom" MouseDown="_createWriteOffButton_MouseDown"/>
+                <ListBox x:Name="_writeOffListBox" Background="#FF111111" Foreground="White" BorderBrush="#FF111111" FontFamily="Arial Black" RenderTransformOrigin="0.5,0.5" Height="476" VerticalAlignment="Top" Margin="36,78,36,0">
+                    <ListBox.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleX="-0.186"/>
+                            <RotateTransform/>
+                            <TranslateTransform X="-0.797"/>
+                        </TransformGroup>
+                    </ListBox.RenderTransform>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <ContentPresenter/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="#333333" BorderThickness="0,0,0,1" Padding="10" HorizontalAlignment="Stretch">
+                                <Grid HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock FontSize="18" FontWeight="Bold" Foreground="White" Text="{Binding orderId, StringFormat='{}{0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding orderStartData, StringFormat='Date: {0:dd.MM.yyyy}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding orderStatus, StringFormat='Status: {0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding orderFinishData, StringFormat='Estimated Delivery: {0:dd.MM.yyyy}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding senderWarehouse, StringFormat='Sender Warehouse: {0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding recipientWarehouse, StringFormat='Recipient Warehouse: {0}'}" FontFamily="Arial Black"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                            <TextBlock Text="Delete" Cursor="Hand" FontSize="18" Foreground="White" Margin="0,0,15,0" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseLeftButtonDown="deleteWriteOffEntity">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground" Value="White"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Foreground" Value="Yellow"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                            <TextBlock Text="Edit" Cursor="Hand" FontSize="18" Foreground="White" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseLeftButtonDown="editWriteOffEntity">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground" Value="White"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Foreground" Value="Yellow"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+
+            <!-- ==================== WAREHOUSES ==================== -->
+            <Grid x:Name="_warehouseManagementWarehousesGrid" Background="#FF1F1F1F" Margin="0,58,0,-5" Visibility="Collapsed">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="_warehouseWarehousesLabel" Content="Warehouses" Margin="36,10,0,0" FontSize="36" Foreground="White" FontFamily="Arial Black" HorizontalAlignment="Left" Width="250" Height="56" VerticalAlignment="Top"/>
+                <Label x:Name="_createWarehouseButton" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="36,0,0,16" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="Create" Height="51" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="156" MouseDown="_createWarehouseButton_MouseDown"/>
+                <ListBox x:Name="_warehouseListBox" Background="#FF111111" Foreground="White" BorderBrush="#FF111111" FontFamily="Arial Black" RenderTransformOrigin="0.5,0.5" Margin="36,78,764,0" Width="700" Height="476" VerticalAlignment="Top">
+                    <ListBox.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleX="-0.186"/>
+                            <RotateTransform/>
+                            <TranslateTransform X="-0.797"/>
+                        </TransformGroup>
+                    </ListBox.RenderTransform>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <ContentPresenter/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="#333333" BorderThickness="0,0,0,1" Padding="10" HorizontalAlignment="Stretch">
+                                <Grid HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock FontSize="18" FontWeight="Bold" Foreground="White" Text="{Binding WarehouseId, StringFormat='{}{0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding WarehouseName}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding Capacity, StringFormat='Capacity: {0}'}" FontFamily="Arial Black"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                            <TextBlock Text="Delete" Cursor="Hand" FontSize="18" Foreground="White" Margin="0,0,15,0" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseLeftButtonDown="deleteWarehouseEntity">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground" Value="White"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Foreground" Value="Yellow"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                            <TextBlock Text="Edit" Cursor="Hand" FontSize="18" Foreground="White" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseLeftButtonDown="editWarehouseEntity">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground" Value="White"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Foreground" Value="Yellow"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Label x:Name="_warehouseStockssLabel" Content="Stocks" Margin="766,10,484,0" FontSize="36" Foreground="White" FontFamily="Arial Black" Height="56" VerticalAlignment="Top"/>
+                <Label x:Name="_createStockButton" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="766,0,0,16" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="Create" Height="51" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="156" MouseDown="_createStockButton_MouseDown"/>
+                <ListBox x:Name="_stockListBox" Background="#FF111111" Foreground="White" BorderBrush="#FF111111" FontFamily="Arial Black" RenderTransformOrigin="0.5,0.5" Margin="764,78,36,0" Width="700" Height="476" VerticalAlignment="Top">
+                    <ListBox.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleX="-0.186"/>
+                            <RotateTransform/>
+                            <TranslateTransform X="-0.797"/>
+                        </TransformGroup>
+                    </ListBox.RenderTransform>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <ContentPresenter/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="#333333" BorderThickness="0,0,0,1" Padding="10" HorizontalAlignment="Stretch">
+                                <Grid HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <!-- Информация -->
+                                        <StackPanel Grid.Column="0">
+
+                                            <TextBlock FontSize="18"
+        FontWeight="Bold"
+        Text="{Binding warehouse}" />
+
+                                            <TextBlock FontSize="14"
+        Text="{Binding stock, StringFormat=have \{0\}}" />
+
+                                            <TextBlock FontSize="14"
+        Text="{Binding product}" />
+
+
+
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                            <TextBlock Text="Delete" Cursor="Hand" FontSize="18" Foreground="White" Margin="0,0,15,0" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseLeftButtonDown="deleteStockEntity">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground" Value="White"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Foreground" Value="Yellow"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                            <TextBlock Text="Edit" Cursor="Hand" FontSize="18" Foreground="White" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseLeftButtonDown="editStockEntity">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground" Value="White"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Foreground" Value="Yellow"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+
+            <!-- ==================== TRANSACTION ==================== -->
+            <Grid x:Name="_warehouseManagementTransactionGrid" Background="#FF1F1F1F" Margin="0,58,0,-5" Visibility="Collapsed">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="_warehouseManagementTransfersTransactionTitle" Content="Write-off products into production" Margin="40,10,599,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black" Height="56"/>
+                <ListBox x:Name="_warehouseManagementTransfersTransactionListBox" Margin="36,78,36,0" Background="#FF111111" Foreground="White" BorderBrush="#FF111111" FontFamily="Arial Black" RenderTransformOrigin="0.5,0.5" Height="476" VerticalAlignment="Top">
+                    <ListBox.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleX="-0.186"/>
+                            <RotateTransform/>
+                            <TranslateTransform X="-0.797"/>
+                        </TransformGroup>
+                    </ListBox.RenderTransform>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <ContentPresenter/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="#333333" BorderThickness="0,0,0,1" Padding="10" HorizontalAlignment="Stretch">
+                                <Grid HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock FontSize="18" FontWeight="Bold" Foreground="White" Text="{Binding IssueDate, StringFormat='Date: {0:dd.MM.yyyy}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding TransferTransactionId, StringFormat='ID: {0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding TransferOrderId, StringFormat='Transfer Order Id: {0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding WarehouseName}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding TransactionType}" FontFamily="Arial Black"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+
+            <!-- ==================== ROUTES ==================== -->
+            <Grid x:Name="_warehouseManagementRoutesGrid" Background="#FF1F1F1F" Margin="0,58,0,-5" Visibility="Collapsed">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="_warehouseRoutesLabel" Content="Routes" Margin="36,10,0,0" FontSize="36" Foreground="White" FontFamily="Arial Black" HorizontalAlignment="Left" Width="404" Height="56" VerticalAlignment="Top"/>
+                <Label x:Name="_createRouteButton" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="36,0,1313,16" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="Create" Height="51" VerticalAlignment="Bottom" MouseDown="_createRouteButton_MouseDown"/>
+                <ListBox x:Name="_routeListBox" Background="#FF111111" Foreground="White" BorderBrush="#FF111111" FontFamily="Arial Black" RenderTransformOrigin="0.5,0.5" Margin="36,78,36,0" Height="476" VerticalAlignment="Top">
+                    <ListBox.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleX="-0.186"/>
+                            <RotateTransform/>
+                            <TranslateTransform X="-0.797"/>
+                        </TransformGroup>
+                    </ListBox.RenderTransform>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <ContentPresenter/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="#333333" BorderThickness="0,0,0,1" Padding="10" HorizontalAlignment="Stretch">
+                                <Grid HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock FontSize="18" FontWeight="Bold" Foreground="White" Text="{Binding routeId, StringFormat='{}{0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding startWarehouse, StringFormat='Start Warehouse: {0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding finishWarehouse, StringFormat='Finish Warehouse: {0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding routeTime, StringFormat='Travel Time: {0}'}" FontFamily="Arial Black"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                            <TextBlock Text="Delete" Cursor="Hand" FontSize="18" Foreground="White" Margin="0,0,15,0" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseLeftButtonDown="deleteRouteEntity">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground" Value="White"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Foreground" Value="Yellow"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                            <TextBlock Text="Edit" Cursor="Hand" FontSize="18" Foreground="White" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseLeftButtonDown="editRouteEntity">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground" Value="White"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Foreground" Value="Yellow"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+
+            <!-- ==================== TRANSIT WAREHOUSES ==================== -->
+            <Grid x:Name="_warehouseManagementTransitWarehousesGrid" Background="#FF1F1F1F" Margin="0,58,0,-5" Visibility="Collapsed">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="_warehouseTransitLabel" Content="Transit Warehouses" Margin="36,10,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black" Height="56" HorizontalAlignment="Left" Width="350"/>
+                <Label x:Name="_createTransitButton" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="36,0,0,16" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="Create" Height="51" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="159" MouseDown="_createTransitButton_MouseDown"/>
+                <ListBox x:Name="_transitListBox" Background="#FF111111" Foreground="White" BorderBrush="#FF111111" FontFamily="Arial Black" RenderTransformOrigin="0.5,0.5" Margin="36,78,36,0" Height="476" VerticalAlignment="Top">
+                    <ListBox.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleX="-0.186"/>
+                            <RotateTransform/>
+                            <TranslateTransform X="-0.797"/>
+                        </TransformGroup>
+                    </ListBox.RenderTransform>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <ContentPresenter/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="#333333" BorderThickness="0,0,0,1" Padding="10" HorizontalAlignment="Stretch">
+                                <Grid HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock FontSize="18" FontWeight="Bold" Foreground="White" Text="{Binding TransitWarehouseId, StringFormat='{}{0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding Capacity, StringFormat='Capacity: {0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding RouteId, StringFormat='Route ID: {0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding TypeTransit, StringFormat='Transit Type: {0}'}" FontFamily="Arial Black"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                            <TextBlock Text="Delete" Cursor="Hand" FontSize="18" Foreground="White" Margin="0,0,15,0" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseLeftButtonDown="deleteTransitWarehouseEntity">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground" Value="White"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Foreground" Value="Yellow"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                            <TextBlock Text="Edit" Cursor="Hand" FontSize="18" Foreground="White" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseLeftButtonDown="editTransitWarehouseEntity">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground" Value="White"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Foreground" Value="Yellow"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </Grid>
+
+        <Grid x:Name="_productionStagesManagementGrid" Visibility="Collapsed">
+
+            <Grid x:Name="_productionStagesManagementCreateOrderGrid" Margin="0,53,0,0" Background="#FF1F1F1F">
+                <Label x:Name="_productionStageLabel" Content="Production Stages" Margin="36,10,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black" Height="56" HorizontalAlignment="Left" Width="732"/>
+                <Label
+                    x:Name="_createStageButton" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="36,564,-189,0" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="Create" VerticalAlignment="Top"/>
+                <ListBox x:Name="_stageListBox"
+                    Background="#FF111111"
+                    Foreground="White"
+                    BorderBrush="#FF111111"
+                    FontFamily="Arial Black" RenderTransformOrigin="0.5,0.5" Height="476" VerticalAlignment="Center" HorizontalAlignment="Center" Width="1428">
+                    <ListBox.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleX="-0.186"/>
+                            <RotateTransform/>
+                            <TranslateTransform X="-0.797"/>
+                        </TransformGroup>
+                    </ListBox.RenderTransform>
+
+
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <ContentPresenter/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="#333333"
+                                BorderThickness="0,0,0,1"
+                                Padding="10"
+                                HorizontalAlignment="Stretch">
+
+                                <Grid HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Информация -->
+                                        <StackPanel Grid.Column="0">
+
+                                            <TextBlock FontSize="18"
+                                                FontWeight="Bold"
+                                                Text="{Binding WarehouseName}" />
+
+                                            <TextBlock FontSize="14"
+                                                Text="{Binding WarehouseId, StringFormat=\{0\}}" />
+
+                                            <TextBlock FontSize="14"
+                                                Text="{Binding Capacity, StringFormat=Capacity: \{0\}}" />
+
+
+
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="1"
+                                            Orientation="Horizontal"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top">
+
+                                            <TextBlock Text="Delete"
+                                                Cursor="Hand"
+                                                FontSize="18"
+                                                Margin="0,0,15,0"
+                                                MouseLeave="someButton_MouseLeaveWhite" 
+                                                MouseEnter="someButton_MouseEnterYellow">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground"
+                                                            Value="White"/>
+
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver"
+                                                                Value="True">
+                                                                <Setter Property="Foreground"
+                                                                    Value="Yellow"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+
+                                            <TextBlock Text="Edit"
+                                                Cursor="Hand"
+                                                FontSize="18"
+                                                MouseLeave="someButton_MouseLeaveWhite" 
+                                                MouseEnter="someButton_MouseEnterYellow">
+
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground"
+                                                            Value="White"/>
+
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver"
+                                                                Value="True">
+                                                                <Setter Property="Foreground"
+                                                                    Value="Yellow"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Label x:Name="_productionProductLabel" Content="Products" Margin="36,10,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black" Height="56" HorizontalAlignment="Left" Width="732"/>
+                <Label
+                    x:Name="_createProductButton" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="36,564,1311,0" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="Create" VerticalAlignment="Top"/>
+                <ListBox x:Name="_productListBox"
+                    Background="#FF111111"
+                    Foreground="White"
+                    BorderBrush="#FF111111"
+                    FontFamily="Arial Black" RenderTransformOrigin="0.5,0.5" Height="476" VerticalAlignment="Center" HorizontalAlignment="Center" Width="1428">
+                    <ListBox.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleX="-0.186"/>
+                            <RotateTransform/>
+                            <TranslateTransform X="-0.797"/>
+                        </TransformGroup>
+                    </ListBox.RenderTransform>
+
+
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <ContentPresenter/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="#333333"
+                                BorderThickness="0,0,0,1"
+                                Padding="10"
+                                HorizontalAlignment="Stretch">
+
+                                <Grid HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Информация -->
+                                        <StackPanel Grid.Column="0">
+
+                                            <TextBlock FontSize="18"
+                                                FontWeight="Bold"
+                                                Text="{Binding WarehouseName}" />
+
+                                            <TextBlock FontSize="14"
+                                                Text="{Binding WarehouseId, StringFormat=\{0\}}" />
+
+                                            <TextBlock FontSize="14"
+                                                Text="{Binding Capacity, StringFormat=Capacity: \{0\}}" />
+
+
+
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="1"
+                                            Orientation="Horizontal"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top">
+
+                                            <TextBlock Text="Delete"
+                                                Cursor="Hand"
+                                                FontSize="18"
+                                                Margin="0,0,15,0"
+                                                MouseLeave="someButton_MouseLeaveWhite" 
+                                                MouseEnter="someButton_MouseEnterYellow">
+
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground"
+                                                            Value="White"/>
+
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver"
+                                                                Value="True">
+                                                                <Setter Property="Foreground"
+                                                                    Value="Yellow"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+
+                                            <TextBlock Text="Edit"
+                                                Cursor="Hand"
+                                                FontSize="18"
+                                                MouseLeave="someButton_MouseLeaveWhite" 
+                                                MouseEnter="someButton_MouseEnterYellow">
+
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground"
+                                                            Value="White"/>
+
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver"
+                                                                Value="True">
+                                                                <Setter Property="Foreground"
+                                                                    Value="Yellow"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Label Width="732" VerticalAlignment="Top" x:Name="_productionReleaseProductLabel" Margin="36,10,0,0" Height="56" HorizontalAlignment="Left" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="Release product doucuments"
+          />
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

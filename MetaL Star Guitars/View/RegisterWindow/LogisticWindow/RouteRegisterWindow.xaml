@@ -1,0 +1,54 @@
+﻿<Window x:Class="MetaL_Star_Guitars.View.RegisterWindow.RouteRegisterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Route" Height="530" Width="758" Background="#FF252525">
+
+    <Grid x:Name="_mainGrid">
+
+        <Label x:Name="_warehouseManagementRoutesTitleLabel" Content="Route" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black" Height="56" HorizontalAlignment="Left" Width="740"/>
+
+        <Label x:Name="_warehouseManagementRouteStartWarehouseTitleLabel" Content="Start warehouse" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black" Width="324"/>
+
+        <Label x:Name="_warehouseManagementRouteFinishWarehouseTitleLabel" Content="Finish warehouse" Margin="10,123,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black" HorizontalAlignment="Left" Width="324"/>
+        <Label
+                    Grid.Row="0" x:Name="_warehouseManagementRouteRouteIdTitleLabel" Margin="10,210,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Route ID" Grid.Column="0" Height="38" VerticalAlignment="Top" HorizontalAlignment="Left" Width="324"/>
+        <Label
+                    Grid.Row="0" x:Name="_warehouseManagementRouteRouteIdLabel" Margin="339,210,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="1" HorizontalAlignment="Left" Width="378" Height="38" VerticalAlignment="Top"/>
+        <Label
+                    x:Name="_warehouseManagementRouteRegisterButtonLabel" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="11,417,0,0" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="Register" VerticalAlignment="Top" HorizontalAlignment="Left" Width="324" MouseDown="_warehouseManagementRouteRegisterButtonLabel_MouseDown"/>
+        <Label
+                    x:Name="_warehouseManagementWarehouseWarehouseCancelButtonLabel1" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="340,417,0,0" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="Cancel" VerticalAlignment="Top" HorizontalAlignment="Left" Width="379" MouseDown="warehouseManagementWarehouseWarehouseCancelButtonLabel_MouseDown"/>
+        <Label x:Name="_warehouseManagementRouteTravelTimeTitleLabel" Content="Travel Time" Margin="11,166,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black" HorizontalAlignment="Left" Width="324"/>
+        <TextBox x:Name="_warehouseManagementRouteTimeTextBox" HorizontalAlignment="Left" Margin="340,169,0,0" VerticalAlignment="Top" Width="379" FontSize="22" FontFamily="Arial Black" Height="31"/>
+        <Label
+                    Grid.Row="0" x:Name="_warehouseManagementRouteTransitWarehouseTitleLabel" Margin="10,255,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Transit warehouses" Grid.Column="0" Height="38" VerticalAlignment="Top" HorizontalAlignment="Left" Width="324"/>
+        <ListBox x:Name="_transitWarehousesListBox" Margin="336,255,0,0" Background="#FF111111" Foreground="White" BorderBrush="#FF111111" HorizontalAlignment="Left" Width="387" FontFamily="Arial Black" d:ItemsSource="{d:SampleData ItemCount=5}" Height="137" VerticalAlignment="Top">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Width="356">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="280" />
+                        </Grid.ColumnDefinitions>
+
+                        <CheckBox Grid.Column="0" Margin="0,0,10,0" IsChecked="{Binding IsSelected, Mode=TwoWay}" />
+
+                        <TextBlock Grid.Column="1" 
+                                    Text="{Binding TransitWarehouseDescribe}" 
+                                    FontSize="18" Margin="0,0,12,0"
+                           
+                                    TextTrimming="CharacterEllipsis" 
+
+                                    ToolTip="{Binding ProductDescribe}" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <ComboBox x:Name="_warehouseManagementRouteStartWarehouseComboBox" HorizontalAlignment="Left" Margin="340,83,0,0" Width="379" Background="#FF161616" FontSize="22" FontFamily="Arial Black" Height="31" VerticalAlignment="Top"/>
+        <ComboBox x:Name="_warehouseManagementRouteFinishWarehouseComboBox" HorizontalAlignment="Left" Margin="340,126,0,0" Width="379" Background="#FF161616" FontSize="22" FontFamily="Arial Black" Height="31" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

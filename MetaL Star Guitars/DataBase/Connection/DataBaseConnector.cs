@@ -5,7 +5,7 @@ using System.IO;
 
 namespace MetaL_Star_Guitars.DataBase.Connection;
 
-class DataBaseConnector : DbContext
+public class DataBaseConnector : DbContext
 {
     public DbSet<production_order_entity> ProductionOrders { get; set; }
     public DbSet<product_entity> Products { get; set; }

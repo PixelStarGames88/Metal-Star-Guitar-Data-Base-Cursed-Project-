@@ -1,19 +1,40 @@
-﻿using MetaL_Star_Guitars.DataBase.Entities;
+﻿using MetaL_Star_Guitars.DataBase.Connection;
+using MetaL_Star_Guitars.DataBase.Entities;
+using System;
+using System.Collections.Generic;
+using System.Data.Common;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
-namespace MetaL_Star_Guitars;
+namespace MetaL_Star_Guitars.View.RegisterWindow.ProductionWindow;
 
-public partial class MainWindow : Window
+/// <summary>
+/// Логика взаимодействия для ProductionOrderRegister.xaml
+/// </summary>
+public partial class ProductionOrderRegister : Window
 {
-    private void productionStagesManagementCreateOrderButton_MouseDown(object sender, MouseButtonEventArgs e)
+
+    private DataBaseConnector dbConnector;
+    public ProductionOrderRegister(DataBaseConnector dateBaseConnector)
     {
-        _productionStagesManagementReleaseProductsGrid.Visibility = Visibility.Collapsed;
-        _warehouseManagementWriteOffToProductionGrid.Visibility = Visibility.Visible;
-        productionStagesManagementCreateOrderCancelButtonLabel_MouseDown(sender, e);
-        fillForStageComboBoxProductionStagesManagement();
-        fillProductComboBoxProductionStagesManagement();
+        InitializeComponent();
+        dbConnector = dateBaseConnector;
+
+    }
+    private void someButton_MouseEnterYellow(object sender, MouseEventArgs e)
+    {
+        if (sender is Label label) label.Foreground = Brushes.Yellow;
+    }
+    private void someButton_MouseLeaveWhite(object sender, MouseEventArgs e)
+    {
+        if (sender is Label label) label.Foreground = Brushes.White;
     }
     private void fillForStageComboBoxProductionStagesManagement()
     {
@@ -98,7 +119,6 @@ public partial class MainWindow : Window
     private void fill_productionOrdersListBox()
     {
         var orders = dbConnector.ProductionOrders.ToList();
-        _productionOrdersManagementOrdersListBox.ItemsSource = orders;
     }
 
     private void SaveOrUpdateProductionOrder(int orderId, int productId, int stageId, int quantity)
@@ -184,5 +204,4 @@ public partial class MainWindow : Window
             }
         }
     }
-
 }

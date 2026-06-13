@@ -1,0 +1,37 @@
+﻿<Window x:Class="MetaL_Star_Guitars.View.RegisterWindow.ProductionWindow.ProductionOrderRegister"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MetaL Star Guitars" Height="406" Width="774" Background="#FF252525">
+
+    <Grid x:Name="_mainGrid">
+
+        <Label x:Name="_productionStagesManagementCreateOrderTitleLabel" Content="Making a production order" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black"/>
+
+        <Label x:Name="_productionStagesManagementCreateOrderForStageLabel" Content="For production stage" HorizontalAlignment="Left" Margin="10,92,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+        <ComboBox x:Name="_productionStagesManagementCreateOrderForStageComboBox" HorizontalAlignment="Left" Margin="332,95,0,0" VerticalAlignment="Top" Width="388" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
+
+        <Label x:Name="_productionStagesManagementCreateOrderProductLabel" Content="Product" HorizontalAlignment="Left" Margin="10,136,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+        <ComboBox x:Name="_productionStagesManagementCreateOrderProductComboBox" Margin="332,138,0,0" HorizontalAlignment="Left" Width="305" VerticalAlignment="Top" Background="#FF161616" FontSize="22" FontFamily="Arial Black" SelectionChanged="productionStagesManagementCreateOrderProductComboBox_SelectionChanged"/>
+        <TextBox x:Name="_productionStagesManagementCreateOrderQuantityTextBox" HorizontalAlignment="Left" Margin="642,138,0,0" VerticalAlignment="Top" Width="78" FontSize="22" FontFamily="Arial Black" Height="31"/>
+        <Label
+                        x:Name="_productionStagesManagementCreateOrderToOrderButtonLabel" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="10,325,0,0" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="To order" HorizontalAlignment="Left" Width="236" Height="51" VerticalAlignment="Top" MouseDown="productionStagesManagementCreateOrderToOrderButtonLabel_MouseDown"/>
+        <Label
+                        x:Name="_productionStagesManagementCreateOrderCancelButtonLabel" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="332,325,0,0" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="Cancel" Height="51" VerticalAlignment="Top" MouseDown="productionStagesManagementCreateOrderCancelButtonLabel_MouseDown" HorizontalAlignment="Left" Width="145"/>
+        <Label
+                        Grid.Row="0" x:Name="_productionStagesManagementCreateOrderIdTitleLabel" Margin="10,179,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Document ID" HorizontalAlignment="Left" Width="307" Height="38" VerticalAlignment="Top"/>
+        <Label
+                        Grid.Row="0" x:Name="_productionStagesManagementCreateOrderDocumentIdLabel" Margin="332,179,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="1" HorizontalAlignment="Left" Width="378" Height="38" VerticalAlignment="Top"/>
+        <Label
+                        x:Name="_productionStagesManagementCreateOrderStatusTitleLabel" Margin="10,222,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Status" HorizontalAlignment="Left" Width="307" Height="37" VerticalAlignment="Top"/>
+        <Label
+                        x:Name="_productionStagesManagementCreateOrderDateTitleLabel" Margin="10,264,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Date" HorizontalAlignment="Left" Width="307" Height="38" VerticalAlignment="Top"/>
+        <Label
+                        x:Name="_productionStagesManagementCreateOrderDateLabel" Margin="332,264,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="17.05.2026" Height="38" VerticalAlignment="Top" HorizontalAlignment="Left" Width="378"/>
+        <Label
+                        Grid.Row="0" x:Name="_productionStagesManagementCreateOrderStatusLabel" Margin="332,221,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Open" HorizontalAlignment="Left" Width="378" Height="38" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

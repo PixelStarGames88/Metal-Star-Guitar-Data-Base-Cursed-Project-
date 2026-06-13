@@ -9,7 +9,7 @@ public class transfer_order_content_entity
     public int Quantity { get; set; }
 
     [Column("transfer_order_id")]
-    public int TransferOrderId { get; set; }
+    public int? TransferOrderId { get; set; }
 
     [Column("product_id")]
     public int ProductId { get; set; }

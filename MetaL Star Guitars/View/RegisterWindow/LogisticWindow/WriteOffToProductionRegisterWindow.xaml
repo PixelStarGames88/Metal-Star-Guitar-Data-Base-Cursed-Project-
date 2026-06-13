@@ -1,0 +1,40 @@
+﻿<Window x:Class="MetaL_Star_Guitars.View.RegisterWindow.WriteOffToProductionRegister"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MetaL Star Guitars" Height="466" Width="831" Background="#FF252525">
+
+    <Grid x:Name="_mainGrid" Margin="0,0,10,0">
+        <Label x:Name="_warehouseManagementWriteOffToProductionTitleLabel" Content="Write-off products into production" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black" Height="56" HorizontalAlignment="Left" Width="721"/>
+
+        <Label x:Name="_warehouseManagementWriteOffToProductionForOrderLabel" Content="For order" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+        <ComboBox x:Name="_warehouseManagementWriteOffToProductionForOrderComboBox" HorizontalAlignment="Left" Margin="332,93,0,0" VerticalAlignment="Top" Width="379" Background="White" FontSize="22" FontFamily="Arial Black" Foreground="Black"/>
+
+        <Label x:Name="_warehouseManagementWriteOffToProductionFromWarehouseLabel" Content="From warehouse" Margin="10,133,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black" HorizontalAlignment="Left" Width="294"/>
+        <ComboBox x:Name="_warehouseManagementWriteOffToProductionFromWarehouseComboBox" HorizontalAlignment="Left" Margin="332,136,0,0" VerticalAlignment="Top" Width="379" Background="White" FontSize="22" FontFamily="Arial Black" SelectionChanged="warehouseManagementWriteOffToProductionForOrderComboBox_SelectionChanged"/>
+
+        <Label x:Name="_warehouseManagementWriteOffToProductionProductLabel" Content="Product" Margin="10,176,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black" HorizontalAlignment="Left" Width="294"/>
+        <ComboBox x:Name="_warehouseManagementWriteOffToProductionProductComboBox" Margin="332,179,0,0" HorizontalAlignment="Left" Width="180" VerticalAlignment="Top" Background="#FF161616" FontSize="22" FontFamily="Arial Black" SelectionChanged="warehouseManagementWriteOffToProductionProductComboBox_SelectionChanged"/>
+        <TextBox x:Name="_warehouseManagementWriteOffToProductionQuantityTextBox" HorizontalAlignment="Left" Margin="517,179,0,0" VerticalAlignment="Top" Width="69" FontSize="22" FontFamily="Arial Black" Height="31"/>
+        <Label x:Name="_warehouseManagementWriteOffToProductionLimitLabel" Content=" &lt; 0 pcs." Margin="591,176,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black" HorizontalAlignment="Left" Width="140"/>
+        <Label
+                x:Name="_warehouseManagementWriteOffToProductionToWriteOffButtonLabel" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="10,375,0,0" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="To write-off" HorizontalAlignment="Left" VerticalAlignment="Top" Width="307" MouseDown="warehouseManagementWriteOffToProductionToWriteOffButtonLabel_MouseDown"/>
+        <Label
+                x:Name="_warehouseManagementWriteOffToProductionCancelButtonLabel" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="333,375,0,0" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="Cancel" VerticalAlignment="Top" HorizontalAlignment="Left" Width="378" MouseDown="warehouseManagementWriteOffToProductionCancelButtonLabel_MouseDown"/>
+        <Label
+                Grid.Row="0" x:Name="_warehouseManagementWriteOffToProductionDocumentIdTitleLabel" Margin="10,219,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Document ID" Grid.Column="0" HorizontalAlignment="Left" Width="307" Height="38" VerticalAlignment="Top"/>
+        <Label
+                Grid.Row="0" x:Name="_warehouseManagementWriteOffToProductionDocumentIdLabel" Margin="332,219,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="1" HorizontalAlignment="Left" Width="378" Height="38" VerticalAlignment="Top"/>
+        <Label
+                x:Name="_warehouseManagementWriteOffToProductionTypeTitleLabel" Margin="10,262,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Type" Grid.Column="0" Height="37" VerticalAlignment="Top" HorizontalAlignment="Left" Width="307"/>
+        <Label
+                x:Name="_warehouseManagementWriteOffToProductionTypeLabel" Margin="332,262,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Write-off to production" HorizontalAlignment="Left" Width="378" Height="37" VerticalAlignment="Top"/>
+        <Label
+                x:Name="_warehouseManagementWriteOffToProductionDateTitleLabel" Margin="10,304,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Date" Grid.Column="0" Height="38" VerticalAlignment="Top" HorizontalAlignment="Left" Width="307"/>
+        <Label
+                x:Name="_warehouseManagementWriteOffToProductionDateLabel" Margin="332,304,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="18:45 17.05.2026" Height="38" VerticalAlignment="Top" HorizontalAlignment="Left" Width="378"/>
+
+    </Grid>
+</Window>

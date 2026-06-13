@@ -10,18 +10,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace MetaL_Star_Guitars
+namespace MetaL_Star_Guitars.View.RegisterWindow.ProductionWindow
 {
     /// <summary>
-    /// Логика взаимодействия для MessageWindow.xaml
+    /// Логика взаимодействия для ProductionStageRegisterWindow.xaml
     /// </summary>
-    public partial class MessageWindow : Window
+    public partial class ProductionStageRegisterWindow : Window
     {
-        public MessageWindow(string title, string message)
+        public ProductionStageRegisterWindow()
         {
             InitializeComponent();
-            this.Title = title;
-            _authorizationWelcomeLabel.Content = message;
         }
         private void someButton_MouseEnterYellow(object sender, MouseEventArgs e)
         {
@@ -30,11 +28,6 @@ namespace MetaL_Star_Guitars
         private void someButton_MouseLeaveWhite(object sender, MouseEventArgs e)
         {
             if (sender is Label label) label.Foreground = Brushes.White;
-        }
-
-        private void authorizationEnterButton_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            this.Close();
         }
     }
 }

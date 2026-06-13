@@ -1,0 +1,28 @@
+﻿<Window x:Class="MetaL_Star_Guitars.ProductRegisterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MetaL Star Guitars" Height="329" Width="790" Background="#FF252525">
+
+    <Grid x:Name="_mainGrid">
+
+        <Label x:Name="_productionStagesManagementProductTitleLabel1" Content="Making products" HorizontalAlignment="Left" Margin="30,10,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black"/>
+
+        <Label x:Name="_productionStagesManagementProductsProductNameTitleLabel" Content="Product name" HorizontalAlignment="Left" Margin="30,79,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black" RenderTransformOrigin="0.518,0.24"/>
+
+        <Label x:Name="_productionStagesManagementProductsPriceTitleLabel" Content="Price" HorizontalAlignment="Left" Margin="30,123,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+        <TextBox x:Name="_productionStagesManagementProductsPriceTextBox" HorizontalAlignment="Left" Margin="352,125,0,0" VerticalAlignment="Top" Width="388" FontSize="22" FontFamily="Arial Black" Height="31"/>
+        <Label
+                        x:Name="_productionStagesManagementProductRegisterButtonLabel" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="30,238,0,0" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="Register" HorizontalAlignment="Left" Width="236" Height="51" VerticalAlignment="Top"/>
+        <Label
+                        x:Name="_productionStagesManagementProductCancelButtonLabel" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="352,238,0,0" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="Cancel" Height="51" VerticalAlignment="Top" HorizontalAlignment="Left" Width="145"/>
+        <Label
+                        Grid.Row="0" x:Name="_productionStagesManagementProductProductIdTitleLabel" Margin="30,172,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Document ID" Grid.Column="0" HorizontalAlignment="Left" Width="307" Height="38" VerticalAlignment="Top"/>
+        <Label
+                        Grid.Row="0" x:Name="_productionStagesManagementProductProductIdLabel" Margin="352,172,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="1" HorizontalAlignment="Left" Width="388" Height="38" VerticalAlignment="Top"/>
+        <TextBox x:Name="_productionStagesManagementProductsProductsNameTextBox" HorizontalAlignment="Left" Margin="352,82,0,0" VerticalAlignment="Top" Width="388" FontSize="22" FontFamily="Arial Black" Height="31"/>
+
+    </Grid>
+</Window>
