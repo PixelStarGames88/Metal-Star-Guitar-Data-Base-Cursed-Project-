@@ -36,4 +36,5 @@ public partial class MessageWindow : Window
     {
         this.Close();
     }
+
 }

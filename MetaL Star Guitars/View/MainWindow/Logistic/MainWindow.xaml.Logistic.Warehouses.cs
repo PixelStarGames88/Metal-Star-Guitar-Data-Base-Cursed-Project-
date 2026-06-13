@@ -25,6 +25,28 @@ public partial class MainWindow : Window
 
         _warehouseListBox.ItemsSource = documents;
     }
+    private void editWarehouseEntity(object sender, MouseButtonEventArgs e)
+    {
+        dynamic item = (sender as TextBlock)?.DataContext ?? throw new NullReferenceException();
+        int warehouseId = item.WarehouseId;
+        var entity = dbConnector.Warehouses.FirstOrDefault(x => x.WarehouseId == warehouseId);
+        if (entity != null)
+        {
+            var w = new WarehouseRegisterWindow(dbConnector);
+            w._warehouseManagementWarehouseWarehouseIdLabel.Content = entity.WarehouseId;
+            w._warehouseManagementWarehouseWarehouseNameTextBox.Text = entity.WarehouseName;
+            w._warehouseManagementWarehouseCapacityTextBox.Text = entity.Capacity.ToString();
+            w.Show();
+        }
+    }
+    private void deleteWarehouseEntity(object sender, MouseButtonEventArgs e)
+    {
+        dynamic item = (sender as TextBlock)?.DataContext ?? throw new NullReferenceException();
+        int warehouseId = item.WarehouseId;
+        var entity = dbConnector.Warehouses.FirstOrDefault(x => x.WarehouseId == warehouseId);
+        if (entity != null) { dbConnector.Warehouses.Remove(entity); dbConnector.SaveChanges(); fill_WarehouseListBox(); }
+    }
+
     private void _createWarehouseButton_MouseDown(object sender, MouseButtonEventArgs e)
     {
         new WarehouseRegisterWindow(dbConnector).Show();

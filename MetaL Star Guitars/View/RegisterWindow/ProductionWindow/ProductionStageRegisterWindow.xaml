@@ -5,8 +5,57 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MetaL_Star_Guitars.View.RegisterWindow.ProductionWindow"
         mc:Ignorable="d"
-        Title="ProductionStageRegisterWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="MetaL Star Guitars" Height="550" Width="800" Background="#FF252525">
+
+    <Grid x:Name="_mainGrid">
+
+        <Label x:Name="_productionStagesManagementCreateStageTitleLabel" Content="Making a production stage" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black"/>
+
+        <Label x:Name="_productionStagesManagementCreateStageNameLabel" Content="Stage name" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+        <TextBox x:Name="_productionStagesManagementCreateStageNameTextBox" Margin="332,73,30,0" VerticalAlignment="Top" Background="White" Foreground="Black" FontSize="22" FontFamily="Arial Black" Height="31"/>
+
+        <Label x:Name="_productionStagesManagementCreateStageResultProductLabel" Content="Result product" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+        <ComboBox x:Name="_productionStagesManagementCreateStageResultProductComboBox" Margin="332,113,0,0" HorizontalAlignment="Left" Width="438" VerticalAlignment="Top" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
+
+        <Label x:Name="_productionStagesManagementCreateStageIdTitleLabel" Margin="10,155,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="Stage ID" HorizontalAlignment="Left" Width="307" Height="38" VerticalAlignment="Top"/>
+        <Label x:Name="_productionStagesManagementCreateStageIdLabel" Margin="332,155,0,0" FontSize="24" FontFamily="Arial Black" Foreground="White" Content="1" HorizontalAlignment="Left" Width="438" Height="38" VerticalAlignment="Top"/>
+
+        <Label x:Name="_productionStagesManagementCreateStageProductsTitleLabel" Content="Used products" HorizontalAlignment="Left" Margin="10,195,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
+
+        <ListBox x:Name="_productsListBox" Background="#FF111111" Foreground="White" BorderBrush="#FF111111" FontFamily="Arial Black" Margin="10,230,10,80">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="OverridesDefaultStyle" Value="True"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <ContentPresenter/>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="#333333" BorderThickness="0,0,0,1" Padding="5" HorizontalAlignment="Stretch">
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <CheckBox Grid.Column="0" Margin="0,0,10,0" IsChecked="{Binding IsSelected, Mode=TwoWay}" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" FontSize="16" Foreground="White" Text="{Binding ProductDescribe}" FontFamily="Arial Black" VerticalAlignment="Center"/>
+                            <TextBox Grid.Column="2" HorizontalContentAlignment="Center" FontSize="16" Width="70" Text="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="White" Foreground="Black" FontFamily="Arial Black" SelectionBrush="{x:Null}"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Label x:Name="_productionStagesManagementCreateStageRegisterButtonLabel" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="10,470,0,0" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="Register" HorizontalAlignment="Left" Width="236" Height="51" VerticalAlignment="Top" MouseDown="productionStagesManagementCreateStageRegisterButtonLabel_MouseDown"/>
+        <Label x:Name="_productionStagesManagementCreateStageCancelButtonLabel" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="332,470,0,0" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="Cancel" Height="51" VerticalAlignment="Top" MouseDown="productionStagesManagementCreateStageCancelButtonLabel_MouseDown" HorizontalAlignment="Left" Width="145"/>
+
     </Grid>
 </Window>

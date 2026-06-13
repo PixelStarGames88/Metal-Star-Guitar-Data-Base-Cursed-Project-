@@ -6,5 +6,4 @@ namespace MetaL_Star_Guitars;
 public partial class MainWindow : Window
 {
 
-
 }
