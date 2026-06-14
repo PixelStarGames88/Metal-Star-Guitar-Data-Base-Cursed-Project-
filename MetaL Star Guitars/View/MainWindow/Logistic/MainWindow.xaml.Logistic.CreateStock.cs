@@ -12,7 +12,7 @@ namespace MetaL_Star_Guitars;
 
 public partial class MainWindow : Window
 {
-    private void fill_StockListBox()
+    public void fill_StockListBox()
     {
         var stock = dbConnector.Stocks
             .Join

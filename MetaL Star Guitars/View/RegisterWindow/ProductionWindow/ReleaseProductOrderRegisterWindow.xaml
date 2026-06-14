@@ -14,10 +14,10 @@
         <ComboBox x:Name="_productionStagesManagementReleaseProductsToOrderComboBox" HorizontalAlignment="Left" Margin="337,79,0,0" VerticalAlignment="Top" Width="388" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
 
         <Label x:Name="_productionStagesManagementReleaseProductsToWarehouseLabel" Content="To warehouse" HorizontalAlignment="Left" Margin="12,119,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-        <ComboBox x:Name="_productionStagesManagementReleaseProductsToWarehouseComboBox" HorizontalAlignment="Left" Margin="337,122,0,0" VerticalAlignment="Top" Width="388" Background="#FF161616" FontSize="22" FontFamily="Arial Black" SelectionChanged="productionStagesManagementReleaseProductsToWarehouseComboBox_SelectionChanged"/>
+        <ComboBox x:Name="_productionStagesManagementReleaseProductsToWarehouseComboBox" HorizontalAlignment="Left" Margin="337,122,0,0" VerticalAlignment="Top" Width="388" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
 
         <Label x:Name="_productionStagesManagementReleaseProductsProductLabel" Content="Product" HorizontalAlignment="Left" Margin="12,162,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-        <ComboBox x:Name="_productionStagesManagementReleaseProductsProductComboBox" Margin="337,165,0,0" HorizontalAlignment="Left" Width="305" VerticalAlignment="Top" Background="#FF161616" FontSize="22" FontFamily="Arial Black" SelectionChanged="productionStagesManagementReleaseProductsProductComboBox_SelectionChanged"/>
+        <ComboBox x:Name="_productionStagesManagementReleaseProductsProductComboBox" Margin="337,165,0,0" HorizontalAlignment="Left" Width="305" VerticalAlignment="Top" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
         <TextBox x:Name="_productionStagesManagementReleaseProductsQuantityTextBox" HorizontalAlignment="Left" Margin="647,165,0,0" VerticalAlignment="Top" Width="78" FontSize="22" FontFamily="Arial Black" Height="31"/>
         <Label
                         x:Name="_productionStagesManagementReleaseProductsToReleaseButtonLabel" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="10,360,0,0" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="To release" Height="51" VerticalAlignment="Top" HorizontalAlignment="Left" Width="255" MouseDown="productionStagesManagementReleaseProductsToReleaseButtonLabel_MouseDown"/>

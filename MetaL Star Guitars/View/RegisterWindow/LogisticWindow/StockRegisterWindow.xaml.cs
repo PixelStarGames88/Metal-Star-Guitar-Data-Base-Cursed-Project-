@@ -55,7 +55,13 @@ public partial class StockRegisterWindow : Window
         DataBase.Entities.warehouse_entity warehouse = dbConnector.Warehouses.FirstOrDefault(w => w.WarehouseId == warehouseId)!;
         warehouse.WarehouseName = warehouseName;
         warehouse.Capacity = capacity;
+
+        var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+        mainWindow?.fill_StockListBox();
+        new MessageWindow("Message", "Changes are successfull!").Show();
         dbConnector.SaveChanges();
+        this.Close();
+
     }
     private void addNewWarehouse(string warehouseName, int capacity)
     {
@@ -67,7 +73,11 @@ public partial class StockRegisterWindow : Window
                 Capacity = capacity
             }
         );
+        var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+        mainWindow?.fill_StockListBox();
+        new MessageWindow("Message", "Changes are successfull!").Show();
         dbConnector.SaveChanges();
+        this.Close();
     }
 
     private void warehouseManagementWarehouseStockRegisterButtonLabel_MouseDown(object sender, MouseButtonEventArgs e)

@@ -101,7 +101,11 @@ public partial class ProductionStageRegisterWindow : Window
             ResultProductId = resultProductId
         });
 
+        var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+        mainWindow?.fill_StageListBox();
+        new MessageWindow("Message", "Changes are successfull!").Show();
         dbConnector.SaveChanges();
+        this.Close();
     }
     private void update_ProductionStage(int stageId)
     {
@@ -118,7 +122,11 @@ public partial class ProductionStageRegisterWindow : Window
         var oldUsings = dbConnector.ProductUsings.Where(pu => pu.ProductionStageId == stageId).ToList();
         dbConnector.ProductUsings.RemoveRange(oldUsings);
 
+        var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+        mainWindow?.fill_StageListBox();
+        new MessageWindow("Message", "Changes are successfull!").Show();
         dbConnector.SaveChanges();
+        this.Close();
     }
     private void add_newProductUsings(int stageId)
     {

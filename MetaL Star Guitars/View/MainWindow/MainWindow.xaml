@@ -156,12 +156,13 @@
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0">
-                                            <TextBlock FontSize="18" FontWeight="Bold" Foreground="White" Text="{Binding orderId, StringFormat='{}{0}'}" FontFamily="Arial Black"/>
-                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding orderStartData, StringFormat='Date: {0:dd.MM.yyyy}'}" FontFamily="Arial Black"/>
-                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding orderStatus, StringFormat='Status: {0}'}" FontFamily="Arial Black"/>
-                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding orderFinishData, StringFormat='Estimated Delivery: {0:dd.MM.yyyy}'}" FontFamily="Arial Black"/>
-                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding senderWarehouse, StringFormat='Sender Warehouse: {0}'}" FontFamily="Arial Black"/>
-                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding recipientWarehouse, StringFormat='Recipient Warehouse: {0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="18" FontWeight="Bold" Foreground="White" Text="{Binding documentId, StringFormat='{}{0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding documentType, StringFormat='Type: {0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding documentDate, StringFormat='Date: {0:dd.MM.yyyy HH:mm}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding documentQuantity, StringFormat='Quantity: {0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding product, StringFormat='Product: {0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding warehouse, StringFormat='Warehouse: {0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding productionStage, StringFormat='Production Stage: {0}'}" FontFamily="Arial Black"/>
                                         </StackPanel>
                                         <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                                             <TextBlock Text="Delete" Cursor="Hand" FontSize="18" Foreground="White" Margin="0,0,15,0" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseLeftButtonDown="deleteWriteOffEntity">
@@ -589,10 +590,10 @@
             <!-- Навигационная панель -->
             <Grid x:Name="_productionStagesManagementNavigationGrid" Height="53" VerticalAlignment="Top">
                 <Label x:Name="_productionStagesManagementStagesButton" Content="Stages" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="15,10,0,0" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="productionStagesManagementStagesButton_MouseDown" HorizontalAlignment="Left" Width="135" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
-                <Label x:Name="_productionStagesManagementProductsButton" Content="Products" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="productionStagesManagementProductsButton_MouseDown" Width="135" HorizontalAlignment="Left" Margin="160,10,0,0" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
-                <Label x:Name="_productionStagesManagementReleaseProductButton" Content="Release product documents" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="productionStagesManagementReleaseProductButton_MouseDown" Width="350" HorizontalAlignment="Left" Margin="305,10,0,0" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
-                <Label x:Name="_productionStagesManagementProductionOrdersButton" Content="Production Orders" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="productionStagesManagementProductionOrdersButton_MouseDown" Width="250" HorizontalAlignment="Left" Margin="665,10,0,0" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
-                <Label x:Name="_productionStagesManagementExitToMenuButton" Content="Exit to menu" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" Margin="1252,10,0,0" MouseDown="productionStagesManagementExitToMenuButton_MouseDown" HorizontalAlignment="Left" Width="176" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
+                <Label x:Name="_productionStagesManagementProductsButton" Content="Products" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="productionStagesManagementProductsButton_MouseDown" Width="135" HorizontalAlignment="Left" Margin="134,10,0,0" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top" RenderTransformOrigin="0.418,0.501"/>
+                <Label x:Name="_productionStagesManagementReleaseProductButton" Content="Release product documents" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="productionStagesManagementReleaseProductButton_MouseDown" Width="350" HorizontalAlignment="Left" Margin="274,10,0,0" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
+                <Label x:Name="_productionStagesManagementProductionOrdersButton" Content="Production Orders" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="productionStagesManagementProductionOrdersButton_MouseDown" Width="250" HorizontalAlignment="Left" Margin="653,10,0,0" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top" RenderTransformOrigin="0.324,0.691"/>
+                <Label x:Name="_productionStagesManagementExitToMenuButton" Content="Exit to menu" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" Margin="914,10,0,0" MouseDown="productionStagesManagementExitToMenuButton_MouseDown" HorizontalAlignment="Left" Width="176" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
             </Grid>
 
             <!-- ==================== STAGES ==================== -->
@@ -791,12 +792,13 @@
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0">
-                                            <TextBlock FontSize="18" FontWeight="Bold" Foreground="White" Text="{Binding orderId, StringFormat='{}{0}'}" FontFamily="Arial Black"/>
-                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding orderStartData, StringFormat='Date: {0:dd.MM.yyyy}'}" FontFamily="Arial Black"/>
-                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding orderStatus, StringFormat='Status: {0}'}" FontFamily="Arial Black"/>
-                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding orderFinishData, StringFormat='Estimated Delivery: {0:dd.MM.yyyy}'}" FontFamily="Arial Black"/>
-                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding senderWarehouse, StringFormat='Sender Warehouse: {0}'}" FontFamily="Arial Black"/>
-                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding recipientWarehouse, StringFormat='Recipient Warehouse: {0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="18" FontWeight="Bold" Foreground="White" Text="{Binding documentId, StringFormat='{}{0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding documentType, StringFormat='Type: {0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding documentDate, StringFormat='Date: {0:dd.MM.yyyy HH:mm}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding documentQuantity, StringFormat='Quantity: {0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding product, StringFormat='Product: {0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding warehouse, StringFormat='Warehouse: {0}'}" FontFamily="Arial Black"/>
+                                            <TextBlock FontSize="14" Foreground="White" Text="{Binding productionStage, StringFormat='Production Stage: {0}'}" FontFamily="Arial Black"/>
                                         </StackPanel>
                                         <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                                             <TextBlock Text="Delete" Cursor="Hand" FontSize="18" Foreground="White" Margin="0,0,15,0" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="deleteReleaseProductEntity">

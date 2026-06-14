@@ -12,7 +12,7 @@
         <Label x:Name="_productionStagesManagementCreateStageTitleLabel" Content="Making a production stage" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" FontFamily="Arial Black"/>
 
         <Label x:Name="_productionStagesManagementCreateStageNameLabel" Content="Stage name" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-        <TextBox x:Name="_productionStagesManagementCreateStageNameTextBox" Margin="332,73,30,0" VerticalAlignment="Top" Background="White" Foreground="Black" FontSize="22" FontFamily="Arial Black" Height="31"/>
+        <TextBox x:Name="_productionStagesManagementCreateStageNameTextBox" Margin="332,73,0,0" VerticalAlignment="Top" Background="White" Foreground="Black" FontSize="22" FontFamily="Arial Black" Height="31" HorizontalAlignment="Left" Width="438"/>
 
         <Label x:Name="_productionStagesManagementCreateStageResultProductLabel" Content="Result product" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
         <ComboBox x:Name="_productionStagesManagementCreateStageResultProductComboBox" Margin="332,113,0,0" HorizontalAlignment="Left" Width="438" VerticalAlignment="Top" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
@@ -22,7 +22,7 @@
 
         <Label x:Name="_productionStagesManagementCreateStageProductsTitleLabel" Content="Used products" HorizontalAlignment="Left" Margin="10,195,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
 
-        <ListBox x:Name="_productsListBox" Background="#FF111111" Foreground="White" BorderBrush="#FF111111" FontFamily="Arial Black" Margin="10,230,10,80">
+        <ListBox x:Name="_productsListBox" Background="#FF111111" Foreground="White" BorderBrush="#FF111111" FontFamily="Arial Black" Margin="10,230,0,0" Height="224" VerticalAlignment="Top" HorizontalAlignment="Left" Width="780">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="{x:Type ListBoxItem}">
                     <Setter Property="OverridesDefaultStyle" Value="True"/>

@@ -70,7 +70,12 @@ namespace MetaL_Star_Guitars
             DataBase.Entities.warehouse_entity warehouse = dbConnector.Warehouses.FirstOrDefault(w => w.WarehouseId == warehouseId)!;
             warehouse.WarehouseName = warehouseName;
             warehouse.Capacity = capacity;
+
+            var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+            mainWindow?.fill_WarehouseListBox();
+            new MessageWindow("Message", "Changes are successfull!").Show();
             dbConnector.SaveChanges();
+            this.Close();
         }
         private void addNewWarehouse(string warehouseName, int capacity)
         {
@@ -82,7 +87,11 @@ namespace MetaL_Star_Guitars
                     Capacity = capacity
                 }
             );
+            var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+            mainWindow?.fill_WarehouseListBox();
+            new MessageWindow("Message", "Changes are successfull!").Show();
             dbConnector.SaveChanges();
+            this.Close();
         }
         private void warehouseManagementWarehouseWarehouseCancelButtonLabel_MouseDown(object sender, MouseButtonEventArgs e)
         {

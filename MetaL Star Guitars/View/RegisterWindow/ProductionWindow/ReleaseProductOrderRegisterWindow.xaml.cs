@@ -56,12 +56,6 @@ public partial class ReleaseProductOrderRegisterWindow : Window
         _productionStagesManagementReleaseProductsProductComboBox.ItemsSource = products;
         _productionStagesManagementReleaseProductsProductComboBox.DisplayMemberPath = "ProductName";
     }
-    private void productionStagesManagementReleaseProductsToWarehouseComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-    }
-    private void productionStagesManagementReleaseProductsProductComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-    }
     private void productionStagesManagementReleaseProductsCancelButtonLabel_MouseDown(object sender, MouseButtonEventArgs e)
     {
         defaultState();
@@ -114,7 +108,7 @@ public partial class ReleaseProductOrderRegisterWindow : Window
         dbConnector.StockAdjustmentDocuments.Add(new stock_adjustment_document_entity
         {
             StockAdjustmentDocumentId = documentId,
-            IssueDate = DateTime.Now,
+            IssueDate = DateTime.UtcNow,
             DocumentType = documentType,
             Quantity = quantity,
             WarehouseId = warehouseId,
@@ -122,7 +116,12 @@ public partial class ReleaseProductOrderRegisterWindow : Window
             ProductionOrderId = productionOrderId
         });
 
+        updateStockAfterRelease(documentId);
+        var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+        mainWindow?.fill_ReleaseProductListBox();
+        new MessageWindow("Message", "Changes are successfull!").Show();
         dbConnector.SaveChanges();
+        this.Close();
     }
     private void update_ReleaseProduct(int documentId)
     {
@@ -142,6 +141,54 @@ public partial class ReleaseProductOrderRegisterWindow : Window
             existingDoc.ProductionOrderId = productionOrderId;
         }
 
+        var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+        mainWindow?.fill_ReleaseProductListBox();
+        updateProductionOrderStatusToCompleted(productionOrderId);
+        updateStockAfterRelease(documentId);
+        new MessageWindow("Message", "Changes are successfull!").Show();
         dbConnector.SaveChanges();
+        this.Close();
+    }
+    private void updateStockAfterRelease(int documentId)
+    {
+        var document = dbConnector.StockAdjustmentDocuments.FirstOrDefault(x => x.StockAdjustmentDocumentId == documentId);
+        if (document == null)
+        {
+            new MessageWindow("Error", "Document not found!").Show();
+            return;
+        }
+
+        var stock = dbConnector.Stocks.FirstOrDefault(s =>
+            s.WarehouseId == document.WarehouseId &&
+            s.ProductId == document.ProductId);
+
+        if (stock != null)
+        {
+            stock.Quantity += document.Quantity;
+            dbConnector.SaveChanges();
+        }
+        else
+        {
+            dbConnector.Stocks.Add(new stock_entity
+            {
+                WarehouseId = document.WarehouseId,
+                ProductId = document.ProductId,
+                Quantity = document.Quantity
+            });
+            dbConnector.SaveChanges();
+        }
+    }
+    private void updateProductionOrderStatusToCompleted(int productionOrderId)
+    {
+        var order = dbConnector.ProductionOrders.FirstOrDefault(x => x.ProductionOrderId == productionOrderId);
+        if (order != null)
+        {
+            order.Status = "Closed";
+            dbConnector.SaveChanges();
+        }
+        else
+        {
+            new MessageWindow("Error", "Production order not found!").Show();
+        }
     }
 }

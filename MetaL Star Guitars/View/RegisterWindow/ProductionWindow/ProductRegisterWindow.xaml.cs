@@ -73,7 +73,11 @@ public partial class ProductRegisterWindow : Window
             Price = price
         });
 
+        var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+        mainWindow?.fill_ProductListBox();
+        new MessageWindow("Message", "Changes are successfull!").Show();
         dbConnector.SaveChanges();
+        this.Close();
     }
     private void update_Product(int productId)
     {
@@ -87,6 +91,10 @@ public partial class ProductRegisterWindow : Window
             existingProduct.Price = price;
         }
 
+        var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+        mainWindow?.fill_ProductListBox();
+        new MessageWindow("Message", "Changes are successfull!").Show();
         dbConnector.SaveChanges();
+        this.Close();
     }
 }

@@ -20,7 +20,7 @@ public partial class MainWindow : Window
 
         fill_WriteOffListBox();
     }
-    private void fill_WriteOffListBox()
+    public void fill_WriteOffListBox()
     {
         var documents = dbConnector.StockAdjustmentDocuments
             .Join
@@ -44,7 +44,7 @@ public partial class MainWindow : Window
             )
             .Join
             (
-                dbConnector.ProductionOrders, sad => sad.document.ProductionOrderId, po => po.ProductionStageId,
+                dbConnector.ProductionOrders, sad => sad.document.ProductionOrderId, po => po.ProductionOrderId,
                 (sad, po) => new
                 {
                     document = sad.document,
@@ -75,16 +75,23 @@ public partial class MainWindow : Window
         dynamic item = (sender as TextBlock)?.DataContext ?? throw new NullReferenceException();
         int documentId = item.documentId;
         var entity = dbConnector.StockAdjustmentDocuments.FirstOrDefault(x => x.StockAdjustmentDocumentId == documentId);
+
         if (entity != null)
         {
             var w = new WriteOffToProductionRegister(dbConnector);
+
             w._warehouseManagementWriteOffToProductionDocumentIdLabel.Content = entity.StockAdjustmentDocumentId;
             w._warehouseManagementWriteOffToProductionTypeLabel.Content = entity.DocumentType;
-            w._warehouseManagementWriteOffToProductionDateLabel.Content = entity.IssueDate;
+            w._warehouseManagementWriteOffToProductionDateLabel.Content = entity.IssueDate.ToString("dd.MM.yyyy HH:mm");
             w._warehouseManagementWriteOffToProductionQuantityTextBox.Text = entity.Quantity.ToString();
-            w._warehouseManagementWriteOffToProductionForOrderComboBox.SelectedValue = entity.ProductionOrderId;
-            w._warehouseManagementWriteOffToProductionFromWarehouseComboBox.SelectedValue = entity.WarehouseId;
-            w._warehouseManagementWriteOffToProductionProductComboBox.SelectedValue = entity.ProductId;
+
+            w._warehouseManagementWriteOffToProductionForOrderComboBox.SelectedItem =
+                dbConnector.ProductionOrders.FirstOrDefault(po => po.ProductionOrderId == entity.ProductionOrderId);
+            w._warehouseManagementWriteOffToProductionFromWarehouseComboBox.SelectedItem =
+                dbConnector.Warehouses.FirstOrDefault(wh => wh.WarehouseId == entity.WarehouseId);
+            w._warehouseManagementWriteOffToProductionProductComboBox.SelectedItem =
+                dbConnector.Products.FirstOrDefault(p => p.ProductId == entity.ProductId);
+
             w.Show();
         }
     }

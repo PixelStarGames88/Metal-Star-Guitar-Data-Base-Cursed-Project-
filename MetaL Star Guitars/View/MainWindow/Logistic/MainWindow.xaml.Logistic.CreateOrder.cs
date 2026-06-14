@@ -21,7 +21,7 @@ public partial class MainWindow : Window
 
         fill_TransferOrderListBox();
     }
-    private void fill_TransferOrderListBox()
+    public void fill_TransferOrderListBox()
     {
         var documents = dbConnector.TransferOrders
             .Join

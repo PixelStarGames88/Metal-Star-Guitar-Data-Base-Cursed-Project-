@@ -7,6 +7,7 @@ namespace MetaL_Star_Guitars;
 
 public partial class MainWindow : Window
 {
+
     private void productionStagesManagementStagesButton_MouseDown(object sender, MouseButtonEventArgs e)
     {
         _productionStagesManagementProductsGrid.Visibility = Visibility.Collapsed;
@@ -15,7 +16,7 @@ public partial class MainWindow : Window
         _productionStagesManagementStagesGrid.Visibility = Visibility.Visible;
         fill_StageListBox();
     }
-    private void fill_StageListBox()
+    public void fill_StageListBox()
     {
         var stages = dbConnector.ProductionStages
             .Join

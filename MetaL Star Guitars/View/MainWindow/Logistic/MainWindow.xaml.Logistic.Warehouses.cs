@@ -19,7 +19,7 @@ public partial class MainWindow : Window
         fill_StockListBox();
         fill_WarehouseListBox();
     }
-    private void fill_WarehouseListBox()
+    public void fill_WarehouseListBox()
     {
         var documents = dbConnector.Warehouses.ToList();
 

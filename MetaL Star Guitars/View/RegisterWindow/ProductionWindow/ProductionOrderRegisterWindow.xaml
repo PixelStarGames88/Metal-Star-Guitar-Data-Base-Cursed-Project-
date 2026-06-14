@@ -14,7 +14,7 @@
         <ComboBox x:Name="_productionStagesManagementCreateOrderForStageComboBox" HorizontalAlignment="Left" Margin="332,95,0,0" VerticalAlignment="Top" Width="388" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
 
         <Label x:Name="_productionStagesManagementCreateOrderProductLabel" Content="Product" HorizontalAlignment="Left" Margin="10,136,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" FontFamily="Arial Black"/>
-        <ComboBox x:Name="_productionStagesManagementCreateOrderProductComboBox" Margin="332,138,0,0" HorizontalAlignment="Left" Width="305" VerticalAlignment="Top" Background="#FF161616" FontSize="22" FontFamily="Arial Black" SelectionChanged="productionStagesManagementCreateOrderProductComboBox_SelectionChanged"/>
+        <ComboBox x:Name="_productionStagesManagementCreateOrderProductComboBox" Margin="332,138,0,0" HorizontalAlignment="Left" Width="305" VerticalAlignment="Top" Background="#FF161616" FontSize="22" FontFamily="Arial Black"/>
         <TextBox x:Name="_productionStagesManagementCreateOrderQuantityTextBox" HorizontalAlignment="Left" Margin="642,138,0,0" VerticalAlignment="Top" Width="78" FontSize="22" FontFamily="Arial Black" Height="31"/>
         <Label
                         x:Name="_productionStagesManagementCreateOrderToOrderButtonLabel" MouseLeave="someButton_MouseLeaveWhite" MouseEnter="someButton_MouseEnterYellow" Margin="10,325,0,0" FontSize="36" FontFamily="Arial Black" Foreground="White" Content="To order" HorizontalAlignment="Left" Width="236" Height="51" VerticalAlignment="Top" MouseDown="productionStagesManagementCreateOrderToOrderButtonLabel_MouseDown"/>

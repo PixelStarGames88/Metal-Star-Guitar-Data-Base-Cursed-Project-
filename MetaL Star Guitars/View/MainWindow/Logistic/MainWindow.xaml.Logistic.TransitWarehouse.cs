@@ -72,7 +72,7 @@ public partial class MainWindow : Window
         dbConnector.SaveChanges();
         fill_TransitWarehouseListBox();
     }
-    private void fill_TransitWarehouseListBox()
+    public void fill_TransitWarehouseListBox()
     {
         var documents = dbConnector.TransitWarehouses.ToList();
 

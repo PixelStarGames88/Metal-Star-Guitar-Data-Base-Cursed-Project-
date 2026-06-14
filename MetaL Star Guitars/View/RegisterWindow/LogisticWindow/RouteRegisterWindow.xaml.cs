@@ -128,7 +128,13 @@ namespace MetaL_Star_Guitars.View.RegisterWindow
                 TravelTime = travelTime
             });
 
+            add_newRoutesTransitWarehouses(routeId);
+
+            var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+            mainWindow?.fill_RouteListBox();
+            new MessageWindow("Message", "Changes are successfull!").Show();
             dbConnector.SaveChanges();
+            this.Close();
         }
 
         private void update_Route(int routeId)
@@ -154,7 +160,11 @@ namespace MetaL_Star_Guitars.View.RegisterWindow
             var oldTransitLinks = dbConnector.TransitWarehouseRoutes.Where(x => x.RouteId == routeId).ToList();
             dbConnector.TransitWarehouseRoutes.RemoveRange(oldTransitLinks);
 
+            var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+            mainWindow?.fill_RouteListBox();
+            new MessageWindow("Message", "Changes are successfull!").Show();
             dbConnector.SaveChanges();
+            this.Close();
         }
 
         private void add_newRoutesTransitWarehouses(int routeId)
@@ -169,7 +179,12 @@ namespace MetaL_Star_Guitars.View.RegisterWindow
                 .ToList();
 
             dbConnector.TransitWarehouseRoutes.AddRange(selectedTransits);
+            
+            var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+            mainWindow?.fill_RouteListBox();
+            new MessageWindow("Message", "Changes are successfull!").Show();
             dbConnector.SaveChanges();
+            this.Close();
         }
     }
 }

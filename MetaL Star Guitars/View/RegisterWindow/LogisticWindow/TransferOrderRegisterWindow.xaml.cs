@@ -116,7 +116,15 @@ namespace MetaL_Star_Guitars.View.RegisterWindow
                 FinalRouteId = finalRouteId
             });
 
+            var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+            if (mainWindow != null)
+            {
+                _ = ProcessTransferOrderWithDelays(transferOrderId);
+            }
+            mainWindow?.fill_TransferOrderListBox();
+            new MessageWindow("Message", "Changes are successfull!").Show();
             dbConnector.SaveChanges();
+            this.Close();
         }
         private void update_TransferOrder(int transferOrderId)
         {
@@ -136,7 +144,11 @@ namespace MetaL_Star_Guitars.View.RegisterWindow
             var oldContent = dbConnector.TransferOrderContents.Where(x => x.TransferOrderId == transferOrderId).ToList();
             dbConnector.TransferOrderContents.RemoveRange(oldContent);
 
+            var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+            mainWindow?.fill_TransferOrderListBox();
+            new MessageWindow("Message", "Changes are successfull!").Show();
             dbConnector.SaveChanges();
+            this.Close();
         }
         private void add_newContents(int transferOrderId)
         {
@@ -543,6 +555,128 @@ namespace MetaL_Star_Guitars.View.RegisterWindow
                     RouteId = FinalRoute.route_3.RouteId
                 });
             }
+            dbConnector.SaveChanges();
+        }
+        private async Task ProcessTransferOrderWithDelays(int transferOrderId)
+        {
+            var order = dbConnector.TransferOrders.FirstOrDefault(x => x.TransferOrderId == transferOrderId);
+            if (order == null) return;
+
+            var route = dbConnector.FinalRoutes.FirstOrDefault(r => r.FinalRouteId == order.FinalRouteId);
+            if (route == null) return;
+
+            double demoSpeedMultiplier = 0.001;
+            var totalTravelTime = route.ScheduledTime * demoSpeedMultiplier;
+            var halfTravelTime = TimeSpan.FromTicks(totalTravelTime.Ticks / 2);
+
+            try
+            {
+                await Task.Delay(TimeSpan.FromSeconds(2));
+                createShipmentTransaction(transferOrderId);
+                updateTransferOrderStatusToShipped(transferOrderId);
+
+                await Task.Delay(halfTravelTime);
+                createReceiptTransaction(transferOrderId);
+                updateTransferOrderStatusToCompleted(transferOrderId);
+
+                await Task.Delay(TimeSpan.FromSeconds(1));
+                updateRecipientStockAfterReceipt(transferOrderId);
+            }
+            catch (Exception ex)
+            {
+                new MessageWindow("Error", $"Error processing transfer order: {ex.Message}").Show();
+            }
+        }
+        private void createShipmentTransaction(int transferOrderId)
+        {
+            var order = dbConnector.TransferOrders.FirstOrDefault(x => x.TransferOrderId == transferOrderId);
+            if (order == null)
+            {
+                new MessageWindow("Error", "Transfer order not found!").Show();
+                return;
+            }
+
+            dbConnector.TransferTransactions.Add(new transfer_transaction_entity
+            {
+                TransferOrderId = transferOrderId,
+                WarehouseId = order.SenderWarehouseId,
+                IssueDate = DateTime.UtcNow,
+                TransactionType = "Shipment by TO"
+            });
+
+            dbConnector.SaveChanges();
+        }
+
+        private void updateTransferOrderStatusToShipped(int transferOrderId)
+        {
+            var order = dbConnector.TransferOrders.FirstOrDefault(x => x.TransferOrderId == transferOrderId);
+            if (order != null)
+            {
+                order.Status = "Running";
+                dbConnector.SaveChanges();
+            }
+        }
+
+        private void createReceiptTransaction(int transferOrderId)
+        {
+            var order = dbConnector.TransferOrders.FirstOrDefault(x => x.TransferOrderId == transferOrderId);
+            if (order == null)
+            {
+                new MessageWindow("Error", "Transfer order not found!").Show();
+                return;
+            }
+
+            dbConnector.TransferTransactions.Add(new transfer_transaction_entity
+            {
+                TransferOrderId = transferOrderId,
+                WarehouseId = order.RecipientWarehouseId,
+                IssueDate = DateTime.UtcNow,
+                TransactionType = "Receipt by TO"
+            });
+
+            dbConnector.SaveChanges();
+        }
+
+        private void updateTransferOrderStatusToCompleted(int transferOrderId)
+        {
+            var order = dbConnector.TransferOrders.FirstOrDefault(x => x.TransferOrderId == transferOrderId);
+            if (order != null)
+            {
+                order.Status = "Closed";
+                dbConnector.SaveChanges();
+            }
+        }
+
+        private void updateRecipientStockAfterReceipt(int transferOrderId)
+        {
+            var order = dbConnector.TransferOrders.FirstOrDefault(x => x.TransferOrderId == transferOrderId);
+            if (order == null) return;
+
+            var contents = dbConnector.TransferOrderContents
+                .Where(c => c.TransferOrderId == transferOrderId)
+                .ToList();
+
+            foreach (var content in contents)
+            {
+                var stock = dbConnector.Stocks.FirstOrDefault(s =>
+                    s.WarehouseId == order.RecipientWarehouseId &&
+                    s.ProductId == content.ProductId);
+
+                if (stock != null)
+                {
+                    stock.Quantity += content.Quantity;
+                }
+                else
+                {
+                    dbConnector.Stocks.Add(new stock_entity
+                    {
+                        WarehouseId = order.RecipientWarehouseId,
+                        ProductId = content.ProductId,
+                        Quantity = content.Quantity
+                    });
+                }
+            }
+
             dbConnector.SaveChanges();
         }
     }

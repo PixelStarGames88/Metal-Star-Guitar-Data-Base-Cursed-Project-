@@ -48,9 +48,6 @@ public partial class ProductionOrderRegister : Window
         _productionStagesManagementCreateOrderProductComboBox.ItemsSource = products;
         _productionStagesManagementCreateOrderProductComboBox.DisplayMemberPath = "ProductName";
     }
-    private void productionStagesManagementCreateOrderProductComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-    }
     private void productionStagesManagementCreateOrderCancelButtonLabel_MouseDown(object sender, MouseButtonEventArgs e)
     {
         defaultState();
@@ -91,14 +88,18 @@ public partial class ProductionOrderRegister : Window
         dbConnector.ProductionOrders.Add(new production_order_entity
         {
             ProductionOrderId = orderId,
-            IssueDate = DateTime.Now,
+            IssueDate = DateTime.UtcNow,
             Status = "Open",
             ProductId = productId,
             Quantity = quantity,
             ProductionStageId = productionStageId
         });
 
+        var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+        mainWindow?.fill_ProductionOrderListBox();
+        new MessageWindow("Message", "Changes are successfull!").Show();
         dbConnector.SaveChanges();
+        this.Close();
     }
     private void update_ProductionOrder(int orderId)
     {
@@ -114,6 +115,10 @@ public partial class ProductionOrderRegister : Window
             existingOrder.Quantity = quantity;
         }
 
+        var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+        mainWindow?.fill_ProductionOrderListBox();
+        new MessageWindow("Message", "Changes are successfull!").Show();
         dbConnector.SaveChanges();
+        this.Close();
     }
 }

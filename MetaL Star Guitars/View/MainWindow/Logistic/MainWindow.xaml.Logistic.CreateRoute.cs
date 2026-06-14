@@ -22,7 +22,7 @@ public partial class MainWindow : Window
 
         fill_RouteListBox();
     }
-    private void fill_RouteListBox()
+    public void fill_RouteListBox()
     {
         var documents = dbConnector.Routes
             .Join
