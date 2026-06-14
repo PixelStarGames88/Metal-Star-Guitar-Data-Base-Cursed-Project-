@@ -92,8 +92,18 @@ namespace MetaL_Star_Guitars.View.RegisterWindow
 
             add_newContents(transferOrderId);
 
+            if (_warehouseManagementTransfersToOrderButton.Content.ToString() != "Save")
+            {
+                var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+                if (mainWindow != null)
+                {
+                    _ = ProcessTransferOrderWithDelays(transferOrderId);
+                }
+            }
+
             warehouseManagementTransfersCancelButton_MouseDown(sender, e);
             new MessageWindow("Message", "Your order was made successfully!").Show();
+            this.Close();
         }
         private void add_newTransferOrder(int transferOrderId)
         {
@@ -115,16 +125,6 @@ namespace MetaL_Star_Guitars.View.RegisterWindow
                 Status = "Open",
                 FinalRouteId = finalRouteId
             });
-
-            var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-            if (mainWindow != null)
-            {
-                _ = ProcessTransferOrderWithDelays(transferOrderId);
-            }
-            mainWindow?.fill_TransferOrderListBox();
-            new MessageWindow("Message", "Changes are successfull!").Show();
-            dbConnector.SaveChanges();
-            this.Close();
         }
         private void update_TransferOrder(int transferOrderId)
         {
@@ -146,9 +146,7 @@ namespace MetaL_Star_Guitars.View.RegisterWindow
 
             var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
             mainWindow?.fill_TransferOrderListBox();
-            new MessageWindow("Message", "Changes are successfull!").Show();
-            dbConnector.SaveChanges();
-            this.Close();
+
         }
         private void add_newContents(int transferOrderId)
         {
@@ -575,12 +573,20 @@ namespace MetaL_Star_Guitars.View.RegisterWindow
                 createShipmentTransaction(transferOrderId);
                 updateTransferOrderStatusToShipped(transferOrderId);
 
+                var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+                mainWindow?.fill_TransferOrderListBox();
+
                 await Task.Delay(halfTravelTime);
                 createReceiptTransaction(transferOrderId);
                 updateTransferOrderStatusToCompleted(transferOrderId);
 
+                mainWindow?.fill_TransferOrderListBox();
+
                 await Task.Delay(TimeSpan.FromSeconds(1));
                 updateRecipientStockAfterReceipt(transferOrderId);
+
+                mainWindow?.fill_TransferOrderListBox();
+                mainWindow?.fill_StockListBox();
             }
             catch (Exception ex)
             {

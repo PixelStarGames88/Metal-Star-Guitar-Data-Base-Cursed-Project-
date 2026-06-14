@@ -40,9 +40,29 @@ public partial class WriteOffToProductionRegister : Window
     }
     private void fill_forOrderComboBox()
     {
-        var orders = dbConnector.ProductionOrders.ToList();
+        var orders = dbConnector.ProductionOrders
+            .Join
+            (
+                dbConnector.Products, po => po.ProductId, p => p.ProductId,
+                (po, p) => new
+                {
+                    order = po,
+                    product = p
+                }
+            )
+            .Join
+            (
+                dbConnector.ProductionStages, po => po.order.ProductionStageId, s => s.ProductionStageId,
+                (po, s) => new
+                {
+                    ProductionOrderId = po.order.ProductionOrderId,
+                    product = po.product,
+                    stage = s,
+                    description = (po.order.Quantity + " " + po.product.ProductName + " for " + s.ProductionStageName)
+                }
+            ).ToList();
         _warehouseManagementWriteOffToProductionForOrderComboBox.ItemsSource = orders;
-        _warehouseManagementWriteOffToProductionForOrderComboBox.DisplayMemberPath = "ProductionOrderId";
+        _warehouseManagementWriteOffToProductionForOrderComboBox.DisplayMemberPath = "description";
     }
     private void fill_fromWarehouseComboBox()
     {
@@ -122,6 +142,8 @@ public partial class WriteOffToProductionRegister : Window
             return;
         }
 
+
+
         int warehouseId = (_warehouseManagementWriteOffToProductionFromWarehouseComboBox.SelectedItem as warehouse_entity)?.WarehouseId ?? throw new NullReferenceException();
         int productId = (_warehouseManagementWriteOffToProductionProductComboBox.SelectedItem as product_entity)?.ProductId ?? throw new NullReferenceException();
 
@@ -143,18 +165,12 @@ public partial class WriteOffToProductionRegister : Window
         else
             add_newWriteOff(documentId);
 
-        var stock = dbConnector.Stocks.FirstOrDefault(s => s.WarehouseId == warehouseId && s.ProductId == productId);
-        if (stock != null)
-        {
-            stock.Quantity -= quantity;
-            dbConnector.SaveChanges();
-        }
-
         this.Close();
     }
     private void add_newWriteOff(int documentId)
     {
-        int productionOrderId = (_warehouseManagementWriteOffToProductionForOrderComboBox.SelectedItem as production_order_entity)?.ProductionOrderId ?? throw new NullReferenceException();
+        dynamic productionOrder = _warehouseManagementWriteOffToProductionForOrderComboBox.SelectedItem ?? throw new NullReferenceException();
+        int productionOrderId = productionOrder.ProductionOrderId ?? throw new NullReferenceException();
         int warehouseId = (_warehouseManagementWriteOffToProductionFromWarehouseComboBox.SelectedItem as warehouse_entity)?.WarehouseId ?? throw new NullReferenceException();
         int productId = (_warehouseManagementWriteOffToProductionProductComboBox.SelectedItem as product_entity)?.ProductId ?? throw new NullReferenceException();
         int quantity = int.Parse(_warehouseManagementWriteOffToProductionQuantityTextBox.Text.Trim());
@@ -170,13 +186,15 @@ public partial class WriteOffToProductionRegister : Window
             ProductionOrderId = productionOrderId
         });
 
-        var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-        mainWindow?.fill_WriteOffListBox();
+        dbConnector.SaveChanges();
+
         updateStockAfterWriteOff(documentId);
         updateProductionOrderStatusToCompleted(productionOrderId);
+
+        var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+        mainWindow?.fill_WriteOffListBox();
+        mainWindow?.fill_ProductionOrderListBox();
         new MessageWindow("Message", "Changes are successfull!").Show();
-        dbConnector.SaveChanges();
-        this.Close();
     }
     private void update_WriteOff(int documentId)
     {

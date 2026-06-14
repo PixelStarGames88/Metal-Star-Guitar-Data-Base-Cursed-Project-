@@ -40,9 +40,29 @@ public partial class ReleaseProductOrderRegisterWindow : Window
     }
     private void fill_toOrderComboBox()
     {
-        var orders = dbConnector.ProductionOrders.ToList();
+        var orders = dbConnector.ProductionOrders
+            .Join
+            (
+                dbConnector.Products, po => po.ProductId, p => p.ProductId,
+                (po, p) => new
+                {
+                    order = po,
+                    product = p
+                }
+            )
+            .Join
+            (
+                dbConnector.ProductionStages, po => po.order.ProductionStageId, s => s.ProductionStageId,
+                (po, s) => new
+                {
+                    ProductionOrderId = po.order.ProductionOrderId,
+                    product = po.product,
+                    stage = s,
+                    description = (po.order.Quantity + " " + po.product.ProductName + " for " + s.ProductionStageName)
+                }
+            ).ToList();
         _productionStagesManagementReleaseProductsToOrderComboBox.ItemsSource = orders;
-        _productionStagesManagementReleaseProductsToOrderComboBox.DisplayMemberPath = "ProductionOrderId";
+        _productionStagesManagementReleaseProductsToOrderComboBox.DisplayMemberPath = "description";
     }
     private void fill_toWarehouseComboBox()
     {
@@ -99,7 +119,8 @@ public partial class ReleaseProductOrderRegisterWindow : Window
     }
     private void add_newReleaseProduct(int documentId)
     {
-        int productionOrderId = (_productionStagesManagementReleaseProductsToOrderComboBox.SelectedItem as production_order_entity)?.ProductionOrderId ?? throw new NullReferenceException();
+        dynamic productionOrder = _productionStagesManagementReleaseProductsToOrderComboBox.SelectedItem;
+        int productionOrderId = productionOrder.ProductionOrderId ?? throw new NullReferenceException();
         int warehouseId = (_productionStagesManagementReleaseProductsToWarehouseComboBox.SelectedItem as warehouse_entity)?.WarehouseId ?? throw new NullReferenceException();
         int productId = (_productionStagesManagementReleaseProductsProductComboBox.SelectedItem as product_entity)?.ProductId ?? throw new NullReferenceException();
         int quantity = int.Parse(_productionStagesManagementReleaseProductsQuantityTextBox.Text.Trim());
@@ -116,11 +137,15 @@ public partial class ReleaseProductOrderRegisterWindow : Window
             ProductionOrderId = productionOrderId
         });
 
+        dbConnector.SaveChanges();
+
         updateStockAfterRelease(documentId);
+        updateProductionOrderStatusToCompleted(productionOrderId);
+
         var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
         mainWindow?.fill_ReleaseProductListBox();
+        mainWindow?.fill_ProductionOrderListBox();
         new MessageWindow("Message", "Changes are successfull!").Show();
-        dbConnector.SaveChanges();
         this.Close();
     }
     private void update_ReleaseProduct(int documentId)
