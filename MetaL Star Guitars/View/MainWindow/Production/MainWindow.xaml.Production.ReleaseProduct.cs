@@ -27,41 +27,6 @@ public partial class MainWindow : Window
         var entity = dbConnector.StockAdjustmentDocuments.FirstOrDefault(x => x.StockAdjustmentDocumentId == documentId);
         if (entity != null) { dbConnector.StockAdjustmentDocuments.Remove(entity); dbConnector.SaveChanges(); fill_ReleaseProductListBox(); }
     }
-
-    private void editReleaseProductEntity(object sender, MouseButtonEventArgs e)
-    {
-        dynamic item = (sender as TextBlock)?.DataContext ?? throw new NullReferenceException();
-        int documentId = item.orderId;
-        var entity = dbConnector.StockAdjustmentDocuments.FirstOrDefault(x => x.StockAdjustmentDocumentId == documentId);
-
-        if (entity != null)
-        {
-            var w = new ReleaseProductOrderRegisterWindow(dbConnector);
-
-            w._productionStagesManagementReleaseProductsDocumentIdLabel.Content = entity.StockAdjustmentDocumentId;
-            w._productionStagesManagementReleaseProductsDateLabel.Content = entity.IssueDate.ToString("HH\\:mm dd.MM.yyyy");
-            w._productionStagesManagementReleaseProductsQuantityTextBox.Text = entity.Quantity.ToString();
-
-            w._productionStagesManagementReleaseProductsToOrderComboBox.SelectedItem =
-                dbConnector.ProductionOrders.FirstOrDefault(po => po.ProductionOrderId == entity.ProductionOrderId);
-            w._productionStagesManagementReleaseProductsToWarehouseComboBox.SelectedItem =
-                dbConnector.Warehouses.FirstOrDefault(wh => wh.WarehouseId == entity.WarehouseId);
-            w._productionStagesManagementReleaseProductsProductComboBox.SelectedItem =
-                dbConnector.Products.FirstOrDefault(p => p.ProductId == entity.ProductId);
-
-            foreach (ComboBoxItem typeItem in w._productionStagesManagementReleaseProductsTypeComboBox.Items)
-            {
-                if (typeItem.Content.ToString() == entity.DocumentType)
-                {
-                    w._productionStagesManagementReleaseProductsTypeComboBox.SelectedItem = typeItem;
-                    break;
-                }
-            }
-
-            w._productionStagesManagementReleaseProductsToReleaseButtonLabel.Content = "Save";
-            w.Show();
-        }
-    }
     public void fill_ReleaseProductListBox()
     {
         var documents = dbConnector.StockAdjustmentDocuments

@@ -109,11 +109,8 @@ public partial class ReleaseProductOrderRegisterWindow : Window
         }
 
         int documentId = int.Parse(_productionStagesManagementReleaseProductsDocumentIdLabel.Content.ToString()!);
-
-        if (_productionStagesManagementReleaseProductsToReleaseButtonLabel.Content.ToString() == "Save")
-            update_ReleaseProduct(documentId);
-        else
-            add_newReleaseProduct(documentId);
+       
+        add_newReleaseProduct(documentId);
 
         this.Close();
     }
@@ -146,32 +143,6 @@ public partial class ReleaseProductOrderRegisterWindow : Window
         mainWindow?.fill_ReleaseProductListBox();
         mainWindow?.fill_ProductionOrderListBox();
         new MessageWindow("Message", "Changes are successfull!").Show();
-        this.Close();
-    }
-    private void update_ReleaseProduct(int documentId)
-    {
-        int productionOrderId = (_productionStagesManagementReleaseProductsToOrderComboBox.SelectedItem as production_order_entity)?.ProductionOrderId ?? throw new NullReferenceException();
-        int warehouseId = (_productionStagesManagementReleaseProductsToWarehouseComboBox.SelectedItem as warehouse_entity)?.WarehouseId ?? throw new NullReferenceException();
-        int productId = (_productionStagesManagementReleaseProductsProductComboBox.SelectedItem as product_entity)?.ProductId ?? throw new NullReferenceException();
-        int quantity = int.Parse(_productionStagesManagementReleaseProductsQuantityTextBox.Text.Trim());
-        string documentType = (_productionStagesManagementReleaseProductsTypeComboBox.SelectedItem as ComboBoxItem)?.Content.ToString() ?? throw new NullReferenceException();
-
-        var existingDoc = dbConnector.StockAdjustmentDocuments.FirstOrDefault(x => x.StockAdjustmentDocumentId == documentId);
-        if (existingDoc != null)
-        {
-            existingDoc.DocumentType = documentType;
-            existingDoc.Quantity = quantity;
-            existingDoc.WarehouseId = warehouseId;
-            existingDoc.ProductId = productId;
-            existingDoc.ProductionOrderId = productionOrderId;
-        }
-
-        var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-        mainWindow?.fill_ReleaseProductListBox();
-        updateProductionOrderStatusToCompleted(productionOrderId);
-        updateStockAfterRelease(documentId);
-        new MessageWindow("Message", "Changes are successfull!").Show();
-        dbConnector.SaveChanges();
         this.Close();
     }
     private void updateStockAfterRelease(int documentId)

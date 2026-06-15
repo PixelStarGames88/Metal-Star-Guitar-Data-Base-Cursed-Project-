@@ -70,31 +70,6 @@ public partial class MainWindow : Window
 
         _writeOffListBox.ItemsSource = documents;
     }
-    private void editWriteOffEntity(object sender, MouseButtonEventArgs e)
-    {
-        dynamic item = (sender as TextBlock)?.DataContext ?? throw new NullReferenceException();
-        int documentId = item.documentId;
-        var entity = dbConnector.StockAdjustmentDocuments.FirstOrDefault(x => x.StockAdjustmentDocumentId == documentId);
-
-        if (entity != null)
-        {
-            var w = new WriteOffToProductionRegister(dbConnector);
-
-            w._warehouseManagementWriteOffToProductionDocumentIdLabel.Content = entity.StockAdjustmentDocumentId;
-            w._warehouseManagementWriteOffToProductionTypeLabel.Content = entity.DocumentType;
-            w._warehouseManagementWriteOffToProductionDateLabel.Content = entity.IssueDate.ToString("dd.MM.yyyy HH:mm");
-            w._warehouseManagementWriteOffToProductionQuantityTextBox.Text = entity.Quantity.ToString();
-
-            w._warehouseManagementWriteOffToProductionForOrderComboBox.SelectedItem =
-                dbConnector.ProductionOrders.FirstOrDefault(po => po.ProductionOrderId == entity.ProductionOrderId);
-            w._warehouseManagementWriteOffToProductionFromWarehouseComboBox.SelectedItem =
-                dbConnector.Warehouses.FirstOrDefault(wh => wh.WarehouseId == entity.WarehouseId);
-            w._warehouseManagementWriteOffToProductionProductComboBox.SelectedItem =
-                dbConnector.Products.FirstOrDefault(p => p.ProductId == entity.ProductId);
-
-            w.Show();
-        }
-    }
     private void deleteWriteOffEntity(object sender, MouseButtonEventArgs e)
     {
         dynamic item = (sender as TextBlock)?.DataContext ?? throw new NullReferenceException();

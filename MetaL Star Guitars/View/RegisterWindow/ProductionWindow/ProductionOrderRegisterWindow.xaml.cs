@@ -72,10 +72,7 @@ public partial class ProductionOrderRegister : Window
 
         int orderId = int.Parse(_productionStagesManagementCreateOrderDocumentIdLabel.Content.ToString()!);
 
-        if (_productionStagesManagementCreateOrderToOrderButtonLabel.Content.ToString() == "Save")
-            update_ProductionOrder(orderId);
-        else
-            add_newProductionOrder(orderId);
+        add_newProductionOrder(orderId);
 
         this.Close();
     }
@@ -94,26 +91,6 @@ public partial class ProductionOrderRegister : Window
             Quantity = quantity,
             ProductionStageId = productionStageId
         });
-
-        var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-        mainWindow?.fill_ProductionOrderListBox();
-        new MessageWindow("Message", "Changes are successfull!").Show();
-        dbConnector.SaveChanges();
-        this.Close();
-    }
-    private void update_ProductionOrder(int orderId)
-    {
-        int productionStageId = (_productionStagesManagementCreateOrderForStageComboBox.SelectedItem as production_stage_entity)?.ProductionStageId ?? throw new NullReferenceException();
-        int productId = (_productionStagesManagementCreateOrderProductComboBox.SelectedItem as product_entity)?.ProductId ?? throw new NullReferenceException();
-        int quantity = int.Parse(_productionStagesManagementCreateOrderQuantityTextBox.Text.Trim());
-
-        var existingOrder = dbConnector.ProductionOrders.FirstOrDefault(x => x.ProductionOrderId == orderId);
-        if (existingOrder != null)
-        {
-            existingOrder.ProductionStageId = productionStageId;
-            existingOrder.ProductId = productId;
-            existingOrder.Quantity = quantity;
-        }
 
         var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
         mainWindow?.fill_ProductionOrderListBox();

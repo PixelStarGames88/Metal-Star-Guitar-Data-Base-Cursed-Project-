@@ -85,10 +85,8 @@ namespace MetaL_Star_Guitars.View.RegisterWindow
 
             int transferOrderId = int.Parse(_warehouseManagementTransfersOrderIdLabel.Content.ToString()!);
 
-            if (_warehouseManagementTransfersToOrderButton.Content.ToString() == "Save")
-                update_TransferOrder(transferOrderId);
-            else
-                add_newTransferOrder(transferOrderId);
+
+            add_newTransferOrder(transferOrderId);
 
             add_newContents(transferOrderId);
 
@@ -125,28 +123,6 @@ namespace MetaL_Star_Guitars.View.RegisterWindow
                 Status = "Open",
                 FinalRouteId = finalRouteId
             });
-        }
-        private void update_TransferOrder(int transferOrderId)
-        {
-            int senderWarehouseId = (_warehouseManagementTransfersSenderWarehouseComboBox.SelectedItem as warehouse_entity)?.WarehouseId ?? throw new NullReferenceException();
-            int recipientWarehouseId = (_warehouseManagementTransfersRecipientWarehouseComboBox.SelectedItem as warehouse_entity)?.WarehouseId ?? throw new NullReferenceException();
-            dynamic selectedItem = _warehouseManagementTransfersRouteComboBox.SelectedItem ?? throw new NullReferenceException();
-            string finalRouteId = selectedItem.FinalRoute.FinalRouteId;
-
-            var existingOrder = dbConnector.TransferOrders.FirstOrDefault(x => x.TransferOrderId == transferOrderId);
-            if (existingOrder != null)
-            {
-                existingOrder.SenderWarehouseId = senderWarehouseId;
-                existingOrder.RecipientWarehouseId = recipientWarehouseId;
-                existingOrder.FinalRouteId = finalRouteId;
-            }
-
-            var oldContent = dbConnector.TransferOrderContents.Where(x => x.TransferOrderId == transferOrderId).ToList();
-            dbConnector.TransferOrderContents.RemoveRange(oldContent);
-
-            var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-            mainWindow?.fill_TransferOrderListBox();
-
         }
         private void add_newContents(int transferOrderId)
         {
@@ -563,6 +539,8 @@ namespace MetaL_Star_Guitars.View.RegisterWindow
             var route = dbConnector.FinalRoutes.FirstOrDefault(r => r.FinalRouteId == order.FinalRouteId);
             if (route == null) return;
 
+            updateSenderStockAfterTransferOrder(transferOrderId);
+
             double demoSpeedMultiplier = 0.001;
             var totalTravelTime = route.ScheduledTime * demoSpeedMultiplier;
             var halfTravelTime = TimeSpan.FromTicks(totalTravelTime.Ticks / 2);
@@ -575,6 +553,7 @@ namespace MetaL_Star_Guitars.View.RegisterWindow
 
                 var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
                 mainWindow?.fill_TransferOrderListBox();
+                mainWindow?.fill_StockListBox();
 
                 await Task.Delay(halfTravelTime);
                 createReceiptTransaction(transferOrderId);
@@ -587,6 +566,7 @@ namespace MetaL_Star_Guitars.View.RegisterWindow
 
                 mainWindow?.fill_TransferOrderListBox();
                 mainWindow?.fill_StockListBox();
+
             }
             catch (Exception ex)
             {
@@ -622,7 +602,30 @@ namespace MetaL_Star_Guitars.View.RegisterWindow
                 dbConnector.SaveChanges();
             }
         }
+        private void updateSenderStockAfterTransferOrder(int transferOrderId)
+        {
+            var order = dbConnector.TransferOrders.FirstOrDefault(x => x.TransferOrderId == transferOrderId);
+            if (order == null) return;
 
+            var contents = dbConnector.TransferOrderContents
+                .Where(c => c.TransferOrderId == transferOrderId)
+                .ToList();
+
+            foreach (var content in contents)
+            {
+                var stock = dbConnector.Stocks.FirstOrDefault(s =>
+                    s.WarehouseId == order.SenderWarehouseId &&
+                    s.ProductId == content.ProductId);
+
+                if (stock != null)
+                {
+                    stock.Quantity -= content.Quantity;
+                    if (stock.Quantity < 0) stock.Quantity = 0;
+                }
+            }
+
+            dbConnector.SaveChanges();
+        }
         private void createReceiptTransaction(int transferOrderId)
         {
             var order = dbConnector.TransferOrders.FirstOrDefault(x => x.TransferOrderId == transferOrderId);

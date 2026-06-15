@@ -92,18 +92,6 @@
                                                     </Style>
                                                 </TextBlock.Style>
                                             </TextBlock>
-                                            <TextBlock Text="Edit" Cursor="Hand" FontSize="18" Foreground="White" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseLeftButtonDown="editTransferOrderEntity">
-                                                <TextBlock.Style>
-                                                    <Style TargetType="{x:Type TextBlock}">
-                                                        <Setter Property="Foreground" Value="White"/>
-                                                        <Style.Triggers>
-                                                            <Trigger Property="IsMouseOver" Value="True">
-                                                                <Setter Property="Foreground" Value="Yellow"/>
-                                                            </Trigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
                                         </StackPanel>
                                     </Grid>
                                 </Grid>
@@ -166,18 +154,6 @@
                                         </StackPanel>
                                         <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                                             <TextBlock Text="Delete" Cursor="Hand" FontSize="18" Foreground="White" Margin="0,0,15,0" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseLeftButtonDown="deleteWriteOffEntity">
-                                                <TextBlock.Style>
-                                                    <Style TargetType="{x:Type TextBlock}">
-                                                        <Setter Property="Foreground" Value="White"/>
-                                                        <Style.Triggers>
-                                                            <Trigger Property="IsMouseOver" Value="True">
-                                                                <Setter Property="Foreground" Value="Yellow"/>
-                                                            </Trigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
-                                            <TextBlock Text="Edit" Cursor="Hand" FontSize="18" Foreground="White" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseLeftButtonDown="editWriteOffEntity">
                                                 <TextBlock.Style>
                                                     <Style TargetType="{x:Type TextBlock}">
                                                         <Setter Property="Foreground" Value="White"/>
@@ -591,7 +567,7 @@
             <Grid x:Name="_productionStagesManagementNavigationGrid" Height="53" VerticalAlignment="Top">
                 <Label x:Name="_productionStagesManagementStagesButton" Content="Stages" FontSize="24" Foreground="White" FontFamily="Arial Black" Margin="15,10,0,0" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="productionStagesManagementStagesButton_MouseDown" HorizontalAlignment="Left" Width="135" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
                 <Label x:Name="_productionStagesManagementProductsButton" Content="Products" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="productionStagesManagementProductsButton_MouseDown" Width="135" HorizontalAlignment="Left" Margin="134,10,0,0" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top" RenderTransformOrigin="0.418,0.501"/>
-                <Label x:Name="_productionStagesManagementReleaseProductButton" Content="Release product documents" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="productionStagesManagementReleaseProductButton_MouseDown" Width="350" HorizontalAlignment="Left" Margin="274,10,0,0" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
+                <Label x:Name="_productionStagesManagementReleaseProductButton" Content="Release product documents" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="productionStagesManagementReleaseProductButton_MouseDown" Margin="274,10,847,0" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
                 <Label x:Name="_productionStagesManagementProductionOrdersButton" Content="Production Orders" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="productionStagesManagementProductionOrdersButton_MouseDown" Width="250" HorizontalAlignment="Left" Margin="653,10,0,0" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top" RenderTransformOrigin="0.324,0.691"/>
                 <Label x:Name="_productionStagesManagementExitToMenuButton" Content="Exit to menu" FontSize="24" Foreground="White" FontFamily="Arial Black" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" Margin="914,10,0,0" MouseDown="productionStagesManagementExitToMenuButton_MouseDown" HorizontalAlignment="Left" Width="176" VerticalContentAlignment="Center" Height="38" VerticalAlignment="Top"/>
             </Grid>
@@ -813,18 +789,6 @@
                                                     </Style>
                                                 </TextBlock.Style>
                                             </TextBlock>
-                                            <TextBlock Text="Edit" Cursor="Hand" FontSize="18" Foreground="White" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="editReleaseProductEntity">
-                                                <TextBlock.Style>
-                                                    <Style TargetType="{x:Type TextBlock}">
-                                                        <Setter Property="Foreground" Value="White"/>
-                                                        <Style.Triggers>
-                                                            <Trigger Property="IsMouseOver" Value="True">
-                                                                <Setter Property="Foreground" Value="Yellow"/>
-                                                            </Trigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
                                         </StackPanel>
                                     </Grid>
                                 </Grid>
@@ -883,18 +847,6 @@
                                         </StackPanel>
                                         <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                                             <TextBlock Text="Delete" Cursor="Hand" FontSize="18" Foreground="White" Margin="0,0,15,0" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="deleteProductionOrderEntity">
-                                                <TextBlock.Style>
-                                                    <Style TargetType="{x:Type TextBlock}">
-                                                        <Setter Property="Foreground" Value="White"/>
-                                                        <Style.Triggers>
-                                                            <Trigger Property="IsMouseOver" Value="True">
-                                                                <Setter Property="Foreground" Value="Yellow"/>
-                                                            </Trigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
-                                            <TextBlock Text="Edit" Cursor="Hand" FontSize="18" Foreground="White" MouseEnter="someButton_MouseEnterYellow" MouseLeave="someButton_MouseLeaveWhite" MouseDown="editProductionOrderEntity">
                                                 <TextBlock.Style>
                                                     <Style TargetType="{x:Type TextBlock}">
                                                         <Setter Property="Foreground" Value="White"/>

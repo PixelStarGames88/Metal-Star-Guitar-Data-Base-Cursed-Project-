@@ -26,31 +26,6 @@ public partial class MainWindow : Window
         var entity = dbConnector.ProductionOrders.FirstOrDefault(x => x.ProductionOrderId == orderId);
         if (entity != null) { dbConnector.ProductionOrders.Remove(entity); dbConnector.SaveChanges(); fill_ProductionOrderListBox(); }
     }
-
-    private void editProductionOrderEntity(object sender, MouseButtonEventArgs e)
-    {
-        dynamic item = (sender as TextBlock)?.DataContext ?? throw new NullReferenceException();
-        int orderId = item.orderId;
-        var entity = dbConnector.ProductionOrders.FirstOrDefault(x => x.ProductionOrderId == orderId);
-
-        if (entity != null)
-        {
-            var w = new ProductionOrderRegister(dbConnector);
-
-            w._productionStagesManagementCreateOrderDocumentIdLabel.Content = entity.ProductionOrderId;
-            w._productionStagesManagementCreateOrderStatusLabel.Content = entity.Status;
-            w._productionStagesManagementCreateOrderDateLabel.Content = entity.IssueDate.ToString("dd.MM.yyyy");
-            w._productionStagesManagementCreateOrderQuantityTextBox.Text = entity.Quantity.ToString();
-
-            w._productionStagesManagementCreateOrderForStageComboBox.SelectedItem =
-                dbConnector.ProductionStages.FirstOrDefault(ps => ps.ProductionStageId == entity.ProductionStageId);
-            w._productionStagesManagementCreateOrderProductComboBox.SelectedItem =
-                dbConnector.Products.FirstOrDefault(p => p.ProductId == entity.ProductId);
-
-            w._productionStagesManagementCreateOrderToOrderButtonLabel.Content = "Save";
-            w.Show();
-        }
-    }
     public void fill_ProductionOrderListBox()
     {
         var orders = dbConnector.ProductionOrders

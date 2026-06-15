@@ -160,10 +160,7 @@ public partial class WriteOffToProductionRegister : Window
 
         int documentId = int.Parse(_warehouseManagementWriteOffToProductionDocumentIdLabel.Content.ToString()!);
 
-        if (_warehouseManagementWriteOffToProductionToWriteOffButtonLabel.Content.ToString() == "Save")
-            update_WriteOff(documentId);
-        else
-            add_newWriteOff(documentId);
+        add_newWriteOff(documentId);
 
         this.Close();
     }
@@ -195,28 +192,6 @@ public partial class WriteOffToProductionRegister : Window
         mainWindow?.fill_WriteOffListBox();
         mainWindow?.fill_ProductionOrderListBox();
         new MessageWindow("Message", "Changes are successfull!").Show();
-    }
-    private void update_WriteOff(int documentId)
-    {
-        int productionOrderId = (_warehouseManagementWriteOffToProductionForOrderComboBox.SelectedItem as production_order_entity)?.ProductionOrderId ?? throw new NullReferenceException();
-        int warehouseId = (_warehouseManagementWriteOffToProductionFromWarehouseComboBox.SelectedItem as warehouse_entity)?.WarehouseId ?? throw new NullReferenceException();
-        int productId = (_warehouseManagementWriteOffToProductionProductComboBox.SelectedItem as product_entity)?.ProductId ?? throw new NullReferenceException();
-        int quantity = int.Parse(_warehouseManagementWriteOffToProductionQuantityTextBox.Text.Trim());
-
-        var existingDoc = dbConnector.StockAdjustmentDocuments.FirstOrDefault(x => x.StockAdjustmentDocumentId == documentId);
-        if (existingDoc != null)
-        {
-            existingDoc.Quantity = quantity;
-            existingDoc.WarehouseId = warehouseId;
-            existingDoc.ProductId = productId;
-            existingDoc.ProductionOrderId = productionOrderId;
-        }
-
-        var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-        mainWindow?.fill_WriteOffListBox();
-        new MessageWindow("Message", "Changes are successfull!").Show();
-        dbConnector.SaveChanges();
-        this.Close();
     }
     private void updateStockAfterWriteOff(int documentId)
     {
